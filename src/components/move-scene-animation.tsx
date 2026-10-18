@@ -30,8 +30,13 @@ type MoverSpec = {
   /** symmetric fit anchor span (px) so scaling pivots at the feet */
   fitSpan: number;
   arm: "a" | "b" | "b2" | "c" | "c3";
-  item?: ReactNode;
-  itemClass?: string;
+  /** x position where this loader waits by the truck between jobs */
+  station: number;
+  /** items carried on the two jobs in the 72s load queue */
+  item1?: ReactNode;
+  itemClass1?: string;
+  item2?: ReactNode;
+  itemClass2?: string;
 };
 
 function MoverLeg({ back }: { back?: boolean }) {
@@ -207,6 +212,7 @@ function Mover({ spec, foreman = false }: { spec: MoverSpec; foreman?: boolean }
     "--dx": `${spec.dx}px`,
     "--tx": `${spec.tx}px`,
     "--s": spec.scale,
+    "--st": `${spec.station}px`,
   } as CSSProperties;
 
   return (
@@ -256,7 +262,8 @@ function Mover({ spec, foreman = false }: { spec: MoverSpec; foreman?: boolean }
                 )}
               </g>
               <MoverHead hair={spec.hair} beard={spec.beard} />
-              {spec.item ? <g className={`mv-item ${spec.itemClass}`}>{spec.item}</g> : null}
+              {spec.item1 ? <g className={`mv-item ${spec.itemClass1}`}>{spec.item1}</g> : null}
+              {spec.item2 ? <g className={`mv-item ${spec.itemClass2}`}>{spec.item2}</g> : null}
               <MoverArm
                 className={
                   foreman
@@ -377,6 +384,115 @@ function ItemCrate() {
       >
         HEAVY
       </text>
+    </g>
+  );
+}
+
+/** A potted plant — small cargo for the solo jobs. */
+function ItemPlant() {
+  return (
+    <g className="mv-rock mv-rock--plant">
+      <path
+        d="M-4 -36 Q-14 -44 -13 -52 Q-4 -50 -1 -42 Q2 -52 10 -54 Q13 -45 4 -39 Q12 -42 18 -48 Q19 -39 8 -34 Q-2 -33 -4 -36 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="2.6"
+        strokeLinejoin="round"
+      />
+      <path d="M1 -46 L1 -37" stroke={INK} strokeWidth="1.6" opacity="0.7" fill="none" />
+      <path
+        d="M-9 -37 L17 -37 L14 -19 Q-3 -17.5 -11.5 -19 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path d="M-11.5 -33 L17.5 -33" stroke={INK} strokeWidth="1.6" opacity="0.6" fill="none" />
+      <path
+        d="M-8 -28 L-6 -21 M-1 -28 L-0.5 -21 M6 -28 L7.5 -21 M12 -28 L13.5 -21"
+        stroke={INK}
+        strokeWidth="1.3"
+        opacity="0.55"
+        fill="none"
+      />
+    </g>
+  );
+}
+
+/** A fridge — the pair's second job. */
+function ItemFridge() {
+  return (
+    <g className="mv-rock mv-rock--fridge">
+      <path
+        d="M-2 -60 Q27 -61.6 56 -60 Q57.6 -32 56.5 -6 Q27 -4.4 -2.5 -6 Q-4 -33 -2 -60 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="3.6"
+        strokeLinejoin="round"
+      />
+      <path d="M-2 -39 Q27 -37.4 56.5 -39" stroke={INK} strokeWidth="2.6" fill="none" />
+      <path
+        d="M-7 -55 L-5.5 -44 M-7 -34 L-5.5 -12"
+        stroke={INK}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M-2.5 -58.5 L2 -58 M53.5 -58.5 L50 -58"
+        stroke={INK}
+        strokeWidth="1.6"
+        opacity="0.6"
+        fill="none"
+      />
+      <path d="M8 -56 Q30 -57.4 48 -56" stroke={INK} strokeWidth="1.4" opacity="0.5" fill="none" />
+    </g>
+  );
+}
+
+/** A dining table with a little rug under it — the trio's second job. */
+function ItemTable() {
+  return (
+    <g className="mv-rock mv-rock--table">
+      <ellipse
+        cx="26"
+        cy="3"
+        rx="30"
+        ry="3.4"
+        fill="none"
+        stroke={INK}
+        strokeWidth="1.6"
+        opacity="0.4"
+        strokeDasharray="6 5"
+      />
+      <path
+        d="M-6 -34 Q26 -36.6 58 -34 Q59.5 -30 58 -26 Q26 -23.4 -6.5 -26 Q-8 -30 -6 -34 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="3.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M-1 -27 L-2 3 M57 -27 L58.5 3"
+        stroke={INK}
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M-2 -14 Q26 -12.4 57 -14"
+        stroke={INK}
+        strokeWidth="1.6"
+        opacity="0.55"
+        fill="none"
+      />
+      <path
+        d="M-7.5 3 L-0.5 3 M54.5 3 L61.5 3"
+        stroke={INK}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        fill="none"
+      />
     </g>
   );
 }
@@ -811,6 +927,9 @@ function Dog() {
 }
 
 function SceneArt({ uid }: { uid: string }) {
+  // 72s load queue — the door is never shared, the crew rotates job to job:
+  //   C-trio table (72/0→8.4) · B-pair crate (21→25.7) · A-solo plant (34→37.9)
+  //   C-trio sofa (40→46.4) · A-solo box (62→65.9) · B-pair fridge (67→71.7)
   const crew: MoverSpec[] = [
     {
       id: "a",
@@ -820,8 +939,11 @@ function SceneArt({ uid }: { uid: string }) {
       hair: "spiky",
       fitSpan: 36,
       arm: "a",
-      item: <ItemBox />,
-      itemClass: "mv-item--a",
+      station: 620,
+      item1: <ItemPlant />,
+      itemClass1: "mv-item--a1",
+      item2: <ItemBox />,
+      itemClass2: "mv-item--a2",
     },
     {
       id: "b1",
@@ -831,11 +953,24 @@ function SceneArt({ uid }: { uid: string }) {
       hair: "flat",
       fitSpan: 58,
       arm: "b",
-      item: <ItemCrate />,
-      itemClass: "mv-item--b",
+      station: 660,
+      item1: <ItemCrate />,
+      itemClass1: "mv-item--b1",
+      item2: <ItemFridge />,
+      itemClass2: "mv-item--b2",
     },
-    { id: "b2", dx: 18, tx: 30, scale: 0.96, hair: "part", beard: "full", fitSpan: 30, arm: "b2" },
-    { id: "c1", dx: 0, tx: 0, scale: 0.94, hair: "cap", fitSpan: 30, arm: "c" },
+    {
+      id: "b2",
+      dx: 18,
+      tx: 30,
+      scale: 0.96,
+      hair: "part",
+      beard: "full",
+      fitSpan: 30,
+      arm: "b2",
+      station: 690,
+    },
+    { id: "c1", dx: 0, tx: 0, scale: 0.94, hair: "cap", fitSpan: 30, arm: "c", station: 726 },
     {
       id: "c2",
       dx: 14,
@@ -845,8 +980,18 @@ function SceneArt({ uid }: { uid: string }) {
       beard: "mustache",
       fitSpan: 30,
       arm: "c",
+      station: 756,
     },
-    { id: "c3", dx: 28, tx: 68, scale: 1.08, hair: "part", fitSpan: 30, arm: "c3" },
+    {
+      id: "c3",
+      dx: 28,
+      tx: 68,
+      scale: 1.08,
+      hair: "part",
+      fitSpan: 30,
+      arm: "c3",
+      station: 786,
+    },
   ];
 
   const foreman: MoverSpec = {
@@ -858,6 +1003,7 @@ function SceneArt({ uid }: { uid: string }) {
     beard: "mustache",
     fitSpan: 34,
     arm: "a",
+    station: 812,
   };
 
   return (
@@ -1040,16 +1186,32 @@ function SceneArt({ uid }: { uid: string }) {
       {/* foreman watching the load-in */}
       <Mover spec={foreman} foreman />
 
-      {/* sofa travels as its own load so the crew can pace behind it */}
-      <g className="mv mv-cargo" style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}>
+      {/* the trio's two big loads travel as their own groups, pacing with C2 */}
+      <g
+        className="mv mv-cargo mv-cargo--table"
+        style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}
+      >
         <g className="mv-flip">
           <g className="mv-wobble mv-wobble--cargo">
             <g className="mv-bob">
               <rect x="-80" y="-78" width="160" height="78" fill="none" />
-              <g className="mv-item mv-item--c">
-                <g className="mv-rock mv-rock--sofa">
-                  <ItemSofa />
-                </g>
+              <g className="mv-item mv-item--table">
+                <ItemTable />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g
+        className="mv mv-cargo mv-cargo--sofa"
+        style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}
+      >
+        <g className="mv-flip">
+          <g className="mv-wobble mv-wobble--cargo">
+            <g className="mv-bob">
+              <rect x="-80" y="-78" width="160" height="78" fill="none" />
+              <g className="mv-item mv-item--sofa">
+                <ItemSofa />
               </g>
             </g>
           </g>

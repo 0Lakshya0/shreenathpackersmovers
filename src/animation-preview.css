@@ -83,52 +83,54 @@
 .move-scene--compact {
   display: none;
 }
-
 /* ------------------------------------------------------------------ */
-/* Scene 01 · hand-drawn black & white moving-crew loop               */
+/* Scene 01 · hand-drawn black & white moving-crew loop (72s queue)   */
 /* ------------------------------------------------------------------ */
-/* Three independent loops share the door (x ~ 151) and the truck     */
-/* loading point (x ~ 591). Everything runs on CSS translations;      */
-/* nested stride/bob/rock/sway loops are gated with                   */
-/* animation-play-state so the crew stands still when it should.      */
+/* One 72s master loop, six sequential door jobs — the door is never  */
+/* shared, the crew rotates job to job and the carried item changes:  */
+/*   C-trio table (0->8.4s) · B-pair crate (21->25.4s) · A-solo     */
+/*   plant (34->37.9s) · C-trio sofa (40->46.4s) · A-solo box        */
+/*   (62->65.9s) · B-pair fridge (67->71.4s)                         */
+/* Between jobs each loader walks back to his own station by the     */
+/* truck (var(--st)) and idles there — breathe, blink, look around.  */
 
 .mv {
   will-change: transform, opacity;
 }
 
-/* master travel: door -> truck -> door (base transform = reduced-motion tableau) */
+/* master travel, 72s load queue (base transform = reduced-motion tableau) */
 .mv--a {
-  animation: walk-a 12s linear infinite;
+  animation: walk-a 72s linear infinite;
   transform: translate(330px, 340px);
 }
 .mv--b1 {
-  animation: walk-b 16s linear infinite;
-  transform: translate(520px, 340px);
+  animation: walk-b 72s linear infinite;
+  transform: translate(450px, 340px);
 }
 .mv--b2 {
-  animation: walk-b 16s linear infinite;
-  transform: translate(550px, 340px);
+  animation: walk-b 72s linear infinite;
+  transform: translate(480px, 340px);
 }
 .mv--c1 {
-  animation: walk-c 22s linear infinite;
+  animation: walk-c 72s linear infinite;
   transform: translate(210px, 340px);
 }
 .mv--c2 {
-  animation: walk-c 22s linear infinite;
+  animation: walk-c 72s linear infinite;
   transform: translate(244px, 340px);
 }
 .mv--c3 {
-  animation: walk-c 22s linear infinite;
+  animation: walk-c 72s linear infinite;
   transform: translate(278px, 340px);
 }
 .mv-cargo {
-  animation: walk-c 22s linear infinite;
+  animation: walk-c 72s linear infinite;
   transform: translate(244px, 340px);
 }
 
 /* the foreman stands by the truck, facing the incoming crew */
 .mv-foreman {
-  transform: translate(700px, 340px);
+  transform: translate(812px, 340px);
 }
 .mv-foreman .mv-flip {
   transform: scaleX(-1);
@@ -143,31 +145,31 @@
   transform: rotate(-40deg);
 }
 .mv-foreman .mv-head {
-  animation: foreman-head 7s ease-in-out infinite;
+  animation:
+    foreman-head 7s ease-in-out infinite,
+    idle-look 9s ease-in-out -2s infinite;
 }
 .mv-foreman .mv-torso-g {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
   animation: breathe 2.8s ease-in-out infinite;
 }
 
-/* direction flip: faces the travel direction, turns at truck and door */
+/* direction flip: faces the travel direction, quick pivots at turns */
 .mv-flip {
   transform-box: fill-box;
   transform-origin: 50% 50%;
 }
 .mv--a .mv-flip {
-  animation: flip-a 12s linear infinite;
+  animation: flip-a 72s linear infinite;
 }
 .mv--b1 .mv-flip,
 .mv--b2 .mv-flip {
-  animation: flip-b 16s linear infinite;
+  animation: flip-b 72s linear infinite;
 }
 .mv--c1 .mv-flip,
 .mv--c2 .mv-flip,
 .mv--c3 .mv-flip,
 .mv-cargo .mv-flip {
-  animation: flip-c 22s linear infinite;
+  animation: flip-c 72s linear infinite;
 }
 
 /* hand-drawn "line boil": a tiny discrete jitter, like redrawn pencil lines */
@@ -217,25 +219,42 @@
 }
 .mv--a .mv-bob {
   animation:
-    gate-a 12s linear infinite,
+    gate-a 72s linear infinite,
     crew-bob 0.55s ease-in-out infinite;
 }
-.mv--b1 .mv-bob,
+.mv--b1 .mv-bob {
+  animation:
+    gate-b 72s linear infinite,
+    crew-bob 0.55s ease-in-out infinite;
+}
 .mv--b2 .mv-bob {
   animation:
-    gate-b 16s linear infinite,
+    gate-b 72s linear infinite,
+    crew-bob 0.51s ease-in-out infinite;
+}
+.mv--c1 .mv-bob {
+  animation:
+    gate-c 72s linear infinite,
     crew-bob 0.55s ease-in-out infinite;
 }
-.mv--c1 .mv-bob,
-.mv--c2 .mv-bob,
-.mv--c3 .mv-bob,
+.mv--c2 .mv-bob {
+  animation:
+    gate-c 72s linear infinite,
+    crew-bob 0.52s ease-in-out infinite;
+}
+.mv--c3 .mv-bob {
+  animation:
+    gate-c 72s linear infinite,
+    crew-bob 0.58s ease-in-out infinite;
+}
 .mv-cargo .mv-bob {
   animation:
-    gate-c 22s linear infinite,
+    gate-c 72s linear infinite,
     crew-bob 0.55s ease-in-out infinite;
 }
 
-/* gait: legs swing in antiphase, gated to walking windows */
+/* gait: legs swing in antiphase, gated to walking windows. Each loader
+   has a slightly different stride tempo so crews don't march in lockstep */
 .mv-leg {
   transform-box: fill-box;
   transform-origin: 50% 0%;
@@ -248,63 +267,129 @@
 }
 .mv--a .mv-leg--f {
   animation:
-    gate-a 12s linear infinite,
+    gate-a 72s linear infinite,
     stride-f 0.55s ease-in-out infinite;
 }
 .mv--a .mv-leg--b {
   animation:
-    gate-a 12s linear infinite,
+    gate-a 72s linear infinite,
     stride-b 0.55s ease-in-out infinite;
 }
-.mv--b1 .mv-leg--f,
+.mv--b1 .mv-leg--f {
+  animation:
+    gate-b 72s linear infinite,
+    stride-f 0.55s ease-in-out infinite;
+}
+.mv--b1 .mv-leg--b {
+  animation:
+    gate-b 72s linear infinite,
+    stride-b 0.55s ease-in-out infinite;
+}
 .mv--b2 .mv-leg--f {
   animation:
-    gate-b 16s linear infinite,
-    stride-f 0.55s ease-in-out infinite;
+    gate-b 72s linear infinite,
+    stride-f 0.49s ease-in-out infinite;
 }
-.mv--b1 .mv-leg--b,
 .mv--b2 .mv-leg--b {
   animation:
-    gate-b 16s linear infinite,
-    stride-b 0.55s ease-in-out infinite;
+    gate-b 72s linear infinite,
+    stride-b 0.49s ease-in-out infinite;
 }
-.mv--c1 .mv-leg--f,
-.mv--c2 .mv-leg--f,
-.mv--c3 .mv-leg--f {
+.mv--c1 .mv-leg--f {
   animation:
-    gate-c 22s linear infinite,
+    gate-c 72s linear infinite,
     stride-f 0.55s ease-in-out infinite;
 }
-.mv--c1 .mv-leg--b,
-.mv--c2 .mv-leg--b,
-.mv--c3 .mv-leg--b {
+.mv--c1 .mv-leg--b {
   animation:
-    gate-c 22s linear infinite,
+    gate-c 72s linear infinite,
     stride-b 0.55s ease-in-out infinite;
 }
+.mv--c2 .mv-leg--f {
+  animation:
+    gate-c 72s linear infinite,
+    stride-f 0.51s ease-in-out infinite;
+}
+.mv--c2 .mv-leg--b {
+  animation:
+    gate-c 72s linear infinite,
+    stride-b 0.51s ease-in-out infinite;
+}
+.mv--c3 .mv-leg--f {
+  animation:
+    gate-c 72s linear infinite,
+    stride-f 0.47s ease-in-out infinite;
+}
+.mv--c3 .mv-leg--b {
+  animation:
+    gate-c 72s linear infinite,
+    stride-b 0.47s ease-in-out infinite;
+}
 
-/* head sway while walking; the foreman nods on his own beat */
+/* head sway while walking + a slow look-around that keeps running idle */
 .mv-head {
   transform-box: fill-box;
   transform-origin: 50% 85%;
 }
 .mv--a .mv-head {
   animation:
-    gate-a 12s linear infinite,
-    head-sway 0.55s ease-in-out infinite;
+    gate-a 72s linear infinite,
+    head-sway 0.55s ease-in-out infinite,
+    idle-look 7.4s ease-in-out -1.2s infinite;
 }
-.mv--b1 .mv-head,
+.mv--b1 .mv-head {
+  animation:
+    gate-b 72s linear infinite,
+    head-sway 0.55s ease-in-out infinite,
+    idle-look 8.2s ease-in-out infinite;
+}
 .mv--b2 .mv-head {
   animation:
-    gate-b 16s linear infinite,
-    head-sway 0.55s ease-in-out infinite;
+    gate-b 72s linear infinite,
+    head-sway 0.51s ease-in-out infinite,
+    idle-look 6.6s ease-in-out -2.4s infinite;
 }
-.mv--c1 .mv-head,
-.mv--c2 .mv-head,
+.mv--c1 .mv-head {
+  animation:
+    gate-c 72s linear infinite,
+    head-sway 0.55s ease-in-out infinite,
+    idle-look 7.9s ease-in-out -0.7s infinite;
+}
+.mv--c2 .mv-head {
+  animation:
+    gate-c 72s linear infinite,
+    head-sway 0.52s ease-in-out infinite,
+    idle-look 6.9s ease-in-out -3.2s infinite;
+}
 .mv--c3 .mv-head {
   animation:
-    gate-c 22s linear infinite,
-    head-sway 0.55s ease-in-out infinite;
+    gate-c 72s linear infinite,
+    head-sway 0.47s ease-in-out infinite,
+    idle-look 8.5s ease-in-out -1.8s infinite;
+}
+
+/* chest breathing — every loader idles with a real heartbeat */
+.mv-torso-g {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.mv--a .mv-torso-g {
+  animation: breathe 2.9s ease-in-out infinite;
+}
+.mv--b1 .mv-torso-g {
+  animation: breathe 3.3s ease-in-out -0.6s infinite;
+}
+.mv--b2 .mv-torso-g {
+  animation: breathe 2.7s ease-in-out -1.4s infinite;
+}
+.mv--c1 .mv-torso-g {
+  animation: breathe 3.1s ease-in-out -0.2s infinite;
+}
+.mv--c2 .mv-torso-g {
+  animation: breathe 2.8s ease-in-out -1.9s infinite;
+}
+.mv--c3 .mv-torso-g {
+  animation: breathe 3.5s ease-in-out -0.9s infinite;
 }
 
 /* carried cargo rocks with the stride, gated to walking windows */
@@ -321,20 +406,44 @@
 .mv-rock--sofa {
   --rock: 1.1deg;
 }
+.mv-rock--plant {
+  --rock: 3deg;
+}
+.mv-rock--fridge {
+  --rock: 1.2deg;
+}
+.mv-rock--table {
+  --rock: 1.4deg;
+}
+.mv--a .mv-rock--plant {
+  animation:
+    gate-a 72s linear infinite,
+    rock 0.5s ease-in-out infinite;
+}
 .mv--a .mv-rock--box {
   animation:
-    gate-a 12s linear infinite,
+    gate-a 72s linear infinite,
     rock 0.55s ease-in-out infinite;
 }
 .mv--b1 .mv-rock--crate {
   animation:
-    gate-b 16s linear infinite,
-    rock 0.55s ease-in-out infinite;
+    gate-b 72s linear infinite,
+    rock 0.6s ease-in-out infinite;
+}
+.mv--b1 .mv-rock--fridge {
+  animation:
+    gate-b 72s linear infinite,
+    rock 0.66s ease-in-out infinite;
+}
+.mv-cargo .mv-rock--table {
+  animation:
+    gate-c 72s linear infinite,
+    rock 0.62s ease-in-out infinite;
 }
 .mv-cargo .mv-rock--sofa {
   animation:
-    gate-c 22s linear infinite,
-    rock 0.55s ease-in-out infinite;
+    gate-c 72s linear infinite,
+    rock 0.56s ease-in-out infinite;
 }
 
 /* blink, staggered per character */
@@ -373,16 +482,16 @@
   opacity: 0;
 }
 .mv--a .mv-mouth {
-  animation: mouth-a 12s linear infinite;
+  animation: mouth-a 72s linear infinite;
 }
 .mv--b1 .mv-mouth,
 .mv--b2 .mv-mouth {
-  animation: mouth-b 16s linear infinite;
+  animation: mouth-b 72s linear infinite;
 }
 .mv--c1 .mv-mouth,
 .mv--c2 .mv-mouth,
 .mv--c3 .mv-mouth {
-  animation: mouth-c 22s linear infinite;
+  animation: mouth-c 72s linear infinite;
 }
 
 /* exertion: sweat drops while the load is carried */
@@ -392,16 +501,16 @@
   transform-origin: center;
 }
 .mv--a .mv-sweat {
-  animation: sweat-a 12s ease-in-out infinite;
+  animation: sweat-a 72s ease-in-out infinite;
 }
 .mv--b1 .mv-sweat,
 .mv--b2 .mv-sweat {
-  animation: sweat-b 16s ease-in-out infinite;
+  animation: sweat-b 72s ease-in-out infinite;
 }
 .mv--c1 .mv-sweat,
 .mv--c2 .mv-sweat,
 .mv--c3 .mv-sweat {
-  animation: sweat-c 22s ease-in-out infinite;
+  animation: sweat-c 72s ease-in-out infinite;
 }
 
 /* arms: hang while walking empty, lock into the carry pose with cargo */
@@ -410,40 +519,53 @@
   transform-origin: 50% 0%;
 }
 .mv--a .mv-arm--f {
-  animation: arm-a 12s ease-in-out infinite;
+  animation: arm-a 72s ease-in-out infinite;
   transform: rotate(-75deg);
 }
 .mv--b1 .mv-arm--f {
-  animation: arm-b 16s ease-in-out infinite;
+  animation: arm-b 72s ease-in-out infinite;
   transform: rotate(-75deg);
 }
 .mv--b2 .mv-arm--f {
-  animation: arm-b2 16s ease-in-out infinite;
+  animation: arm-b2 72s ease-in-out infinite;
   transform: rotate(80deg);
 }
 .mv--c1 .mv-arm--f,
 .mv--c2 .mv-arm--f {
-  animation: arm-c 22s ease-in-out infinite;
+  animation: arm-c 72s ease-in-out infinite;
   transform: rotate(-75deg);
 }
 .mv--c3 .mv-arm--f {
-  animation: arm-c3 22s ease-in-out infinite;
+  animation: arm-c3 72s ease-in-out infinite;
   transform: rotate(80deg);
 }
 
 /* cargo: hidden inside the home, visible while carried, then drops
-   cleanly up into the open cargo bay */
+   cleanly up into the open cargo bay. Tableau defaults show the round's
+   first items: box, crate and sofa. */
 .mv-item {
   opacity: 1;
 }
-.mv-item--a {
-  animation: item-a 12s linear infinite;
+.mv-item--a1 {
+  opacity: 0;
+  animation: item-a1 72s linear infinite;
 }
-.mv-item--b {
-  animation: item-b 16s linear infinite;
+.mv-item--a2 {
+  animation: item-a2 72s linear infinite;
 }
-.mv-item--c {
-  animation: item-c 22s linear infinite;
+.mv-item--b1 {
+  animation: item-b1 72s linear infinite;
+}
+.mv-item--b2 {
+  opacity: 0;
+  animation: item-b2 72s linear infinite;
+}
+.mv-item--table {
+  opacity: 0;
+  animation: item-table 72s linear infinite;
+}
+.mv-item--sofa {
+  animation: item-sofa 72s linear infinite;
 }
 
 /* exhaust: gentle hand-drawn puffs while the truck is parked */
@@ -480,14 +602,14 @@
   animation: dog-look 9s ease-in-out infinite;
 }
 
-/* ambient life: drifting clouds, a bird, chimney curls */
+/* ambient life: drifting clouds (very slow), a bird, chimney curls */
 .mv-cloud--a {
   transform: translate(300px, 72px);
-  animation: cloud-a 78s linear infinite;
+  animation: cloud-a 240s linear infinite;
 }
 .mv-cloud--b {
   transform: translate(720px, 46px);
-  animation: cloud-b 105s linear infinite;
+  animation: cloud-b 320s linear infinite;
 }
 .mv-bird {
   transform: translate(1000px, 96px);
@@ -506,81 +628,122 @@
   animation-delay: -2.3s;
 }
 
-/* the foreman's speech bubble pops when the sofa crew lifts */
+/* the foreman's bubble pops when the trio lifts (table ~8s, sofa ~46s) */
 .mv-speech {
   opacity: 1;
   transform-box: fill-box;
   transform-origin: 40% 85%;
-  animation: speech-c 22s ease-in-out infinite;
+  animation: speech-c 72s ease-in-out infinite;
 }
 
-/* travel timelines (percentages are % of each loop) */
+/* ================================================================== */
+/* 72s master queue — travel timelines                                */
+/* door x = 151 + --dx · inside x = 169 + --dx · truck x = 591 + --tx  */
+/* station x = --st (per loader, set inline)                          */
+/* ================================================================== */
+
 @keyframes walk-a {
   0% {
+    transform: translate(calc(558px + var(--tx, 0px)), 340px);
+    opacity: 1;
+  }
+  0.7% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  2.1% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  5.8% {
+    transform: translate(var(--st, 620px), 340px);
+  }
+  75.7% {
+    transform: translate(var(--st, 620px), 340px);
+  }
+  86.1% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
-  6% {
-    opacity: 1;
-  }
-  10% {
+  88.1% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  18% {
+  89.7% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  22% {
+  91.7% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
-  }
-  52% {
-    transform: translate(calc(591px + var(--tx, 0px)), 340px);
-  }
-  58% {
-    transform: translate(calc(591px + var(--tx, 0px)), 340px);
-  }
-  88% {
-    transform: translate(calc(151px + var(--dx, 0px)), 340px);
   }
   100% {
-    transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    transform: translate(calc(558px + var(--tx, 0px)), 340px);
     opacity: 1;
   }
 }
 
 @keyframes walk-b {
   0% {
+    transform: translate(calc(166.5px + var(--dx, 0px)), 340px);
+    opacity: 1;
+  }
+  11.4% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  12.8% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  16.7% {
+    transform: translate(var(--st, 660px), 340px);
+  }
+  18.8% {
+    transform: translate(var(--st, 660px), 340px);
+  }
+  29.2% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
-  6% {
-    opacity: 1;
-  }
-  8% {
+  31.1% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  17% {
+  32.9% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  20% {
+  35.3% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
-  48% {
+  47.5% {
     transform: translate(calc(591px + var(--tx, 0px)), 340px);
   }
-  54% {
+  48.9% {
     transform: translate(calc(591px + var(--tx, 0px)), 340px);
   }
-  84% {
+  52.5% {
+    transform: translate(var(--st, 660px), 340px);
+  }
+  82.6% {
+    transform: translate(var(--st, 660px), 340px);
+  }
+  93.1% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    opacity: 1;
+  }
+  95% {
+    transform: translate(calc(169px + var(--dx, 0px)), 340px);
+    opacity: 0;
+  }
+  96.8% {
+    transform: translate(calc(169px + var(--dx, 0px)), 340px);
+    opacity: 0;
+  }
+  99.2% {
+    transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    opacity: 1;
   }
   100% {
-    transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    transform: translate(calc(166.5px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
 }
@@ -590,29 +753,57 @@
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
-  5% {
-    opacity: 1;
-  }
-  7% {
+  3.1% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  15% {
+  5.1% {
     transform: translate(calc(169px + var(--dx, 0px)), 340px);
     opacity: 0;
   }
-  18% {
+  11.7% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
     opacity: 1;
   }
-  46% {
+  24.2% {
     transform: translate(calc(591px + var(--tx, 0px)), 340px);
   }
-  53% {
+  25.6% {
     transform: translate(calc(591px + var(--tx, 0px)), 340px);
   }
-  84% {
+  30% {
+    transform: translate(var(--st, 726px), 340px);
+  }
+  46.7% {
+    transform: translate(var(--st, 726px), 340px);
+  }
+  55.6% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    opacity: 1;
+  }
+  58.1% {
+    transform: translate(calc(169px + var(--dx, 0px)), 340px);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(calc(169px + var(--dx, 0px)), 340px);
+    opacity: 0;
+  }
+  64.4% {
+    transform: translate(calc(151px + var(--dx, 0px)), 340px);
+    opacity: 1;
+  }
+  76.9% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  78.3% {
+    transform: translate(calc(591px + var(--tx, 0px)), 340px);
+  }
+  82.8% {
+    transform: translate(var(--st, 726px), 340px);
+  }
+  88.3% {
+    transform: translate(var(--st, 726px), 340px);
   }
   100% {
     transform: translate(calc(151px + var(--dx, 0px)), 340px);
@@ -622,46 +813,68 @@
 
 /* gait gates: hold stride + bob while walking, freeze while standing */
 @keyframes gate-a {
-  0% {
+  0%,
+  0.7% {
     animation-play-state: running, running;
   }
-  10% {
+  2.1% {
     animation-play-state: running, paused;
   }
-  18% {
+  5.8% {
     animation-play-state: running, running;
   }
-  52% {
+  75.7% {
     animation-play-state: running, paused;
   }
-  58% {
+  86.1% {
     animation-play-state: running, running;
   }
-  88% {
+  88.1% {
     animation-play-state: running, paused;
   }
+  89.7%,
   100% {
     animation-play-state: running, running;
   }
 }
 
 @keyframes gate-b {
-  0% {
+  0%,
+  11.4% {
     animation-play-state: running, running;
   }
-  8% {
+  12.8% {
     animation-play-state: running, paused;
   }
-  17% {
+  16.7% {
     animation-play-state: running, running;
   }
-  48% {
+  18.8% {
     animation-play-state: running, paused;
   }
-  54% {
+  29.2%,
+  31.1% {
     animation-play-state: running, running;
   }
-  84% {
+  32.9% {
+    animation-play-state: running, paused;
+  }
+  47.5% {
+    animation-play-state: running, running;
+  }
+  48.9% {
+    animation-play-state: running, paused;
+  }
+  52.5% {
+    animation-play-state: running, running;
+  }
+  82.6% {
+    animation-play-state: running, paused;
+  }
+  95% {
+    animation-play-state: running, running;
+  }
+  96.8% {
     animation-play-state: running, paused;
   }
   100% {
@@ -670,24 +883,41 @@
 }
 
 @keyframes gate-c {
-  0% {
+  0%,
+  3.1% {
     animation-play-state: running, running;
   }
-  7% {
+  5.1% {
     animation-play-state: running, paused;
   }
-  15% {
+  24.2% {
     animation-play-state: running, running;
   }
-  46% {
+  25.6% {
     animation-play-state: running, paused;
   }
-  53% {
+  30% {
     animation-play-state: running, running;
   }
-  84% {
+  46.7% {
     animation-play-state: running, paused;
   }
+  58.1% {
+    animation-play-state: running, running;
+  }
+  60% {
+    animation-play-state: running, paused;
+  }
+  76.9% {
+    animation-play-state: running, running;
+  }
+  78.3% {
+    animation-play-state: running, paused;
+  }
+  82.8% {
+    animation-play-state: running, running;
+  }
+  88.3%,
   100% {
     animation-play-state: running, running;
   }
@@ -696,14 +926,14 @@
 /* direction changes: outbound, turnaround at the truck, home turn */
 @keyframes flip-a {
   0%,
-  58% {
+  5.8% {
     transform: scaleX(1);
   }
-  60%,
-  91% {
+  6.5%,
+  89.6% {
     transform: scaleX(-1);
   }
-  93%,
+  90.3%,
   100% {
     transform: scaleX(1);
   }
@@ -711,14 +941,22 @@
 
 @keyframes flip-b {
   0%,
-  48% {
+  11.8% {
     transform: scaleX(1);
   }
-  50%,
-  84% {
+  12.5%,
+  32.9% {
     transform: scaleX(-1);
   }
-  86%,
+  33.6%,
+  52.8% {
+    transform: scaleX(1);
+  }
+  53.5%,
+  96.8% {
+    transform: scaleX(-1);
+  }
+  97.5%,
   100% {
     transform: scaleX(1);
   }
@@ -726,75 +964,115 @@
 
 @keyframes flip-c {
   0%,
-  46% {
-    transform: scaleX(1);
-  }
-  48%,
-  84% {
+  5.1% {
     transform: scaleX(-1);
   }
-  86%,
-  100% {
+  5.8%,
+  31.4% {
     transform: scaleX(1);
+  }
+  32.1%,
+  60% {
+    transform: scaleX(-1);
+  }
+  60.7%,
+  83.9% {
+    transform: scaleX(1);
+  }
+  84.6%,
+  100% {
+    transform: scaleX(-1);
   }
 }
 
 /* carry poses: chest-level box, long-crate grip, sofa pacing grip */
 @keyframes arm-a {
   0%,
-  19% {
-    transform: rotate(0deg);
-  }
-  22%,
-  56% {
+  2.8% {
     transform: rotate(-75deg);
   }
-  60%,
-  100% {
+  4%,
+  51.6% {
     transform: rotate(0deg);
+  }
+  52.8%,
+  62.8% {
+    transform: rotate(-75deg);
+  }
+  64%,
+  90.4% {
+    transform: rotate(0deg);
+  }
+  91.6%,
+  100% {
+    transform: rotate(-75deg);
   }
 }
 
 @keyframes arm-b {
   0%,
-  18% {
-    transform: rotate(0deg);
-  }
-  21%,
-  52% {
+  11.8% {
     transform: rotate(-75deg);
   }
-  56%,
-  100% {
+  12.8%,
+  34.5% {
     transform: rotate(0deg);
+  }
+  35.7%,
+  48.9% {
+    transform: rotate(-75deg);
+  }
+  50%,
+  98.9% {
+    transform: rotate(0deg);
+  }
+  99.5%,
+  100% {
+    transform: rotate(-75deg);
   }
 }
 
 @keyframes arm-b2 {
   0%,
-  18% {
-    transform: rotate(0deg);
-  }
-  21%,
-  52% {
+  11.8% {
     transform: rotate(80deg);
   }
-  56%,
-  100% {
+  12.8%,
+  34.5% {
     transform: rotate(0deg);
+  }
+  35.7%,
+  48.9% {
+    transform: rotate(80deg);
+  }
+  50%,
+  98.9% {
+    transform: rotate(0deg);
+  }
+  99.5%,
+  100% {
+    transform: rotate(80deg);
   }
 }
 
 @keyframes arm-c {
   0%,
-  16% {
+  11.1% {
     transform: rotate(0deg);
   }
-  19%,
-  50% {
+  11.7%,
+  24.9% {
     transform: rotate(-75deg);
   }
-  54%,
+  26.4%,
+  63.9% {
+    transform: rotate(0deg);
+  }
+  64.4%,
+  77.5% {
+    transform: rotate(-75deg);
+  }
+  79%,
   100% {
     transform: rotate(0deg);
   }
@@ -802,20 +1080,27 @@
 
 @keyframes arm-c3 {
   0%,
-  16% {
+  11.1% {
     transform: rotate(0deg);
   }
-  19%,
-  50% {
+  11.7%,
+  24.9% {
     transform: rotate(80deg);
   }
-  54%,
+  26.4%,
+  63.9% {
+    transform: rotate(0deg);
+  }
+  64.4%,
+  77.5% {
+    transform: rotate(80deg);
+  }
+  79%,
   100% {
     transform: rotate(0deg);
   }
 }
 
-/* foreman: holds the checklist, raises it to point at the load-in */
 @keyframes foreman-arm {
   0%,
   40% {
@@ -858,64 +1143,144 @@
   }
 }
 
-/* cargo visibility + clean drop into the cargo bay */
-@keyframes item-a {
+/* slow idle look-around (head) — keeps running while the loader waits */
+@keyframes idle-look {
   0%,
-  18% {
+  100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(4deg);
+  }
+  48% {
+    transform: rotate(3.5deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+
+/* cargo visibility + clean drop into the cargo bay (72s windows) */
+@keyframes item-a1 {
+  0%,
+  50.9% {
     opacity: 0;
     transform: none;
   }
-  22% {
+  52.6% {
     opacity: 1;
     transform: none;
   }
-  52% {
+  61.8% {
     opacity: 1;
     transform: none;
   }
-  57.5%,
+  63.2%,
   100% {
     opacity: 0;
     transform: translate(-22px, -70px);
   }
 }
 
-@keyframes item-b {
+@keyframes item-a2 {
   0%,
-  17% {
+  0.6% {
+    opacity: 1;
+    transform: none;
+  }
+  2.1% {
+    opacity: 0;
+    transform: translate(-22px, -70px);
+  }
+  89.9% {
     opacity: 0;
     transform: none;
   }
-  20% {
+  91.7%,
+  100% {
     opacity: 1;
     transform: none;
   }
-  48% {
+}
+
+@keyframes item-b1 {
+  0%,
+  33.1% {
+    opacity: 0;
+    transform: none;
+  }
+  35.7% {
     opacity: 1;
     transform: none;
   }
-  53.5%,
+  47.5% {
+    opacity: 1;
+    transform: none;
+  }
+  48.9%,
   100% {
     opacity: 0;
     transform: translate(-30px, -78px);
   }
 }
 
-@keyframes item-c {
+@keyframes item-b2 {
   0%,
-  15% {
+  11.4% {
+    opacity: 1;
+    transform: none;
+  }
+  12.8% {
+    opacity: 0;
+    transform: translate(-30px, -60px);
+  }
+  95.5% {
     opacity: 0;
     transform: none;
   }
-  18% {
+  99.6%,
+  100% {
     opacity: 1;
     transform: none;
   }
-  46% {
+}
+
+@keyframes item-table {
+  0%,
+  4.8% {
+    opacity: 0;
+    transform: none;
+  }
+  11.7% {
     opacity: 1;
     transform: none;
   }
-  52.5%,
+  24.2% {
+    opacity: 1;
+    transform: none;
+  }
+  25.6%,
+  100% {
+    opacity: 0;
+    transform: translate(-26px, -50px);
+  }
+}
+
+@keyframes item-sofa {
+  0%,
+  59.5% {
+    opacity: 0;
+    transform: none;
+  }
+  64.4% {
+    opacity: 1;
+    transform: none;
+  }
+  77% {
+    opacity: 1;
+    transform: none;
+  }
+  78.4%,
   100% {
     opacity: 0;
     transform: translate(-26px, -64px);
@@ -998,69 +1363,117 @@
 
 @keyframes mouth-a {
   0%,
-  22% {
-    opacity: 0;
-  }
-  25%,
-  54% {
+  1.2% {
     opacity: 1;
   }
-  58%,
-  100% {
+  2.1%,
+  52.3% {
     opacity: 0;
+  }
+  53.5%,
+  61.6% {
+    opacity: 1;
+  }
+  62.8%,
+  91.4% {
+    opacity: 0;
+  }
+  92.5%,
+  100% {
+    opacity: 1;
   }
 }
 
 @keyframes mouth-b {
   0%,
-  20% {
-    opacity: 0;
-  }
-  23%,
-  50% {
+  11.1% {
     opacity: 1;
   }
-  54%,
-  100% {
+  12.5%,
+  35.3% {
     opacity: 0;
+  }
+  36.5%,
+  47.3% {
+    opacity: 1;
+  }
+  48.5%,
+  99.3% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
 @keyframes mouth-c {
   0%,
-  18% {
+  11.2% {
     opacity: 0;
   }
-  21%,
-  48% {
+  12.5%,
+  23.9% {
     opacity: 1;
   }
-  52%,
+  25%,
+  64.2% {
+    opacity: 0;
+  }
+  65.4%,
+  76.8% {
+    opacity: 1;
+  }
+  77.9%,
   100% {
     opacity: 0;
   }
 }
 
 @keyframes sweat-a {
-  0%,
-  25% {
+  0% {
+    opacity: 0;
+    transform: translate(3.5px, 9px) scale(0.8);
+  }
+  1.4% {
     opacity: 0;
     transform: translate(0, 0) scale(0.4);
   }
-  28% {
+  53.3% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  54.3% {
     opacity: 0.9;
     transform: translate(2px, -4px) scale(1);
   }
-  32%,
-  40% {
+  55.8% {
     opacity: 0;
     transform: translate(4px, 9px) scale(0.8);
   }
-  43% {
+  59.7% {
     opacity: 0.9;
     transform: translate(1.5px, -4px) scale(1);
   }
-  47%,
+  61.2% {
+    opacity: 0;
+    transform: translate(3.5px, 9px) scale(0.8);
+  }
+  92.6% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  93.6% {
+    opacity: 0.9;
+    transform: translate(2px, -4px) scale(1);
+  }
+  95.1% {
+    opacity: 0;
+    transform: translate(4px, 9px) scale(0.8);
+  }
+  98% {
+    opacity: 0.9;
+    transform: translate(1.5px, -4px) scale(1);
+  }
   100% {
     opacity: 0;
     transform: translate(3.5px, 9px) scale(0.8);
@@ -1068,25 +1481,47 @@
 }
 
 @keyframes sweat-b {
-  0%,
-  26% {
+  0% {
     opacity: 0;
     transform: translate(0, 0) scale(0.4);
   }
-  29% {
+  0.9% {
     opacity: 0.9;
     transform: translate(2px, -4px) scale(1);
   }
-  33%,
-  40% {
+  2.4% {
     opacity: 0;
     transform: translate(4px, 9px) scale(0.8);
   }
-  43% {
+  6.9% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  7.9% {
+    opacity: 0.9;
+    transform: translate(2px, -4px) scale(1);
+  }
+  9.4% {
+    opacity: 0;
+    transform: translate(3.5px, 9px) scale(0.8);
+  }
+  36.7% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  37.7% {
+    opacity: 0.9;
+    transform: translate(2px, -4px) scale(1);
+  }
+  39.2% {
+    opacity: 0;
+    transform: translate(4px, 9px) scale(0.8);
+  }
+  43.1% {
     opacity: 0.9;
     transform: translate(1.5px, -4px) scale(1);
   }
-  47%,
+  44.6%,
   100% {
     opacity: 0;
     transform: translate(3.5px, 9px) scale(0.8);
@@ -1094,25 +1529,43 @@
 }
 
 @keyframes sweat-c {
-  0%,
-  24% {
+  0% {
     opacity: 0;
     transform: translate(0, 0) scale(0.4);
   }
-  27% {
+  12.5% {
     opacity: 0.9;
     transform: translate(2px, -4px) scale(1);
   }
-  31%,
-  40% {
+  14% {
     opacity: 0;
     transform: translate(4px, 9px) scale(0.8);
   }
-  43% {
+  18.7% {
     opacity: 0.9;
     transform: translate(1.5px, -4px) scale(1);
   }
-  47%,
+  20.3% {
+    opacity: 0;
+    transform: translate(3.5px, 9px) scale(0.8);
+  }
+  65.3% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  66.3% {
+    opacity: 0.9;
+    transform: translate(2px, -4px) scale(1);
+  }
+  67.8% {
+    opacity: 0;
+    transform: translate(4px, 9px) scale(0.8);
+  }
+  72.5% {
+    opacity: 0.9;
+    transform: translate(1.5px, -4px) scale(1);
+  }
+  74.1%,
   100% {
     opacity: 0;
     transform: translate(3.5px, 9px) scale(0.8);
@@ -1230,22 +1683,41 @@
 
 @keyframes speech-c {
   0%,
-  16% {
+  9.2% {
     opacity: 0;
     transform: scale(0.7);
   }
-  19% {
+  11.4% {
     opacity: 1;
     transform: scale(1.07);
   }
-  21.5% {
+  12.8% {
     transform: scale(1);
   }
-  44% {
+  20% {
     opacity: 1;
     transform: scale(1);
   }
-  48%,
+  22% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  61.4% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  63.9% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+  65.3% {
+    transform: scale(1);
+  }
+  72.8% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  74.8%,
   100% {
     opacity: 0;
     transform: scale(0.8);
