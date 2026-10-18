@@ -962,7 +962,7 @@ function SceneArt({ uid }: { uid: string }) {
     {
       id: "b2",
       dx: 18,
-      tx: 30,
+      tx: 24,
       scale: 0.96,
       hair: "part",
       beard: "full",
@@ -974,7 +974,7 @@ function SceneArt({ uid }: { uid: string }) {
     {
       id: "c2",
       dx: 14,
-      tx: 34,
+      tx: 28,
       scale: 1.02,
       hair: "bald",
       beard: "mustache",
@@ -985,7 +985,7 @@ function SceneArt({ uid }: { uid: string }) {
     {
       id: "c3",
       dx: 28,
-      tx: 68,
+      tx: 56,
       scale: 1.08,
       hair: "part",
       fitSpan: 30,
@@ -1189,7 +1189,7 @@ function SceneArt({ uid }: { uid: string }) {
       {/* the trio's two big loads travel as their own groups, pacing with C2 */}
       <g
         className="mv mv-cargo mv-cargo--table"
-        style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}
+        style={{ "--dx": "14px", "--tx": "28px" } as CSSProperties}
       >
         <g className="mv-flip">
           <g className="mv-wobble mv-wobble--cargo">
@@ -1204,7 +1204,7 @@ function SceneArt({ uid }: { uid: string }) {
       </g>
       <g
         className="mv mv-cargo mv-cargo--sofa"
-        style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}
+        style={{ "--dx": "14px", "--tx": "28px" } as CSSProperties}
       >
         <g className="mv-flip">
           <g className="mv-wobble mv-wobble--cargo">
