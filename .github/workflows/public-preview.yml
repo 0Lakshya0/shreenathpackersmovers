@@ -42,7 +42,8 @@ jobs:
 
   deploy:
     environment:
-      name: github-pages
+      # The default github-pages environment is restricted to main; this preview deploys from the Arena branch.
+      name: phone-preview
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
