@@ -762,30 +762,30 @@
 
 @keyframes arm-porter {
   0%,
-  4.9% {
+  4.2% {
     transform: rotate(0deg);
   }
-  5.6%,
-  12.5% {
+  4.9%,
+  13.1% {
     transform: rotate(-75deg);
   }
-  13.4%,
-  39.6% {
+  13.9%,
+  38.9% {
     transform: rotate(0deg);
   }
-  40.3%,
-  47.2% {
+  39.7%,
+  47.9% {
     transform: rotate(-75deg);
   }
-  48.1%,
-  74.3% {
+  48.6%,
+  73.6% {
     transform: rotate(0deg);
   }
-  75%,
-  81.9% {
+  74.4%,
+  82.6% {
     transform: rotate(-75deg);
   }
-  82.8%,
+  83.3%,
   100% {
     transform: rotate(0deg);
   }
@@ -1047,22 +1047,21 @@
 
 @keyframes arm-pa {
   0%,
-  1.4% {
+  8% {
     transform: rotate(-75deg);
   }
-  2.3%,
-  47.2% {
+  10%,
+  45% {
     transform: rotate(0deg);
   }
-  48%,
-  55.6% {
+  47.64%,
+  57% {
     transform: rotate(-75deg);
   }
-  56.5%,
-  96.6% {
+  59.2%,
+  98.5% {
     transform: rotate(0deg);
   }
-  99.3%,
   100% {
     transform: rotate(-75deg);
   }
@@ -1140,16 +1139,23 @@
 }
 
 @keyframes item-loadbox-a {
-  0%,
-  45.5% {
-    opacity: 1;
-  }
-  46.1% {
+  0% {
     opacity: 0;
   }
-  46.9%,
-  100% {
+  1.4%,
+  44.4% {
     opacity: 1;
+  }
+  45.3% {
+    opacity: 0;
+  }
+  46.4%,
+  58.3% {
+    opacity: 1;
+  }
+  59.7%,
+  100% {
+    opacity: 0;
   }
 }
 
@@ -1297,12 +1303,12 @@
   }
   37.5% {
     opacity: 1;
-    transform: translate(200px, 52px);
+    transform: translate(190px, 40px);
   }
   38.2%,
   100% {
     opacity: 0;
-    transform: translate(200px, 52px);
+    transform: translate(190px, 40px);
   }
 }
 
@@ -1319,12 +1325,12 @@
   }
   67.36% {
     opacity: 1;
-    transform: translate(150px, 52px);
+    transform: translate(140px, 40px);
   }
   68.1%,
   100% {
     opacity: 0;
-    transform: translate(150px, 52px);
+    transform: translate(140px, 40px);
   }
 }
 
@@ -1341,7 +1347,7 @@
   }
   100% {
     opacity: 1;
-    transform: translate(310px, 52px);
+    transform: translate(300px, 40px);
   }
 }
 

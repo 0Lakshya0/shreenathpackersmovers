@@ -701,30 +701,30 @@ function RoomShell() {
       {/* packing bench */}
       <g>
         <path
-          d="M300 288 Q420 285.5 540 288 L540 296 Q420 293.5 300 296 Z"
+          d="M316 300 Q428 298 540 300 L540 308 Q428 306 316 308 Z"
           fill={PAPER}
           stroke={INK}
           strokeWidth="2.6"
           strokeLinejoin="round"
         />
         <path
-          d="M306 296 L304 340 M420 294 L420 340 M534 296 L536 340"
+          d="M322 308 L320 340 M428 306 L428 340 M534 308 L536 340"
           stroke={INK}
           strokeWidth="3"
           strokeLinecap="round"
         />
         <path
-          d="M318 291.5 Q420 289.5 522 291.5"
+          d="M334 303 Q428 301 522 303"
           stroke={INK}
           strokeWidth="1.1"
           opacity="0.4"
           fill="none"
         />
         {/* tape roll + crumpled paper on the bench */}
-        <circle cx="521" cy="281" r="6.5" fill={PAPER} stroke={INK} strokeWidth="2" />
-        <circle cx="521" cy="281" r="2.2" fill="none" stroke={INK} strokeWidth="1.2" />
+        <circle cx="524" cy="293" r="6.5" fill={PAPER} stroke={INK} strokeWidth="2" />
+        <circle cx="524" cy="293" r="2.2" fill="none" stroke={INK} strokeWidth="1.2" />
         <path
-          d="M330 285 Q333 281 337 284 Q341 281 343 285 Q347 284 345 288 Q338 290 334 288 Q330 289 330 285 Z"
+          d="M336 297 Q339 293 343 296 Q347 293 349 297 Q353 296 351 300 Q344 302 340 300 Q336 301 336 297 Z"
           fill={PAPER}
           stroke={INK}
           strokeWidth="1.4"
@@ -1023,17 +1023,17 @@ function SceneArt({ uid }: { uid: string }) {
       </g>
 
       {/* bench work-boxes that slide along the bench into the row */}
-      <g transform="translate(390 288)">
+      <g transform="translate(400 300)">
         <g className="pk-item pk-item--bb1">
           <PackBox />
         </g>
       </g>
-      <g transform="translate(495 288)">
+      <g transform="translate(505 300)">
         <g className="pk-item pk-item--bb2">
           <PackBox />
         </g>
       </g>
-      <g transform="translate(390 288)">
+      <g transform="translate(400 300)">
         <g className="pk-item pk-item--bb3">
           <PackBox />
         </g>
