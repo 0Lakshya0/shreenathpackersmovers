@@ -2,348 +2,392 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   ArrowUpRight,
+  Boxes,
+  Building2,
+  Car,
   Check,
   DoorOpen,
-  Globe,
-  MessageCircle,
-  Package,
+  Globe2,
+  MapPin,
+  PackageCheck,
   Phone,
   ShieldCheck,
   Truck,
+  UserRoundCheck,
 } from "lucide-react";
+import { QuoteForm } from "@/components/quote-form";
 import { Reveal } from "@/components/reveal";
-import { PHONE, PHONE_LINK, PROCESS_STEPS, SERVICES } from "@/lib/site-data";
+import { TrackingDashboard } from "@/components/tracking-dashboard";
+import { FAQ_ITEMS, PHONE, PHONE_LINK, SERVICES, WHATSAPP } from "@/lib/site-data";
 import movingTeam from "@/assets/moving-team.jpg";
-import packing from "@/assets/careful-packing.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Shree Nath Packers & Movers, Indore | Thoughtful Moves, Wherever Life Takes You",
+        title: "Shree Nath Packers & Movers | Premium Shifting from Indore",
       },
       {
         name: "description",
         content:
-          "Plan a thoughtful home or office move with Shree Nath Packers & Movers in Indore. Explore local shifting, domestic relocation and careful packing.",
+          "Plan a household, office, vehicle or domestic move with Shree Nath Packers & Movers. Based at Dewas Naka, Indore, with moving enquiries across India.",
       },
       { property: "og:title", content: "Shree Nath Packers & Movers | Indore" },
       {
         property: "og:description",
-        content: "Careful packing. Considered moves. Local and domestic relocation from Indore.",
+        content:
+          "Premium shifting, thoughtfully planned. Local moves in Indore and domestic relocation across India.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#f7f5ef" },
+      { name: "theme-color", content: "#f4f5f2" },
     ],
   }),
   component: HomePage,
 });
 
+const serviceBadges = [
+  {
+    icon: Car,
+    title: "All Vehicles Available",
+    detail: "Vehicle and carrier options confirmed by route.",
+  },
+  {
+    icon: Truck,
+    title: "All Types of Loaders",
+    detail: "Loading support planned around your move.",
+  },
+  {
+    icon: PackageCheck,
+    title: "Premium Multi-Layer Packing Material",
+    detail: "Packing combinations matched to your belongings.",
+  },
+];
+
+const trustFeatures = [
+  {
+    icon: ShieldCheck,
+    title: "Verified Fleet & Drivers",
+    detail: "Vehicle and driver details confirmed during move planning.",
+  },
+  {
+    icon: PackageCheck,
+    title: "100% Transit Insured Safety",
+    detail: "Coverage, eligibility and policy terms confirmed before booking.",
+  },
+  {
+    icon: UserRoundCheck,
+    title: "Trained & Professional Labour Crew",
+    detail: "Crew and handling requirements planned around your shipment.",
+  },
+  {
+    icon: DoorOpen,
+    title: "Guaranteed Door-to-Door Delivery",
+    detail: "Delivery scope and timing confirmed for the agreed route.",
+  },
+];
+
+const journeySteps = [
+  {
+    number: "01",
+    title: "Share the route",
+    text: "Tell us where you’re moving from and to, and what needs to travel.",
+    icon: Globe2,
+  },
+  {
+    number: "02",
+    title: "Shape the plan",
+    text: "Discuss packing, vehicle options, timing and the services you need.",
+    icon: Boxes,
+  },
+  {
+    number: "03",
+    title: "Move with clarity",
+    text: "Confirm the written scope and terms before the moving day is planned.",
+    icon: Building2,
+  },
+];
+
 function HomePage() {
   return (
-    <main className="page-home">
-      <section className="hero hero--home" id="home">
-        <div className="hero__grain" aria-hidden="true" />
-        <div className="container hero__grid">
-          <div className="hero__copy">
-            <p className="eyebrow hero__eyebrow">
-              <span className="eyebrow__rule" /> A more thoughtful move begins here
+    <main className="enterprise-home">
+      <section className="enterprise-hero" id="home">
+        <div className="enterprise-hero__orb enterprise-hero__orb--one" aria-hidden="true" />
+        <div className="enterprise-hero__orb enterprise-hero__orb--two" aria-hidden="true" />
+        <div className="container enterprise-hero__grid">
+          <Reveal className="enterprise-hero__copy">
+            <p className="enterprise-eyebrow">
+              <span className="enterprise-eyebrow__signal" /> DEWAS NAKA, INDORE <i /> PAN-INDIA
+              REACH
             </p>
-            <h1 className="hero__title">
-              Moving day,
-              <em>made thoughtful.</em>
+            <h1>
+              <span className="enterprise-hero__brandline">Shree Nath Packers &amp; Movers:</span>
+              <span>Premium Shifting,</span>
+              <em>Zero Stress.</em>
             </h1>
-            <p className="hero__lead">
-              From the first carefully packed box to the last handover, move with a team that treats
-              every belonging with care.
+            <p className="enterprise-hero__lead">
+              Thoughtful household, office and vehicle moves—planned from Dewas Naka, Indore to
+              destinations across India.
             </p>
-            <div className="hero__actions">
-              <Link className="button button--primary" to="/contact">
-                Plan your move <ArrowUpRight size={17} aria-hidden="true" />
-              </Link>
-              <a className="hero-call" href={PHONE_LINK}>
-                <span className="hero-call__icon">
-                  <Phone size={16} aria-hidden="true" />
-                </span>
-                <span>
-                  <small>Prefer a conversation?</small>
-                  <strong>Call +91 {PHONE}</strong>
-                </span>
-              </a>
-            </div>
-            <div className="hero__note">
-              <span className="hero__note-icon">
-                <Check size={13} aria-hidden="true" />
-              </span>
-              <span>Home · office · vehicle moves</span>
-              <span className="hero__note-divider" />
-              <span>Based in Indore</span>
-            </div>
-          </div>
 
-          <div className="hero__visual">
-            <figure className="hero__frame">
+            <div className="enterprise-hero__badges" aria-label="Moving service options">
+              {serviceBadges.map(({ icon: Icon, title, detail }, index) => (
+                <div className="enterprise-badge" key={title}>
+                  <span className="enterprise-badge__icon">
+                    <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
+                  </span>
+                  <span>
+                    <strong>{title}</strong>
+                    <small>{detail}</small>
+                  </span>
+                  <Check className="enterprise-badge__check" size={15} aria-hidden="true" />
+                  <span className="sr-only">Service availability is confirmed for your route.</span>
+                  <span className="enterprise-badge__index">0{index + 1}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="enterprise-hero__actions">
+              <a className="enterprise-button enterprise-button--dark" href={PHONE_LINK}>
+                <Phone size={17} aria-hidden="true" /> Call {PHONE}
+              </a>
+              <Link className="enterprise-text-link" to="/services">
+                Explore all services <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+            <p className="enterprise-hero__reassurance">
+              <Check size={15} aria-hidden="true" /> Free enquiry · No obligation to book
+            </p>
+          </Reveal>
+
+          <Reveal className="enterprise-hero__visual" delay={100}>
+            <div className="enterprise-hero__image-panel">
               <img
                 src={movingTeam}
                 alt="A moving team carefully loading wrapped furniture and boxes into a truck"
                 width={1536}
                 height={1024}
                 fetchPriority="high"
-                className="hero__image"
               />
-              <div className="hero__image-shade" aria-hidden="true" />
-              <div className="hero__location">
-                <Globe size={14} aria-hidden="true" />
-                <span>INDORE · MOVES ACROSS INDIA</span>
-              </div>
-              <div className="hero__photo-card">
-                <span className="hero__photo-icon">
-                  <ShieldCheck size={22} strokeWidth={1.6} aria-hidden="true" />
+              <div className="enterprise-hero__image-overlay" aria-hidden="true" />
+              <div className="enterprise-hero__image-label">
+                <span className="enterprise-hero__image-label-icon">
+                  <MapPin size={16} aria-hidden="true" />
                 </span>
-                <span className="hero__photo-copy">
-                  <strong>Care in every detail</strong>
-                  <small>Packing · handling · delivery</small>
+                <span>
+                  <small>STARTING FROM</small>
+                  <strong>Dewas Naka, Indore</strong>
                 </span>
-                <ArrowUpRight size={17} aria-hidden="true" />
               </div>
-            </figure>
-            <div className="hero__image-footnote">
-              <span>01</span>
-              <span className="hero__image-footnote-line" />
-              <span>One careful move at a time</span>
+              <div className="enterprise-hero__image-caption">
+                <span className="enterprise-hero__caption-dot" />
+                <span>HOME · OFFICE · DOMESTIC</span>
+                <span className="enterprise-hero__caption-line" />
+                <span>01 / 08</span>
+              </div>
             </div>
-            <span className="hero__seal" aria-hidden="true">
+            <div className="enterprise-hero__form-wrap">
+              <QuoteForm variant="hero" />
+            </div>
+            <div className="enterprise-hero__route-stamp" aria-hidden="true">
               <span>SN</span>
-              <small>
-                MOVE
-                <br />
-                WITH CARE
-              </small>
-            </span>
-          </div>
+              <small>MOVE WITH CARE</small>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="feature-strip" aria-label="Moving services at a glance">
-        <div className="container feature-grid">
-          {[
-            { icon: Package, title: "Thoughtful packing", detail: "Care for the things you value" },
-            { icon: DoorOpen, title: "Door-to-door support", detail: "From pickup to arrival" },
-            { icon: Globe, title: "Local & domestic", detail: "From Indore across India" },
-            { icon: Truck, title: "Moves that fit you", detail: "Home, office & vehicle" },
-          ].map(({ icon: Icon, title, detail }, index) => (
-            <Reveal className="feature-reveal" delay={index * 70} key={title}>
-              <div className="feature-item">
-                <span className="feature-item__icon">
-                  <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
-                </span>
-                <span className="feature-item__copy">
-                  <strong>{title}</strong>
-                  <small>{detail}</small>
-                </span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="section home-services" id="services">
+      <section className="enterprise-trust" aria-label="Moving service commitments">
         <div className="container">
-          <Reveal className="section-heading">
+          <div className="enterprise-trust__heading">
+            <span>THE SHREE NATH STANDARD</span>
+            <span className="enterprise-trust__heading-rule" />
+            <p>Careful planning, with the important details made clear.</p>
+          </div>
+          <div className="enterprise-trust__grid">
+            {trustFeatures.map(({ icon: Icon, title, detail }, index) => (
+              <Reveal className="enterprise-trust__reveal" delay={index * 65} key={title}>
+                <article className="enterprise-trust-card">
+                  <span className="enterprise-trust-card__index">0{index + 1}</span>
+                  <span className="enterprise-trust-card__icon">
+                    <Icon size={22} strokeWidth={1.7} aria-hidden="true" />
+                  </span>
+                  <h2>{title}</h2>
+                  <p>{detail}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+          <p className="enterprise-trust__note">
+            Insurance coverage, route availability and delivery commitments are subject to written
+            confirmation and the agreed service terms.
+          </p>
+        </div>
+      </section>
+
+      <section className="enterprise-services section" id="services">
+        <div className="container">
+          <Reveal className="enterprise-section-heading">
             <div>
-              <p className="eyebrow">
-                <span className="eyebrow__rule" /> WHAT WE DO
+              <p className="enterprise-eyebrow enterprise-eyebrow--muted">
+                <span className="enterprise-eyebrow__signal" /> OUR CAPABILITIES
               </p>
               <h2>
-                Every move has its own <em>shape.</em>
+                Eight ways to move <em>what matters.</em>
               </h2>
             </div>
-            <div className="section-heading__side">
-              <p className="section-heading__intro">
-                Tell us what you’re moving and where you’re headed. We’ll help you find the right
-                way to get there.
+            <div className="enterprise-section-heading__aside">
+              <p>
+                From one careful household move to a coordinated office relocation, start with the
+                service that fits your plans.
               </p>
-              <Link className="text-link" to="/services">
-                Explore all services <ArrowRight size={16} aria-hidden="true" />
-              </Link>
+              <span>INDORE · ACROSS INDIA</span>
             </div>
           </Reveal>
 
-          <div className="service-grid">
+          <div className="enterprise-service-grid">
             {SERVICES.map(({ slug, number, icon: Icon, category, title, summary }, index) => (
-              <Reveal className="service-reveal" delay={index * 90} key={slug}>
-                <article className="service-card">
-                  <div className="service-card__top">
-                    <span className="service-card__icon">
-                      <Icon size={23} strokeWidth={1.6} aria-hidden="true" />
+              <Reveal className="enterprise-service-reveal" delay={(index % 4) * 55} key={slug}>
+                <article className="enterprise-service-card">
+                  <div className="enterprise-service-card__top">
+                    <span className="enterprise-service-card__icon">
+                      <Icon size={23} strokeWidth={1.7} aria-hidden="true" />
                     </span>
-                    <span className="service-card__number">{number}</span>
+                    <span className="enterprise-service-card__number">{number}</span>
                   </div>
-                  <p className="service-card__label">{category}</p>
+                  <p className="enterprise-service-card__category">{category}</p>
                   <h3>{title}</h3>
-                  <p className="service-card__description">{summary}</p>
-                  <Link className="service-card__link" to="/services" hash={slug}>
-                    Explore service <ArrowUpRight size={16} aria-hidden="true" />
-                  </Link>
+                  <p className="enterprise-service-card__summary">{summary}</p>
+                  <a
+                    className="enterprise-service-card__action"
+                    href={WHATSAPP(
+                      `Hello, I would like to enquire about ${title}. Please share the options for my route.`,
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Enquire now about ${title} on WhatsApp`}
+                  >
+                    Enquire now <ArrowUpRight size={16} aria-hidden="true" />
+                  </a>
                 </article>
               </Reveal>
             ))}
           </div>
+          <p className="enterprise-services__footnote">
+            Service availability, carrier type and timing vary by route and are confirmed during
+            your enquiry.
+          </p>
         </div>
       </section>
 
-      <section className="approach-section home-approach" id="approach">
-        <div className="container approach-grid">
-          <Reveal className="approach-photo-wrap">
-            <figure className="approach-photo">
-              <img
-                src={packing}
-                alt="A mover carefully wrapping a chair in protective packing material"
-                width={1024}
-                height={1024}
-                loading="lazy"
-              />
-              <figcaption className="approach-photo__caption">
-                <span className="approach-photo__caption-mark">
-                  <Package size={19} strokeWidth={1.5} aria-hidden="true" />
-                </span>
-                <span>
-                  <small>THE SHREE NATH APPROACH</small>
-                  <strong>Care is in the details.</strong>
-                </span>
-              </figcaption>
-              <span className="approach-photo__index" aria-hidden="true">
-                A MORE CONSIDERED MOVE
-              </span>
-            </figure>
-          </Reveal>
-
-          <Reveal className="approach-copy">
-            <p className="eyebrow eyebrow--light">
-              <span className="eyebrow__rule" /> THE WAY WE MOVE
+      <section className="enterprise-journey">
+        <div className="container enterprise-journey__inner">
+          <Reveal className="enterprise-journey__heading">
+            <p className="enterprise-eyebrow enterprise-eyebrow--light">
+              <span className="enterprise-eyebrow__signal" /> A MORE CONSIDERED MOVE
             </p>
             <h2>
-              It’s not just <em>what</em> you move. It’s how.
+              Clear steps. <em>Human support.</em>
             </h2>
-            <p className="approach-copy__intro">
-              A home is made of more than furniture. We take time to understand your route, your
-              belongings and the kind of support your move calls for.
-            </p>
-            <ul className="approach-list">
-              <li>
-                <span>
-                  <Check size={14} aria-hidden="true" />
-                </span>
-                <p>Plans shaped around your route and the things you’re moving</p>
-              </li>
-              <li>
-                <span>
-                  <Check size={14} aria-hidden="true" />
-                </span>
-                <p>Packing materials selected with your belongings in mind</p>
-              </li>
-              <li>
-                <span>
-                  <Check size={14} aria-hidden="true" />
-                </span>
-                <p>Local moves in Indore and domestic relocations across India</p>
-              </li>
-              <li>
-                <span>
-                  <Check size={14} aria-hidden="true" />
-                </span>
-                <p>Clear answers before you decide what’s right for you</p>
-              </li>
-            </ul>
-            <Link className="approach-link" to="/about">
-              Get to know our approach <ArrowRight size={17} aria-hidden="true" />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section process-section" id="process">
-        <div className="container">
-          <Reveal className="section-heading section-heading--center">
-            <div>
-              <p className="eyebrow eyebrow--center">
-                <span className="eyebrow__rule" /> THE JOURNEY <span className="eyebrow__rule" />
-              </p>
-              <h2>
-                Four steps to a <em>fresh start.</em>
-              </h2>
-            </div>
-            <p className="section-heading__intro">
-              A simple conversation first. A considered plan for the road ahead.
-            </p>
-          </Reveal>
-
-          <div className="process-grid">
-            {PROCESS_STEPS.map(({ number, title, description }, index) => (
-              <Reveal className="process-reveal" delay={index * 90} key={number}>
-                <article className="process-step">
-                  <div className="process-step__top">
-                    <span className="process-step__number">STEP {number}</span>
-                    <span className="process-step__icon">
-                      {index === 0 ? (
-                        <Phone size={20} strokeWidth={1.6} aria-hidden="true" />
-                      ) : index === 1 ? (
-                        <Package size={20} strokeWidth={1.6} aria-hidden="true" />
-                      ) : index === 2 ? (
-                        <Truck size={20} strokeWidth={1.6} aria-hidden="true" />
-                      ) : (
-                        <DoorOpen size={20} strokeWidth={1.6} aria-hidden="true" />
-                      )}
-                    </span>
-                  </div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-
-          <div className="home-journey-cta">
-            <span>
-              <strong>Start with what you know.</strong>
-              <small>We can help you work out the rest together.</small>
-            </span>
-            <Link className="button button--outline-light" to="/contact">
-              Get a free estimate <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="home-faq section">
-        <div className="container home-faq__inner">
-          <Reveal className="home-faq__copy">
-            <p className="eyebrow">
-              <span className="eyebrow__rule" /> BEFORE YOU MOVE
-            </p>
-            <h2>
-              The right answers make <em>all the difference.</em>
-            </h2>
-            <p>
-              Know what goes into an estimate, what to ask about packing and how to get started.
-            </p>
-            <Link className="text-link" to="/faq">
-              Browse all FAQs <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </Reveal>
-          <Reveal className="home-faq__callout" delay={100}>
-            <span className="home-faq__icon">
-              <MessageCircle size={23} strokeWidth={1.5} aria-hidden="true" />
-            </span>
-            <p className="home-faq__quote">
-              “No two moves are quite the same. Your questions deserve a real conversation.”
-            </p>
-            <a href={PHONE_LINK}>
-              Speak with our team <span>+91 {PHONE}</span>
-              <ArrowUpRight size={16} aria-hidden="true" />
+            <p>A move has enough moving parts. We make the first conversation straightforward.</p>
+            <a href={PHONE_LINK} className="enterprise-journey__phone">
+              <Phone size={16} aria-hidden="true" /> Talk to a move coordinator
             </a>
           </Reveal>
+          <div className="enterprise-journey__steps">
+            {journeySteps.map(({ number, title, text, icon: Icon }, index) => (
+              <Reveal className="enterprise-journey__step-wrap" delay={index * 90} key={number}>
+                <article className="enterprise-journey__step">
+                  <div className="enterprise-journey__step-top">
+                    <span>{number}</span>
+                    <Icon size={21} strokeWidth={1.7} aria-hidden="true" />
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="enterprise-tracking section" id="tracking">
+        <div className="container">
+          <Reveal className="enterprise-section-heading enterprise-section-heading--tracking">
+            <div>
+              <p className="enterprise-eyebrow enterprise-eyebrow--muted">
+                <span className="enterprise-eyebrow__signal" /> SHIPMENT VISIBILITY
+              </p>
+              <h2>
+                A route in motion. <em>Updates at a glance.</em>
+              </h2>
+            </div>
+            <p className="enterprise-section-heading__tracking-note">
+              See how a shipment journey could look from pickup to delivery.
+            </p>
+          </Reveal>
+          <Reveal delay={90}>
+            <TrackingDashboard />
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="enterprise-faq section" id="faq">
+        <div className="container enterprise-faq__grid">
+          <Reveal className="enterprise-faq__intro">
+            <p className="enterprise-eyebrow enterprise-eyebrow--muted">
+              <span className="enterprise-eyebrow__signal" /> CLEAR ANSWERS, FIRST
+            </p>
+            <h2>
+              The details matter. <em>Ask anything.</em>
+            </h2>
+            <p>Straightforward information on protection, packing, routes and shipment updates.</p>
+            <Link className="enterprise-text-link" to="/contact">
+              Speak with our team <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </Reveal>
+
+          <div className="enterprise-faq__list">
+            {FAQ_ITEMS.map(({ question, answer }, index) => (
+              <details className="enterprise-faq-item" key={question} open={index === 0}>
+                <summary>
+                  <span className="enterprise-faq-item__number">0{index + 1}</span>
+                  <span>{question}</span>
+                  <span className="enterprise-faq-item__toggle" aria-hidden="true">
+                    <ArrowRight size={16} />
+                  </span>
+                </summary>
+                <div className="enterprise-faq-item__answer">
+                  <p>{answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="enterprise-final-cta">
+        <div className="container enterprise-final-cta__inner">
+          <div>
+            <p className="enterprise-eyebrow enterprise-eyebrow--light">
+              <span className="enterprise-eyebrow__signal" /> READY WHEN YOU ARE
+            </p>
+            <h2>
+              Your next address starts <em>with a conversation.</em>
+            </h2>
+            <p>Tell us the route. We’ll help you understand the next step.</p>
+          </div>
+          <div className="enterprise-final-cta__actions">
+            <a className="enterprise-button enterprise-button--gold" href={PHONE_LINK}>
+              <Phone size={17} aria-hidden="true" /> Call {PHONE}
+            </a>
+            <Link className="enterprise-final-cta__link" to="/contact">
+              Share your move details <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+          <span className="enterprise-final-cta__watermark" aria-hidden="true">
+            SN
+          </span>
         </div>
       </section>
     </main>

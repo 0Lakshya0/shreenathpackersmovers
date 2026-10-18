@@ -10,7 +10,7 @@ export const Route = createFileRoute("/faq")({
       {
         name: "description",
         content:
-          "Get clear answers about moving estimates, packing materials, local shifting, domestic routes and vehicle transport with Shree Nath Packers & Movers.",
+          "Get clear answers about transit insurance terms, packing materials, domestic moving routes and shipment tracking with Shree Nath Packers & Movers.",
       },
     ],
   }),

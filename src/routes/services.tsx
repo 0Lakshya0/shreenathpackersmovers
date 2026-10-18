@@ -20,7 +20,7 @@ export const Route = createFileRoute("/services")({
       {
         name: "description",
         content:
-          "Explore home shifting, office relocation, vehicle transport and loading services with Shree Nath Packers & Movers in Indore.",
+          "Explore household and office relocation, vehicle transport, local and domestic shifting, storage, packing material and loading support in Indore.",
       },
     ],
   }),

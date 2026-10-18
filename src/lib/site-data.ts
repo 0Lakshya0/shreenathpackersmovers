@@ -1,4 +1,4 @@
-import { Boxes, Building2, Car, Home } from "lucide-react";
+import { Boxes, Building2, Car, Globe, Home, MapPin, Package, Warehouse } from "lucide-react";
 
 export const PHONE = "7000568402";
 export const EMAIL = "shreenathpackermovers@gmail.com";
@@ -9,67 +9,123 @@ export const WHATSAPP = (message: string) =>
 
 export const SERVICES = [
   {
-    slug: "home-shifting",
+    slug: "household-shifting",
     icon: Home,
     number: "01",
-    category: "FOR THE HOME",
-    title: "Home shifting",
-    summary:
-      "From a few treasured pieces to a whole household, plan a home move around what matters to you.",
+    category: "HOME MOVES",
+    title: "Household Shifting",
+    summary: "Complete home relocation with multi-layer safe packing.",
     detail:
-      "A home move has a lot of small details. Share your pickup, destination and the things you’re moving, and we can talk through a plan that fits your household.",
+      "A complete home relocation, planned around your route, belongings and preferred moving date, with multi-layer packing options for the things that matter most.",
     includes: [
       "Local moves within Indore and domestic destinations",
-      "Packing and handling options suited to your belongings",
-      "Door-to-door support from pickup to delivery",
+      "Multi-layer packing options selected for your belongings",
+      "Pickup-to-delivery arrangements discussed in advance",
     ],
   },
   {
-    slug: "office-relocation",
+    slug: "office-corporate-relocation",
     icon: Building2,
     number: "02",
-    category: "FOR THE WORKPLACE",
-    title: "Office relocation",
-    summary:
-      "Move desks, equipment and everyday essentials with thoughtful packing and an organised handover.",
+    category: "BUSINESS MOVES",
+    title: "Office & Corporate Relocation",
+    summary: "Zero-downtime shifting for IT equipment & office assets.",
     detail:
-      "Whether you’re moving a few work essentials or planning a larger office relocation, tell us what needs to move and where the new workspace is.",
+      "A considered relocation for workspaces, IT equipment and office assets. We discuss access, inventory and timing so your team can plan around the move.",
     includes: [
-      "A move plan discussed around your workspace and route",
-      "Packing options for furniture, cartons and office essentials",
-      "Loading, transport and unloading arrangements",
+      "Move planning shaped around your workspace and route",
+      "Packing options for equipment, furniture and office essentials",
+      "Timing and handover coordinated with your team",
     ],
   },
   {
-    slug: "vehicle-transport",
+    slug: "vehicle-transportation",
     icon: Car,
     number: "03",
-    category: "FOR THE OPEN ROAD",
-    title: "Vehicle transport",
-    summary:
-      "Ask about adding car or bike transportation to your move. Availability depends on your route.",
+    category: "VEHICLE MOVES",
+    title: "Vehicle Transportation",
+    summary: "Safe car & bike transport across India using closed carriers.",
     detail:
-      "Taking a car or bike along? Share the vehicle type and your route so our team can discuss whether transport can be arranged for your move.",
+      "Taking a car or bike along? Share your vehicle type and route so our team can confirm carrier options, availability and the terms for your move.",
     includes: [
       "Car and bike transportation enquiries",
-      "Route and schedule discussion before booking",
-      "Clear confirmation of applicable options and terms",
+      "Closed-carrier options discussed for eligible routes",
+      "Route, schedule and service terms confirmed before booking",
+    ],
+  },
+  {
+    slug: "local-shifting-indore",
+    icon: MapPin,
+    number: "04",
+    category: "INDORE · LOCAL",
+    title: "Local Shifting within Indore",
+    summary: "Fast, budget-friendly same-day moves in Indore.",
+    detail:
+      "Moving across Indore? Tell us your pickup, destination and what needs to move. We’ll discuss a practical local plan and check date availability.",
+    includes: [
+      "Moves within Indore and nearby areas",
+      "Same-day availability checked when requested",
+      "Packing, loading and delivery options to discuss",
+    ],
+  },
+  {
+    slug: "domestic-shifting",
+    icon: Globe,
+    number: "05",
+    category: "ACROSS INDIA",
+    title: "Domestic Shifting",
+    summary: "Inter-city relocation spanning all over India.",
+    detail:
+      "Plan an inter-city move from Indore to your next address. Route coverage, transit arrangements and timing are confirmed with you before booking.",
+    includes: [
+      "Inter-city relocation enquiries across India",
+      "Route and schedule planning around your move",
+      "Clear confirmation of applicable services and terms",
+    ],
+  },
+  {
+    slug: "warehousing-storage",
+    icon: Warehouse,
+    number: "06",
+    category: "STORAGE",
+    title: "Warehousing & Storage",
+    summary: "Secure, CCTV-monitored short/long term storage solutions in Indore.",
+    detail:
+      "Need a little more time between addresses? Ask us about short- or long-term storage options in Indore, including facility access, availability and terms.",
+    includes: [
+      "Short- and long-term storage enquiries",
+      "CCTV-monitored facility options to discuss",
+      "Space, access and storage terms confirmed in advance",
+    ],
+  },
+  {
+    slug: "premium-packing-material",
+    icon: Package,
+    number: "07",
+    category: "PACKING",
+    title: "Premium Packing Material",
+    summary: "Heavy-duty bubble wrap, corrugated sheets, & boxes.",
+    detail:
+      "Packing materials are selected around the item and the journey. Ask about heavy-duty bubble wrap, corrugated sheets, stretch film and sturdy cartons.",
+    includes: [
+      "Heavy-duty bubble wrap and corrugated sheets",
+      "Cartons and boxes in suitable sizes",
+      "Material combinations discussed for delicate items",
     ],
   },
   {
     slug: "loading-unloading",
     icon: Boxes,
-    number: "04",
-    category: "FOR THE HEAVY LIFTING",
-    title: "Loading & unloading",
-    summary:
-      "Bring in an extra pair of careful hands for furniture, cartons and the larger things in life.",
+    number: "08",
+    category: "MOVING SUPPORT",
+    title: "Professional Loading & Unloading",
+    summary: "Expert labor crew for dismantling, lifting, and re-assembling.",
     detail:
-      "If you need help with the heavy lifting, tell us what needs to be handled, where it is going and what kind of support you’re looking for.",
+      "Discuss the items, access and support you need. Loading and unloading help can include dismantling, lifting and re-assembling as agreed for your move.",
     includes: [
       "Help with furniture, cartons and larger belongings",
-      "Support at pickup and/or destination, as discussed",
-      "A plan based on the items and access at each location",
+      "Dismantling and re-assembly discussed in advance",
+      "Crew and timing planned around your requirements",
     ],
   },
 ];
@@ -100,51 +156,27 @@ export const PROCESS_STEPS = [
 
 export const FAQ_ITEMS = [
   {
-    category: "Planning your move",
-    question: "Which areas do you serve?",
+    category: "Transit protection",
+    question: "What does transit insurance cover?",
     answer:
-      "Shree Nath Packers & Movers is based in Indore and arranges local moves in the city as well as domestic relocations across India. Share your pickup and destination with us to discuss your route.",
+      "Transit cover depends on the policy, declared value, route, exclusions and written terms. Ask our team for the applicable coverage details before confirming a booking; cover should never be assumed without that confirmation.",
   },
   {
-    category: "Planning your move",
-    question: "How is the moving estimate worked out?",
+    category: "Packing standards",
+    question: "Which packing materials are used for a move?",
     answer:
-      "The estimate depends on details such as your route, the volume of belongings, packing requirements and the services you choose. Send us a few details for a free, no-obligation conversation.",
+      "Depending on the item and route, packing may use heavy-duty bubble wrap, corrugated sheets, stretch film and sturdy cartons. We’ll discuss the appropriate combination for your belongings before the move.",
   },
   {
-    category: "Planning your move",
-    question: "What details should I share to get started?",
+    category: "Domestic network",
+    question: "Where do you provide domestic shifting?",
     answer:
-      "Your pickup and destination, approximate home or office size, preferred moving date and any special items are a useful place to start. You can send these through the enquiry form or discuss them by phone.",
+      "Shree Nath Packers & Movers is based at Dewas Naka in Indore and arranges local moves as well as inter-city relocation enquiries across India. Route availability, timing and services are confirmed before booking.",
   },
   {
-    category: "Packing & handling",
-    question: "What packing materials are used?",
+    category: "Shipment updates",
+    question: "How can I track my shipment?",
     answer:
-      "Packing materials can include cartons, corrugated sheets, stretch film and bubble wrap. The right combination depends on the items being moved—ask our team about anything especially delicate.",
-  },
-  {
-    category: "Packing & handling",
-    question: "Can you move a car or a bike too?",
-    answer:
-      "Vehicle transportation can be discussed as part of your move. Availability depends on the destination and schedule, so please share your route when you enquire.",
-  },
-  {
-    category: "Packing & handling",
-    question: "Is transit insurance available?",
-    answer:
-      "Please ask our team about the transit protection options available for your route, including coverage and terms, before confirming a booking.",
-  },
-  {
-    category: "Booking & communication",
-    question: "How do I request a quote?",
-    answer:
-      "Use the enquiry form to share your route and move details. It opens a pre-filled message in WhatsApp so you can review it and send it to our team. You can also call us directly.",
-  },
-  {
-    category: "Booking & communication",
-    question: "Do I have to book after getting an estimate?",
-    answer:
-      "No. The estimate request is a conversation, not a booking. Ask questions, review the details and decide whether you’d like to proceed.",
+      "The tracking panel on this website is a clearly labelled sample, not live consignment data. For an actual move update, contact our team by phone or WhatsApp with the booking details you were given.",
   },
 ];
