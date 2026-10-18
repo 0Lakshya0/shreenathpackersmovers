@@ -1,36 +1,204 @@
-import { useEffect, useRef } from "react";
+type SceneGroupProps = {
+  className: string;
+  transform?: string;
+};
+
+function Carton({ className, transform }: SceneGroupProps) {
+  return (
+    <g
+      className={className}
+      transform={transform}
+      fill="#fff"
+      stroke="#202a25"
+      strokeWidth="2.5"
+      strokeLinejoin="round"
+    >
+      <path d="M0 9h42v29H0z" />
+      <path d="m0 9 21-9 21 9-21 10z" fill="#f0f1ed" />
+      <path d="M21 19v19m-7-19h14" fill="none" />
+      <path d="M17 5h9" stroke="#a97a4c" strokeWidth="2" />
+    </g>
+  );
+}
+
+function Mover({ transform, porter = false }: { transform: string; porter?: boolean }) {
+  return (
+    <g
+      className={porter ? "move-scene__mover move-scene__mover--porter" : "move-scene__mover"}
+      transform={transform}
+    >
+      <g className="move-scene__character-bob">
+        <ellipse cx="0" cy="283" rx="22" ry="4" fill="#202a25" opacity="0.12" />
+
+        {porter ? (
+          <>
+            <g
+              className="move-scene__still-legs"
+              fill="none"
+              stroke="#202a25"
+              strokeLinecap="round"
+            >
+              <path d="M-10 218l-8 52m18-52 8 52" strokeWidth="7" />
+              <path d="m-18 270-11 5m37-5 11 4" strokeWidth="5" />
+            </g>
+            <g className="move-scene__walk-legs" fill="none" stroke="#202a25" strokeLinecap="round">
+              <path className="move-scene__step" d="M-10 218l-8 52" strokeWidth="7" />
+              <path
+                className="move-scene__step move-scene__step--alternate"
+                d="M8 218l8 52"
+                strokeWidth="7"
+              />
+              <path d="m-18 270-11 5m26-5 11 4" strokeWidth="5" />
+            </g>
+          </>
+        ) : (
+          <g fill="none" stroke="#202a25" strokeLinecap="round">
+            <path d="M-10 218l-8 52m18-52 8 52" strokeWidth="7" />
+            <path d="m-18 270-11 5m37-5 11 4" strokeWidth="5" />
+          </g>
+        )}
+
+        <path
+          d="M-16 194q16-10 32 0l5 33q-20 12-42 0z"
+          fill="#fff"
+          stroke="#202a25"
+          strokeWidth="3.5"
+          strokeLinejoin="round"
+        />
+        <path d="M-18 206h38m-37 8h36" fill="none" stroke="#202a25" strokeWidth="2.5" />
+        <path d="M-11 198v26m23-26v26" stroke="#a97a4c" strokeWidth="2" />
+
+        {porter && <Carton className="move-scene__carried-box" transform="translate(-18 181)" />}
+
+        {porter ? (
+          <>
+            <g
+              className="move-scene__free-arms"
+              fill="none"
+              stroke="#202a25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M-13 199q-15 6-21 22l-11-5m59-17q15 5 21 21l11-5" strokeWidth="6" />
+              <circle cx="-45" cy="216" r="4" fill="#fff" strokeWidth="2" />
+              <circle cx="45" cy="215" r="4" fill="#fff" strokeWidth="2" />
+            </g>
+            <g
+              className="move-scene__carry-arms"
+              fill="none"
+              stroke="#202a25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M-13 199q10-4 18 3l9 8m-1-11q-10-4-18 3l-9 8" strokeWidth="6" />
+              <circle cx="14" cy="210" r="4" fill="#fff" strokeWidth="2" />
+              <circle cx="-14" cy="210" r="4" fill="#fff" strokeWidth="2" />
+            </g>
+          </>
+        ) : (
+          <g fill="none" stroke="#202a25" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M-13 199q-15 6-21 22l-11-5m59-17q15 5 21 21l11-5" strokeWidth="6" />
+            <circle cx="-45" cy="216" r="4" fill="#fff" strokeWidth="2" />
+            <circle cx="45" cy="215" r="4" fill="#fff" strokeWidth="2" />
+          </g>
+        )}
+
+        <circle cx="0" cy="171" r="18" fill="#fff" stroke="#202a25" strokeWidth="3.5" />
+        <path d="M-17 169q2-21 20-20 15 1 16 17-11-8-21-8-6 8-15 11z" fill="#202a25" />
+        <path d="M-8 173v2m16-2v2" stroke="#202a25" strokeWidth="3" strokeLinecap="round" />
+        <path
+          d="M-5 181q5 4 10 0"
+          fill="none"
+          stroke="#202a25"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path d="M-17 195q17-10 34 0" fill="none" stroke="#202a25" strokeWidth="2" />
+      </g>
+    </g>
+  );
+}
+
+function Smoke() {
+  const puffs = [
+    { name: "one", x: 0, y: 0 },
+    { name: "two", x: 8, y: -4 },
+    { name: "three", x: -6, y: -8 },
+  ];
+
+  return (
+    <g className="move-scene__smoke">
+      {puffs.map(({ name, x, y }) => (
+        <g
+          key={name}
+          className={`move-scene__smoke-cloud move-scene__smoke-cloud--${name}`}
+          transform={`translate(${x} ${y})`}
+        >
+          <path
+            d="M0 9c-7 0-8-8-2-10 2-7 13-7 16 0 7 0 8 10 0 10z"
+            fill="#fff"
+            stroke="#202a25"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+          <circle cx="6" cy="4" r="1.1" fill="#202a25" stroke="none" opacity="0.35" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function SceneWheels({ compact = false }: { compact?: boolean }) {
+  const wheels = compact ? [300, 437] : [770, 990];
+  const radius = compact ? 15 : 20;
+
+  return (
+    <g className="move-scene__wheels">
+      {wheels.map((x) => (
+        <g
+          key={x}
+          className="move-scene__wheel"
+          transform={`translate(${x} ${compact ? 263 : 282})`}
+        >
+          <g className="move-scene__wheel-spin">
+            <circle r={radius} fill="#fff" stroke="#202a25" strokeWidth={compact ? 3 : 4} />
+            <circle
+              r={compact ? 5 : 8}
+              fill="#fff"
+              stroke="#202a25"
+              strokeWidth={compact ? 2.5 : 3}
+            />
+            <path
+              d={
+                compact
+                  ? "M0-11v5m11 6-5-2m-6 13v-5m-11-6 5 2"
+                  : "M0-15v7m15 8-7-3m-8 18v-7m-15-8 7 3"
+              }
+              fill="none"
+              stroke="#202a25"
+              strokeWidth={compact ? 1.8 : 2}
+              strokeLinecap="round"
+            />
+          </g>
+        </g>
+      ))}
+    </g>
+  );
+}
 
 export function MoveSceneAnimation() {
-  const wideSceneRef = useRef<SVGSVGElement>(null);
-  const compactSceneRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncMotionPreference = () => {
-      for (const scene of [wideSceneRef.current, compactSceneRef.current]) {
-        if (!scene) continue;
-        if (motionPreference.matches) scene.pauseAnimations();
-        else scene.unpauseAnimations();
-      }
-    };
-
-    syncMotionPreference();
-    motionPreference.addEventListener("change", syncMotionPreference);
-    return () => motionPreference.removeEventListener("change", syncMotionPreference);
-  }, []);
-
   return (
     <>
       <svg
-        ref={wideSceneRef}
         className="move-scene move-scene--wide"
         viewBox="0 0 1160 360"
         role="img"
         aria-labelledby="move-scene-title move-scene-description"
       >
-        <title id="move-scene-title">A careful home move, illustrated</title>
+        <title id="move-scene-title">A continuous home-to-truck moving scene</title>
         <desc id="move-scene-description">
-          Two friendly movers carry a box from a home toward a Shree Nath Packers and Movers truck.
+          A mover picks up a box at a home, carries it into a Shree Nath truck, and returns for
+          another load while smoke drifts from the exhaust.
         </desc>
         <defs>
           <pattern id="move-scene-dots" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -76,12 +244,7 @@ export function MoveSceneAnimation() {
           opacity="0.26"
         />
 
-        <g
-          className="move-scene__house"
-          stroke="#202a25"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <g stroke="#202a25" strokeLinecap="round" strokeLinejoin="round">
           <path d="M64 149 191 47l130 102v131H64z" fill="#fff" strokeWidth="4" />
           <path d="m45 152 145-117 146 117" fill="none" strokeWidth="7" />
           <path d="M83 147h213" strokeWidth="2" opacity="0.38" />
@@ -101,80 +264,16 @@ export function MoveSceneAnimation() {
           <path d="M161 38h25" strokeWidth="2" opacity="0.5" />
         </g>
 
-        <g
-          className="move-scene__house-boxes"
-          fill="#fff"
-          stroke="#202a25"
-          strokeLinejoin="round"
-          strokeWidth="2.5"
-        >
-          <path d="M285 251h39v29h-39z" />
-          <path d="m285 251 19-10 20 10-19 10z" fill="#f0f1ed" />
-          <path d="M303 261v19m-6-19h13" fill="none" />
-        </g>
+        <Carton className="move-scene__pickup-box" transform="translate(282 242)" />
 
         <g className="move-scene__route" fill="none" stroke="#a97a4c" strokeLinecap="round">
           <path
-            d="M327 250c82-86 171-89 259-42 33 18 48 37 74 42"
+            d="M321 250c82-86 171-89 259-42 33 18 48 37 74 42"
             strokeWidth="2.5"
             strokeDasharray="3 9"
           />
           <path d="m651 242 11 9-14 4" strokeWidth="2.5" />
           <circle cx="332" cy="249" r="5" fill="#a97a4c" stroke="none" />
-        </g>
-
-        <g
-          className="move-scene__character move-scene__character--porter"
-          transform="translate(376 0)"
-        >
-          <g className="move-scene__character-bob">
-            <ellipse cx="0" cy="283" rx="22" ry="4" fill="#202a25" opacity="0.12" />
-            <path
-              d="M-14 218  -21 270m21-51 13 52"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="7"
-              strokeLinecap="round"
-            />
-            <path
-              d="m-24 273-11 5m48-5 11 4"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M-16 194q16-10 32 0l5 33q-20 12-42 0z"
-              fill="#fff"
-              stroke="#202a25"
-              strokeWidth="3.5"
-              strokeLinejoin="round"
-            />
-            <path d="M-18 206h38m-37 8h36" fill="none" stroke="#202a25" strokeWidth="2.5" />
-            <path d="M-11 198v26m23-26v26" stroke="#a97a4c" strokeWidth="2" />
-            <path
-              className="move-scene__arm move-scene__arm--porter"
-              d="M-13 199q-18 4-23 22l-11-6m62-17q16 2 19 18l10-4"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="-47" cy="216" r="4" fill="#fff" stroke="#202a25" strokeWidth="2" />
-            <circle cx="43" cy="211" r="4" fill="#fff" stroke="#202a25" strokeWidth="2" />
-            <circle cx="0" cy="171" r="18" fill="#fff" stroke="#202a25" strokeWidth="3.5" />
-            <path d="M-17 169q2-21 20-20 15 1 16 17-11-8-21-8-6 8-15 11z" fill="#202a25" />
-            <path d="M-8 173v2m16-2v2" stroke="#202a25" strokeWidth="3" strokeLinecap="round" />
-            <path
-              d="M-5 181q5 4 10 0"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path d="M-17 195q17-10 34 0" fill="none" stroke="#202a25" strokeWidth="2" />
-          </g>
         </g>
 
         <g className="move-scene__truck" stroke="#202a25" strokeLinejoin="round">
@@ -189,8 +288,7 @@ export function MoveSceneAnimation() {
           <path d="M957 190h60l22 37h-82z" fill="#f4f5f2" strokeWidth="3" />
           <path d="M1019 193v30h18" fill="none" strokeWidth="2" />
           <path d="M1068 246h13v17h-13" fill="#fff" strokeWidth="3" />
-          <path d="M935 267h133" strokeWidth="3" />
-          <path d="M691 280h17m215 0h12" strokeWidth="5" strokeLinecap="round" />
+          <path d="M935 267h133M691 280h17m215 0h12" strokeWidth="3" />
           <path d="M718 178h191" strokeWidth="1.5" opacity="0.35" />
           <rect x="760" y="190" width="132" height="51" rx="6" fill="#fff" strokeWidth="2.5" />
           <text
@@ -221,111 +319,19 @@ export function MoveSceneAnimation() {
           </text>
           <path d="M947 273v-10h25v10" fill="#fff" strokeWidth="2" />
           <path d="M1015 274h33" stroke="#a97a4c" strokeWidth="3" strokeLinecap="round" />
+          <path d="M1052 181v-18h7v18" fill="#fff" strokeWidth="2.5" />
         </g>
 
-        <g className="move-scene__wheel" transform="translate(770 282)">
-          <g className="move-scene__wheel-spin">
-            <circle r="20" fill="#fff" stroke="#202a25" strokeWidth="4" />
-            <circle r="8" fill="#fff" stroke="#202a25" strokeWidth="3" />
-            <path
-              d="M0-15v7m15 8-7-3m-8 18v-7m-15-8 7 3"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </g>
+        <Carton className="move-scene__loaded-box" transform="translate(700 226) scale(.82)" />
+        <g transform="translate(1055 157)">
+          <Smoke />
         </g>
-        <g className="move-scene__wheel" transform="translate(990 282)">
-          <g className="move-scene__wheel-spin">
-            <circle r="20" fill="#fff" stroke="#202a25" strokeWidth="4" />
-            <circle r="8" fill="#fff" stroke="#202a25" strokeWidth="3" />
-            <path
-              d="M0-15v7m15 8-7-3m-8 18v-7m-15-8 7 3"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </g>
-        </g>
+        <SceneWheels />
 
-        <g
-          className="move-scene__character move-scene__character--loader"
-          transform="translate(663 0)"
-        >
-          <g className="move-scene__character-bob move-scene__character-bob--loader">
-            <ellipse cx="0" cy="283" rx="22" ry="4" fill="#202a25" opacity="0.12" />
-            <path
-              d="M-13 219-17 269m19-50 10 51"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="7"
-              strokeLinecap="round"
-            />
-            <path
-              d="m-20 273-11 5m40-5 11 4"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M-16 194q16-10 32 0l5 33q-20 12-42 0z"
-              fill="#fff"
-              stroke="#202a25"
-              strokeWidth="3.5"
-              strokeLinejoin="round"
-            />
-            <path d="M-18 206h38m-37 8h36" fill="none" stroke="#202a25" strokeWidth="2.5" />
-            <path d="M-11 198v26m23-26v26" stroke="#a97a4c" strokeWidth="2" />
-            <path
-              className="move-scene__arm move-scene__arm--loader"
-              d="M-14 198q-16 7-21 22l-9-3m44-19q17 3 23 20l11-6"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="-44" cy="217" r="4" fill="#fff" stroke="#202a25" strokeWidth="2" />
-            <circle cx="43" cy="212" r="4" fill="#fff" stroke="#202a25" strokeWidth="2" />
-            <circle cx="0" cy="171" r="18" fill="#fff" stroke="#202a25" strokeWidth="3.5" />
-            <path d="M-17 169q2-21 20-20 15 1 16 17-11-8-21-8-6 8-15 11z" fill="#202a25" />
-            <path d="M-8 173v2m16-2v2" stroke="#202a25" strokeWidth="3" strokeLinecap="round" />
-            <path
-              d="M-5 181q5 4 10 0"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path d="M-17 195q17-10 34 0" fill="none" stroke="#202a25" strokeWidth="2" />
-          </g>
+        <g className="move-scene__porter-track">
+          <Mover porter transform="translate(340 0)" />
         </g>
-
-        <g className="move-scene__transfer-box">
-          <animateMotion
-            dur="6.5s"
-            repeatCount="indefinite"
-            rotate="auto"
-            path="M 354 213 C 444 151 598 151 720 205"
-          />
-          <path
-            d="M0 0h43v34H0z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
-          <path
-            d="m0 0 21-11 22 11-21 11z"
-            fill="#f2f3ef"
-            stroke="#202a25"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
-          <path d="M21 11v23m-8-23h16" fill="none" stroke="#202a25" strokeWidth="2" />
-          <path d="M15-3h12" stroke="#a97a4c" strokeWidth="2" />
-        </g>
+        <Mover transform="translate(663 0)" />
 
         <g className="move-scene__speech" transform="translate(407 104)">
           <path
@@ -348,7 +354,6 @@ export function MoveSceneAnimation() {
           </text>
           <path d="M18 28h35" stroke="#a97a4c" strokeWidth="2" strokeLinecap="round" />
         </g>
-
         <g className="move-scene__safety" transform="translate(1074 135)">
           <path
             d="M0-21 18-14v14q-2 15-18 22Q-16 15-18 0v-14z"
@@ -366,7 +371,6 @@ export function MoveSceneAnimation() {
             strokeLinejoin="round"
           />
         </g>
-
         <text
           x="73"
           y="327"
@@ -391,8 +395,8 @@ export function MoveSceneAnimation() {
           LOADED WITH CARE
         </text>
       </svg>
+
       <svg
-        ref={compactSceneRef}
         className="move-scene move-scene--compact"
         viewBox="0 0 520 340"
         role="img"
@@ -400,7 +404,8 @@ export function MoveSceneAnimation() {
       >
         <title id="move-scene-compact-title">Home-to-truck moving scene</title>
         <desc id="move-scene-compact-description">
-          Movers pass a carefully packed box from a small home to a Shree Nath delivery truck.
+          A mover picks up a box at home, loads it into the Shree Nath truck, and walks back as
+          smoke drifts from the exhaust.
         </desc>
         <defs>
           <pattern
@@ -410,6 +415,15 @@ export function MoveSceneAnimation() {
             patternUnits="userSpaceOnUse"
           >
             <circle cx="2" cy="2" r="1" fill="#29332e" opacity="0.11" />
+          </pattern>
+          <pattern
+            id="move-scene-compact-hatch"
+            width="8"
+            height="8"
+            patternUnits="userSpaceOnUse"
+            patternTransform="rotate(45)"
+          >
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#29332e" strokeWidth="1" opacity="0.12" />
           </pattern>
         </defs>
         <rect x="1" y="1" width="518" height="338" rx="18" fill="#fbfcfa" />
@@ -433,26 +447,19 @@ export function MoveSceneAnimation() {
           <path d="M42 258h139" strokeWidth="3" />
         </g>
 
+        <Carton className="move-scene__pickup-box" transform="translate(164 231) scale(.72)" />
         <path
-          d="M174 236c52-48 104-50 156-23"
+          d="M176 236c52-48 104-50 156-23"
           fill="none"
           stroke="#a97a4c"
           strokeWidth="2"
           strokeDasharray="3 8"
           strokeLinecap="round"
         />
-        <path
-          d="m322 204 10 9-13 3"
-          fill="none"
-          stroke="#a97a4c"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
 
         <g className="move-scene__truck" fill="#fff" stroke="#202a25" strokeLinejoin="round">
           <path d="M264 145h132v113H264z" strokeWidth="3.5" />
-          <path d="M277 158h106v83H277z" fill="#f4f5f2" strokeWidth="2" />
+          <path d="M277 158h106v83H277z" fill="url(#move-scene-compact-hatch)" strokeWidth="2" />
           <path d="M397 173h55q8 0 12 8l19 33v44h-86z" strokeWidth="3.5" />
           <path d="M409 181h37l16 27h-53z" fill="#f0f1ed" strokeWidth="2.5" />
           <path d="M398 257h82" strokeWidth="3" />
@@ -470,133 +477,19 @@ export function MoveSceneAnimation() {
           >
             SHREE NATH
           </text>
-        </g>
-        <g className="move-scene__wheel" transform="translate(300 263)">
-          <g className="move-scene__wheel-spin">
-            <circle r="15" fill="#fff" stroke="#202a25" strokeWidth="3" />
-            <circle r="5" fill="#fff" stroke="#202a25" strokeWidth="2.5" />
-            <path
-              d="M0-11v5m11 6-5-2m-6 13v-5m-11-6 5 2"
-              stroke="#202a25"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </g>
-        </g>
-        <g className="move-scene__wheel" transform="translate(437 263)">
-          <g className="move-scene__wheel-spin">
-            <circle r="15" fill="#fff" stroke="#202a25" strokeWidth="3" />
-            <circle r="5" fill="#fff" stroke="#202a25" strokeWidth="2.5" />
-            <path
-              d="M0-11v5m11 6-5-2m-6 13v-5m-11-6 5 2"
-              stroke="#202a25"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </g>
+          <path d="M463 173v-16h6v16" fill="#fff" strokeWidth="2" />
         </g>
 
-        <g className="move-scene__character" transform="translate(215 0)">
-          <g className="move-scene__character-bob">
-            <ellipse cx="0" cy="281" rx="17" ry="3" fill="#202a25" opacity="0.12" />
-            <path
-              d="m-8 222-8 45m16-45 8 45m-21 7-8 4m33-4 8 4"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M-12 196q12-8 24 0l4 28q-16 8-32 0z"
-              fill="#fff"
-              stroke="#202a25"
-              strokeWidth="2.8"
-            />
-            <path d="M-12 207h27m-25 7h25" stroke="#202a25" strokeWidth="2" />
-            <path d="M-8 199v21m17-21v21" stroke="#a97a4c" strokeWidth="1.8" />
-            <path
-              d="M-10 199q-13 6-17 19m39-19q12 3 16 16"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-            />
-            <circle cx="-27" cy="218" r="3.5" fill="#fff" stroke="#202a25" strokeWidth="1.8" />
-            <circle cx="28" cy="215" r="3.5" fill="#fff" stroke="#202a25" strokeWidth="1.8" />
-            <circle cy="176" r="15" fill="#fff" stroke="#202a25" strokeWidth="2.8" />
-            <path d="M-14 174q2-18 16-18 12 1 13 15-10-7-18-7-5 6-11 10z" fill="#202a25" />
-            <path
-              d="M-6 177v1m12-1v1m-4 7q4 3 7 0"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </g>
+        <Carton className="move-scene__loaded-box" transform="translate(279 216) scale(.68)" />
+        <g transform="translate(466 154)">
+          <Smoke />
         </g>
+        <SceneWheels compact />
 
-        <g className="move-scene__character" transform="translate(259 0)">
-          <g className="move-scene__character-bob move-scene__character-bob--loader">
-            <ellipse cx="0" cy="281" rx="16" ry="3" fill="#202a25" opacity="0.12" />
-            <path
-              d="m-7 222-6 45m14-45 7 45m-20 7-8 4m32-4 8 4"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M-11 196q11-8 22 0l4 28q-15 8-30 0z"
-              fill="#fff"
-              stroke="#202a25"
-              strokeWidth="2.8"
-            />
-            <path d="M-10 207h25m-24 7h23" stroke="#202a25" strokeWidth="2" />
-            <path d="M-7 199v21m16-21v21" stroke="#a97a4c" strokeWidth="1.8" />
-            <path
-              d="M-9 199q-10 6-14 18m35-18q10 3 14 16"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-            />
-            <circle cx="-23" cy="218" r="3.5" fill="#fff" stroke="#202a25" strokeWidth="1.8" />
-            <circle cx="25" cy="215" r="3.5" fill="#fff" stroke="#202a25" strokeWidth="1.8" />
-            <circle cy="176" r="15" fill="#fff" stroke="#202a25" strokeWidth="2.8" />
-            <path d="M-14 174q2-18 16-18 12 1 13 15-10-7-18-7-5 6-11 10z" fill="#202a25" />
-            <path
-              d="M-6 177v1m12-1v1m-4 7q4 3 7 0"
-              fill="none"
-              stroke="#202a25"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </g>
+        <g className="move-scene__porter-track">
+          <Mover porter transform="translate(200 14) scale(.95)" />
         </g>
-
-        <g className="move-scene__transfer-box">
-          <animateMotion
-            dur="5.5s"
-            repeatCount="indefinite"
-            path="M 176 210 C 205 150 252 150 290 199"
-          />
-          <path
-            d="M0 0h33v28H0z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <path
-            d="m0 0 16-9 17 9-17 9z"
-            fill="#f2f3ef"
-            stroke="#202a25"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <path d="M16 9v19m-6-19h12" fill="none" stroke="#202a25" strokeWidth="1.7" />
-          <path d="M12-3h9" stroke="#a97a4c" strokeWidth="1.8" />
-        </g>
+        <Mover transform="translate(259 14) scale(.95)" />
 
         <g className="move-scene__speech" transform="translate(169 58)">
           <path

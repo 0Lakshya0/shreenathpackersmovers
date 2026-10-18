@@ -84,27 +84,80 @@
   display: none;
 }
 
+.move-scene__porter-track {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: porter-trip-wide 16s linear infinite;
+}
+
+.move-scene--compact .move-scene__porter-track {
+  animation-name: porter-trip-compact;
+}
+
 .move-scene__character-bob {
   transform-box: fill-box;
   transform-origin: center bottom;
   animation: mover-bob 2.4s ease-in-out infinite;
 }
 
-.move-scene__character-bob--loader {
-  animation-delay: -1.05s;
+.move-scene__porter-track .move-scene__character-bob {
+  animation: porter-bob 0.48s ease-in-out infinite alternate;
 }
 
-.move-scene__arm {
+.move-scene__still-legs {
+  animation: still-legs 16s linear infinite;
+}
+
+.move-scene__walk-legs {
+  opacity: 0;
+  animation: walk-legs-window 16s linear infinite;
+}
+
+.move-scene__step {
   transform-box: fill-box;
-  transform-origin: 50% 50%;
+  transform-origin: 50% 0%;
+  animation: step-swing 0.48s ease-in-out infinite alternate;
 }
 
-.move-scene__arm--porter {
-  animation: porter-arm 3.2s ease-in-out infinite;
+.move-scene__step--alternate {
+  animation-delay: -0.24s;
 }
 
-.move-scene__arm--loader {
-  animation: loader-arm 3.2s ease-in-out infinite;
+.move-scene__free-arms {
+  animation: free-arms 16s linear infinite;
+}
+
+.move-scene__carry-arms {
+  opacity: 0;
+  animation: carry-arms 16s linear infinite;
+}
+
+.move-scene__pickup-box {
+  animation: pickup-box 16s linear infinite;
+}
+
+.move-scene__carried-box {
+  filter: drop-shadow(0 4px 3px rgb(22 39 30 / 16%));
+  animation: carried-box 16s linear infinite;
+}
+
+.move-scene__loaded-box {
+  opacity: 0;
+  animation: loaded-box 16s linear infinite;
+}
+
+.move-scene__smoke-cloud {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: exhaust-cloud 2.6s ease-out infinite;
+}
+
+.move-scene__smoke-cloud--two {
+  animation-delay: -0.85s;
+}
+
+.move-scene__smoke-cloud--three {
+  animation-delay: -1.7s;
 }
 
 .move-scene__wheel-spin {
@@ -118,18 +171,15 @@
 }
 
 .move-scene__speech {
-  translate: 0 0;
-  animation: speech-float 3.5s ease-in-out infinite;
+  opacity: 0;
+  translate: 0 4px;
+  animation: speech-cycle 16s ease-in-out infinite;
 }
 
 .move-scene__safety {
   transform-box: fill-box;
   filter: drop-shadow(0 0 0 rgb(169 122 76 / 0%));
   animation: safety-flash 2.8s ease-in-out infinite;
-}
-
-.move-scene__transfer-box {
-  filter: drop-shadow(0 5px 3px rgb(22 39 30 / 12%));
 }
 
 .animation-preview__scene-caption {
@@ -264,6 +314,60 @@
   box-shadow: 0 25px 64px -42px rgb(10 39 28 / 42%);
 }
 
+@keyframes porter-trip-wide {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  7% {
+    transform: translateX(-3%);
+    animation-timing-function: steps(1, end);
+  }
+  13% {
+    transform: translateX(-3%);
+    animation-timing-function: ease-in-out;
+  }
+  49% {
+    transform: translateX(33%);
+    animation-timing-function: steps(1, end);
+  }
+  55% {
+    transform: translateX(33%);
+    animation-timing-function: ease-in-out;
+  }
+  91% {
+    transform: translateX(0);
+    animation-timing-function: steps(1, end);
+  }
+}
+
+@keyframes porter-trip-compact {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  7% {
+    transform: translateX(-3.8%);
+    animation-timing-function: steps(1, end);
+  }
+  13% {
+    transform: translateX(-3.8%);
+    animation-timing-function: ease-in-out;
+  }
+  49% {
+    transform: translateX(19%);
+    animation-timing-function: steps(1, end);
+  }
+  55% {
+    transform: translateX(19%);
+    animation-timing-function: ease-in-out;
+  }
+  91% {
+    transform: translateX(0);
+    animation-timing-function: steps(1, end);
+  }
+}
+
 @keyframes mover-bob {
   0%,
   100% {
@@ -274,29 +378,172 @@
   }
 }
 
-@keyframes porter-arm {
+@keyframes porter-bob {
   0%,
   100% {
-    rotate: -1deg;
+    translate: 0 0;
   }
-  48% {
-    rotate: 5deg;
-  }
-  60% {
-    rotate: -4deg;
+  50% {
+    translate: 0 -2px;
   }
 }
 
-@keyframes loader-arm {
+@keyframes walk-legs-window {
   0%,
+  6% {
+    opacity: 1;
+  }
+  8%,
+  12% {
+    opacity: 0;
+  }
+  13%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  54% {
+    opacity: 0;
+  }
+  55%,
+  90% {
+    opacity: 1;
+  }
+  92%,
   100% {
-    rotate: 2deg;
+    opacity: 0;
   }
-  45% {
-    rotate: -5deg;
+}
+
+@keyframes still-legs {
+  0%,
+  6% {
+    opacity: 0;
   }
-  62% {
-    rotate: 4deg;
+  8%,
+  12% {
+    opacity: 1;
+  }
+  13%,
+  48% {
+    opacity: 0;
+  }
+  50%,
+  54% {
+    opacity: 1;
+  }
+  55%,
+  90% {
+    opacity: 0;
+  }
+  92%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes step-swing {
+  from {
+    rotate: -18deg;
+  }
+  to {
+    rotate: 18deg;
+  }
+}
+
+@keyframes free-arms {
+  0%,
+  8% {
+    opacity: 1;
+  }
+  12%,
+  48% {
+    opacity: 0;
+  }
+  52%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes carry-arms {
+  0%,
+  8% {
+    opacity: 0;
+  }
+  12%,
+  48% {
+    opacity: 1;
+  }
+  52%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pickup-box {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  9%,
+  93% {
+    opacity: 0;
+  }
+  97%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes carried-box {
+  0%,
+  7% {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  10%,
+  47% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  52%,
+  100% {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@keyframes loaded-box {
+  0%,
+  48% {
+    opacity: 0;
+  }
+  53%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes exhaust-cloud {
+  0% {
+    opacity: 0;
+    translate: 0 4px;
+    scale: 0.72;
+  }
+  15% {
+    opacity: 0.82;
+  }
+  65% {
+    opacity: 0.42;
+  }
+  100% {
+    opacity: 0;
+    translate: 10px -24px;
+    scale: 1.2;
   }
 }
 
@@ -312,13 +559,21 @@
   }
 }
 
-@keyframes speech-float {
+@keyframes speech-cycle {
   0%,
-  100% {
+  9% {
+    opacity: 0;
+    translate: 0 4px;
+  }
+  14%,
+  42% {
+    opacity: 1;
     translate: 0 0;
   }
-  50% {
-    translate: 0 -4px;
+  49%,
+  100% {
+    opacity: 0;
+    translate: 0 4px;
   }
 }
 
@@ -413,12 +668,47 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .move-scene__porter-track,
   .move-scene__character-bob,
-  .move-scene__arm,
+  .move-scene__still-legs,
+  .move-scene__walk-legs,
+  .move-scene__step,
+  .move-scene__free-arms,
+  .move-scene__carry-arms,
+  .move-scene__pickup-box,
+  .move-scene__carried-box,
+  .move-scene__loaded-box,
+  .move-scene__smoke-cloud,
   .move-scene__wheel-spin,
   .move-scene__route path,
   .move-scene__speech,
   .move-scene__safety {
     animation: none !important;
+  }
+
+  .move-scene__porter-track {
+    transform: none !important;
+  }
+
+  .move-scene__still-legs,
+  .move-scene__free-arms,
+  .move-scene__pickup-box,
+  .move-scene__loaded-box,
+  .move-scene__speech {
+    opacity: 1 !important;
+  }
+
+  .move-scene__walk-legs,
+  .move-scene__carry-arms,
+  .move-scene__carried-box {
+    opacity: 0 !important;
+  }
+
+  .move-scene__smoke-cloud {
+    opacity: 0.5;
+  }
+
+  .move-scene__speech {
+    translate: 0 0;
   }
 }
