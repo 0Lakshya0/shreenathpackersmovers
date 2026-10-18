@@ -1,18 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, Car, Check, PackageCheck, Phone, Truck } from "lucide-react";
 import { QuoteForm } from "@/components/quote-form";
-import { MoveSceneAnimation } from "@/components/move-scene-animation";
+import { PackingSceneAnimation } from "@/components/packing-scene-animation";
 import { PHONE, PHONE_LINK } from "@/lib/site-data";
-import animationCss from "../animation-preview.css?url";
+import packingCss from "../packing-preview.css?url";
 
 export const Route = createFileRoute("/animation-preview")({
   head: () => ({
     meta: [
-      { title: "Animation Scene Trial | Shree Nath Packers & Movers" },
+      { title: "Animation Scene 01 Trial | Shree Nath Packers & Movers" },
       {
         name: "description",
         content:
-          "Unlisted concept preview: a black-and-white 2D moving scene for Shree Nath Packers & Movers.",
+          "Unlisted concept preview: a black-and-white 2D home-packing scene for Shree Nath Packers & Movers.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/animation-preview")({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap",
       },
-      { rel: "stylesheet", href: animationCss },
+      { rel: "stylesheet", href: packingCss },
     ],
   }),
   component: AnimationPreviewPage,
@@ -46,14 +46,14 @@ function AnimationPreviewPage() {
           </div>
 
           <div className="animation-preview__scene-card">
-            <MoveSceneAnimation />
+            <PackingSceneAnimation />
             <div className="animation-preview__scene-caption">
               <span className="animation-preview__scene-caption-dot" />
-              <span>HOME PICKUP</span>
+              <span>BACK GATE PICKUP</span>
               <span className="animation-preview__scene-caption-line" />
-              <span>SAFE LOADING</span>
+              <span>HAND PACKING</span>
               <span className="animation-preview__scene-caption-line" />
-              <span>SHREE NATH TRUCK</span>
+              <span>MAIN GATE HANDOVER</span>
             </div>
           </div>
 
@@ -68,8 +68,9 @@ function AnimationPreviewPage() {
                 <em>Premium Shifting, Zero Stress.</em>
               </h1>
               <p className="animation-preview__lead">
-                A friendly, hand-drawn moment: our movers carry each box from home to truck with
-                care. This is a standalone visual trial—the main homepage is unchanged.
+                A friendly, hand-drawn moment from inside the home: our packers box up every item on
+                the bench, while loaders carry each packed box out the main gate to the truck. This
+                is a standalone visual trial—the main homepage is unchanged.
               </p>
 
               <div className="animation-preview__badges" aria-label="Moving service options">
