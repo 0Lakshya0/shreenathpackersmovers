@@ -36,7 +36,7 @@ function AnimationPreviewPage() {
             <p>
               <span /> ANIMATION CONCEPT · SCENE 01
             </p>
-            <span className="animation-preview__scene-number">2D · BLACK &amp; WHITE</span>
+            <span className="animation-preview__scene-number">2D · CORPORATE VECTOR</span>
           </div>
 
           <div className="animation-preview__scene-card">

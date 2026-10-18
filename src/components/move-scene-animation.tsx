@@ -1,188 +1,480 @@
-type SceneGroupProps = {
-  className: string;
-  transform?: string;
+import type { CSSProperties, ReactNode } from "react";
+
+const NAVY = "#1f3a5f";
+const NAVY_DEEP = "#182f4d";
+const NAVY_CAP = "#16294a";
+const PANTS = "#2b3442";
+const PANTS_BACK = "#232b36";
+const SHIRT_LIGHT = "#f4f7fb";
+
+type MoverSpec = {
+  id: "a" | "b1" | "b2" | "c1" | "c2" | "c3";
+  /** x offset (px) while staged at the door */
+  dx: number;
+  /** x offset (px) while loading at the truck */
+  tx: number;
+  skin: string;
+  /** body scale for height diversity */
+  scale: number;
+  beard?: string;
+  /** symmetric fit anchor span (px) so scaling pivots at the feet */
+  fitSpan: number;
+  arm: "a" | "b" | "b2" | "c" | "c3";
+  item?: ReactNode;
+  itemClass?: string;
 };
 
-function Carton({ className, transform }: SceneGroupProps) {
+function MoverLeg({ back }: { back?: boolean }) {
+  const x = back ? -1 : 1;
   return (
-    <g
-      className={className}
-      transform={transform}
-      fill="#fff"
-      stroke="#202a25"
-      strokeWidth="2.5"
-      strokeLinejoin="round"
-    >
-      <path d="M0 9h42v29H0z" />
-      <path d="m0 9 21-9 21 9-21 10z" fill="#f0f1ed" />
-      <path d="M21 19v19m-7-19h14" fill="none" />
-      <path d="M17 5h9" stroke="#a97a4c" strokeWidth="2" />
+    <g className={back ? "mv-leg mv-leg--b" : "mv-leg mv-leg--f"}>
+      <path
+        d={`M${x} -24 L${x} -2`}
+        stroke={back ? PANTS_BACK : PANTS}
+        strokeWidth="7"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <rect
+        x={back ? -6 : -4}
+        y="-6"
+        width={back ? 11 : 12}
+        height="6"
+        rx="2.5"
+        fill={back ? "#10141a" : "#161b22"}
+      />
     </g>
   );
 }
 
-function Mover({ transform, porter = false }: { transform: string; porter?: boolean }) {
+function MoverArm({ back, skin, className }: { back?: boolean; skin: string; className?: string }) {
+  const x = back ? -3.5 : 4.5;
   return (
-    <g
-      className={porter ? "move-scene__mover move-scene__mover--porter" : "move-scene__mover"}
-      transform={transform}
-    >
-      <g className="move-scene__character-bob">
-        <ellipse cx="0" cy="283" rx="22" ry="4" fill="#202a25" opacity="0.12" />
+    <g className={className ?? (back ? "mv-arm mv-arm--b" : "mv-arm mv-arm--f")}>
+      <path
+        d={`M${x} -51 L${x} -42`}
+        stroke={back ? NAVY_DEEP : NAVY}
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d={`M${x} -42 L${x} -32`}
+        stroke={skin}
+        strokeWidth="5.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx={x} cy="-30.5" r="2.6" fill={skin} />
+    </g>
+  );
+}
 
-        {porter ? (
-          <>
-            <g
-              className="move-scene__still-legs"
-              fill="none"
-              stroke="#202a25"
-              strokeLinecap="round"
-            >
-              <path d="M-10 218l-8 52m18-52 8 52" strokeWidth="7" />
-              <path d="m-18 270-11 5m37-5 11 4" strokeWidth="5" />
+function MoverHead({ skin, beard }: { skin: string; beard?: string | undefined }) {
+  return (
+    <g>
+      <rect x="0" y="-58" width="5.5" height="5" fill={skin} />
+      <circle cx="2.5" cy="-60.5" r="7.2" fill={skin} />
+      <circle cx="6.4" cy="-60.3" r="0.9" fill="#20242b" />
+      {beard ? <rect x="-1.5" y="-56" width="10" height="4.5" rx="2" fill={beard} /> : null}
+      <path d="M-4.7 -61.5 a7.2 7.2 0 0 1 14.4 0 Z" fill={NAVY_CAP} />
+      <rect x="5.5" y="-63.2" width="8" height="2.6" rx="1.3" fill="#101d36" />
+      <circle cx="2.5" cy="-66.5" r="1.1" fill={SHIRT_LIGHT} />
+    </g>
+  );
+}
+
+function Mover({ spec }: { spec: MoverSpec }) {
+  const vars = {
+    "--dx": `${spec.dx}px`,
+    "--tx": `${spec.tx}px`,
+    "--s": spec.scale,
+  } as CSSProperties;
+
+  return (
+    <g className={`mv mv--${spec.id}`} style={vars}>
+      <ellipse className="mv-shadow" cx="0" cy="2.5" rx="15" ry="3" fill="#10151c" opacity="0.14" />
+      <g className="mv-flip">
+        <g className="mv-bob">
+          <g className="mv-fit">
+            <rect x={-spec.fitSpan} y="-76" width={spec.fitSpan * 2} height="76" fill="none" />
+            <MoverLeg back />
+            <MoverArm back skin={spec.skin} />
+            <g>
+              <rect x="-8" y="-33" width="16" height="11" rx="3" fill={PANTS} />
+              <rect x="-9" y="-55" width="18" height="24" rx="5" fill={NAVY} />
+              <rect x="-9" y="-46" width="18" height="4.5" rx="2" fill={SHIRT_LIGHT} />
+              <text
+                x="0"
+                y="-42.6"
+                textAnchor="middle"
+                fontFamily="Outfit, sans-serif"
+                fontSize="5.5"
+                fontWeight="800"
+                letterSpacing="0.5"
+                fill={NAVY}
+              >
+                SN
+              </text>
             </g>
-            <g className="move-scene__walk-legs" fill="none" stroke="#202a25" strokeLinecap="round">
-              <path className="move-scene__step" d="M-10 218l-8 52" strokeWidth="7" />
-              <path
-                className="move-scene__step move-scene__step--alternate"
-                d="M8 218l8 52"
-                strokeWidth="7"
-              />
-              <path d="m-18 270-11 5m26-5 11 4" strokeWidth="5" />
-            </g>
-          </>
-        ) : (
-          <g fill="none" stroke="#202a25" strokeLinecap="round">
-            <path d="M-10 218l-8 52m18-52 8 52" strokeWidth="7" />
-            <path d="m-18 270-11 5m37-5 11 4" strokeWidth="5" />
+            <MoverHead skin={spec.skin} beard={spec.beard} />
+            {spec.item ? <g className={`mv-item ${spec.itemClass}`}>{spec.item}</g> : null}
+            <MoverArm skin={spec.skin} className={`mv-arm mv-arm--f mv-arm--${spec.arm}`} />
+            <MoverLeg />
           </g>
-        )}
-
-        <path
-          d="M-16 194q16-10 32 0l5 33q-20 12-42 0z"
-          fill="#fff"
-          stroke="#202a25"
-          strokeWidth="3.5"
-          strokeLinejoin="round"
-        />
-        <path d="M-18 206h38m-37 8h36" fill="none" stroke="#202a25" strokeWidth="2.5" />
-        <path d="M-11 198v26m23-26v26" stroke="#a97a4c" strokeWidth="2" />
-
-        {porter && <Carton className="move-scene__carried-box" transform="translate(-18 181)" />}
-
-        {porter ? (
-          <>
-            <g
-              className="move-scene__free-arms"
-              fill="none"
-              stroke="#202a25"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M-13 199q-15 6-21 22l-11-5m59-17q15 5 21 21l11-5" strokeWidth="6" />
-              <circle cx="-45" cy="216" r="4" fill="#fff" strokeWidth="2" />
-              <circle cx="45" cy="215" r="4" fill="#fff" strokeWidth="2" />
-            </g>
-            <g
-              className="move-scene__carry-arms"
-              fill="none"
-              stroke="#202a25"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M-13 199q10-4 18 3l9 8m-1-11q-10-4-18 3l-9 8" strokeWidth="6" />
-              <circle cx="14" cy="210" r="4" fill="#fff" strokeWidth="2" />
-              <circle cx="-14" cy="210" r="4" fill="#fff" strokeWidth="2" />
-            </g>
-          </>
-        ) : (
-          <g fill="none" stroke="#202a25" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M-13 199q-15 6-21 22l-11-5m59-17q15 5 21 21l11-5" strokeWidth="6" />
-            <circle cx="-45" cy="216" r="4" fill="#fff" strokeWidth="2" />
-            <circle cx="45" cy="215" r="4" fill="#fff" strokeWidth="2" />
-          </g>
-        )}
-
-        <circle cx="0" cy="171" r="18" fill="#fff" stroke="#202a25" strokeWidth="3.5" />
-        <path d="M-17 169q2-21 20-20 15 1 16 17-11-8-21-8-6 8-15 11z" fill="#202a25" />
-        <path d="M-8 173v2m16-2v2" stroke="#202a25" strokeWidth="3" strokeLinecap="round" />
-        <path
-          d="M-5 181q5 4 10 0"
-          fill="none"
-          stroke="#202a25"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path d="M-17 195q17-10 34 0" fill="none" stroke="#202a25" strokeWidth="2" />
+        </g>
       </g>
     </g>
   );
 }
 
-function Smoke() {
-  const puffs = [
-    { name: "one", x: 0, y: 0 },
-    { name: "two", x: 8, y: -4 },
-    { name: "three", x: -6, y: -8 },
-  ];
-
+/** Medium cargo: single-worker box, held at chest level. */
+function ItemMedium() {
   return (
-    <g className="move-scene__smoke">
-      {puffs.map(({ name, x, y }) => (
-        <g
-          key={name}
-          className={`move-scene__smoke-cloud move-scene__smoke-cloud--${name}`}
-          transform={`translate(${x} ${y})`}
-        >
-          <path
-            d="M0 9c-7 0-8-8-2-10 2-7 13-7 16 0 7 0 8 10 0 10z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-          <circle cx="6" cy="4" r="1.1" fill="#202a25" stroke="none" opacity="0.35" />
-        </g>
-      ))}
+    <g>
+      <rect x="4" y="-52" width="30" height="26" rx="2.5" fill="#c98a4e" />
+      <rect x="4" y="-52" width="30" height="7" rx="2.5" fill="#d99a5c" />
+      <path d="M4 -45 h30" stroke="#a96f38" strokeWidth="1.5" fill="none" />
+      <rect x="16.5" y="-52" width="5" height="26" fill="#ecd3a8" />
     </g>
   );
 }
 
-function SceneWheels({ compact = false }: { compact?: boolean }) {
-  const wheels = compact ? [300, 437] : [770, 990];
-  const radius = compact ? 15 : 20;
+/** Heavy cargo: oversized crate for the coordinated 2-man lift. */
+function ItemCrate() {
+  return (
+    <g>
+      <rect x="-8" y="-54" width="64" height="34" rx="3" fill="#a9713d" />
+      <rect x="-8" y="-54" width="64" height="8" rx="3" fill="#c08a52" />
+      <path d="M-8 -46 h64" stroke="#8a5a2e" strokeWidth="1.5" fill="none" />
+      <rect x="14" y="-54" width="7" height="34" fill="#e8cf9f" />
+      <rect x="36" y="-54" width="7" height="34" fill="#e8cf9f" />
+      <rect x="-2" y="-35" width="20" height="9" rx="1.5" fill="#f4ede2" />
+      <text
+        x="8"
+        y="-28.5"
+        textAnchor="middle"
+        fontFamily="Outfit, sans-serif"
+        fontSize="5.5"
+        fontWeight="800"
+        letterSpacing="0.4"
+        fill="#7a4a22"
+      >
+        HEAVY
+      </text>
+    </g>
+  );
+}
+
+/** Elite cargo: premium sofa paced in by the three-man crew. */
+function ItemSofa() {
+  return (
+    <g>
+      <rect x="-26" y="-46" width="104" height="26" rx="6" fill="#24466e" />
+      <rect x="-20" y="-36" width="40" height="12" rx="4" fill="#2d5680" />
+      <rect x="24" y="-36" width="40" height="12" rx="4" fill="#2d5680" />
+      <rect x="-26" y="-24" width="104" height="12" rx="3" fill="#1d3a5c" />
+      <rect x="-30" y="-40" width="12" height="28" rx="5" fill="#2a4f7a" />
+      <rect x="66" y="-40" width="12" height="28" rx="5" fill="#2a4f7a" />
+      <rect x="-18" y="-12" width="7" height="6" rx="1.5" fill="#8a5a33" />
+      <rect x="63" y="-12" width="7" height="6" rx="1.5" fill="#8a5a33" />
+    </g>
+  );
+}
+
+function House() {
+  return (
+    <g className="mv-house">
+      <ellipse cx="170" cy="342" rx="112" ry="5" fill="#10151c" opacity="0.1" />
+      <rect x="226" y="126" width="20" height="44" fill="#e4dccb" />
+      <rect x="222" y="120" width="28" height="8" rx="2" fill="#cfc4b2" />
+      <rect x="66" y="196" width="206" height="144" fill="#f6f1e7" />
+      <rect x="66" y="196" width="12" height="144" fill="#ece4d5" />
+      <rect x="78" y="200" width="194" height="6" fill="#0b1220" opacity="0.05" />
+      <path d="M50 196 L169 104 L288 196 Z" fill="#24466e" />
+      <rect x="46" y="190" width="246" height="10" rx="3" fill={NAVY} />
+      {/* windows */}
+      <rect x="84" y="226" width="32" height="32" fill="#bcd7ee" />
+      <path d="M100 226v32M84 242h32" stroke="#f6f1e7" strokeWidth="3" fill="none" />
+      <rect x="82" y="256" width="36" height="4" rx="1.5" fill="#d9cfc0" />
+      <rect x="196" y="226" width="32" height="32" fill="#bcd7ee" />
+      <path d="M212 226v32M196 242h32" stroke="#f6f1e7" strokeWidth="3" fill="none" />
+      <rect x="194" y="256" width="36" height="4" rx="1.5" fill="#d9cfc0" />
+      {/* open main door */}
+      <rect x="124" y="256" width="60" height="6" fill="#d9cfc0" />
+      <rect x="128" y="262" width="52" height="78" fill="#1a2230" />
+      <rect x="128" y="262" width="10" height="78" fill="#232e40" />
+      <rect x="146" y="318" width="22" height="22" fill="#6b4a2f" />
+      <rect x="150" y="306" width="16" height="12" fill="#7d5a3a" />
+      <path d="M128 262 L104 270 L104 332 L128 340 Z" fill="#2c4a6e" />
+      <circle cx="110" cy="300" r="2.2" fill={SHIRT_LIGHT} />
+      <rect x="178" y="262" width="6" height="78" fill="#d9cfc0" />
+      <rect x="122" y="262" width="6" height="78" fill="#d9cfc0" />
+      <rect x="136" y="238" width="28" height="14" rx="2" fill={NAVY} />
+      <text
+        x="150"
+        y="248.5"
+        textAnchor="middle"
+        fontFamily="Outfit, sans-serif"
+        fontSize="8"
+        fontWeight="800"
+        letterSpacing="0.5"
+        fill={SHIRT_LIGHT}
+      >
+        SN
+      </text>
+      <rect x="122" y="334" width="64" height="6" rx="1.5" fill="#b98859" />
+      {/* potted plant */}
+      <path d="M190 340 l1.5 -14 h13 l1.5 14 z" fill="#b98859" />
+      <ellipse cx="197" cy="314" rx="7" ry="9" fill="#4c8a5f" />
+      <ellipse cx="190.5" cy="318" rx="5" ry="7" fill="#5d9a6e" />
+      <ellipse cx="203.5" cy="318" rx="5" ry="7" fill="#5d9a6e" />
+      <rect x="66" y="332" width="206" height="8" fill="#e0d8c8" />
+    </g>
+  );
+}
+
+function Truck({ uid }: { uid: string }) {
+  return (
+    <g className="mv-truck">
+      <ellipse cx="738" cy="343" rx="198" ry="5.5" fill="#10151c" opacity="0.12" />
+      {/* cargo box */}
+      <rect x="556" y="156" width="280" height="140" fill="#f8fafc" />
+      <rect x="600" y="156" width="10" height="140" fill="#e7edf4" />
+      <rect x="622" y="186" width="36" height="36" rx="4" fill={NAVY} />
+      <text
+        x="640"
+        y="210"
+        textAnchor="middle"
+        fontFamily="Outfit, sans-serif"
+        fontSize="16"
+        fontWeight="800"
+        letterSpacing="0.5"
+        fill={SHIRT_LIGHT}
+      >
+        SN
+      </text>
+      <text
+        x="672"
+        y="202"
+        fontFamily="Outfit, sans-serif"
+        fontSize="14"
+        fontWeight="800"
+        letterSpacing="1"
+        fill={NAVY}
+      >
+        SHREE NATH
+      </text>
+      <text
+        x="672"
+        y="216"
+        fontFamily="Outfit, sans-serif"
+        fontSize="7"
+        fontWeight="700"
+        letterSpacing="1.8"
+        fill="#5c6d84"
+      >
+        PACKERS &amp; MOVERS
+      </text>
+      <rect x="556" y="262" width="280" height="34" fill={NAVY} />
+      <text
+        x="718"
+        y="283"
+        textAnchor="middle"
+        fontFamily="Outfit, sans-serif"
+        fontSize="11.5"
+        fontWeight="800"
+        letterSpacing="1.6"
+        fill={SHIRT_LIGHT}
+      >
+        SHREE NATH PACKERS &amp; MOVERS
+      </text>
+      {/* open cargo bay */}
+      <rect x="556" y="190" width="44" height="106" fill="#151c28" />
+      <rect x="596" y="190" width="4" height="106" fill="#0b101a" />
+      <rect x="556" y="190" width="44" height="6" fill="#2a3547" />
+      <path d="M556 196 L534 204 L534 300 L556 296 Z" fill="#e6ecf3" />
+      <path d="M556 196 L534 204" stroke="#b9c4d2" strokeWidth="2" fill="none" />
+      {/* cab */}
+      <rect x="832" y="210" width="4" height="86" fill="#0b1220" opacity="0.14" />
+      <path
+        d="M836 296 L836 214 Q836 204 846 204 L878 204 Q887 204 892.5 211.5 L908 236 Q912 242 912 250 L912 296 Z"
+        fill="#f8fafc"
+      />
+      <path d="M848 212 L878 212 L896 240 L848 240 Z" fill="#b7d2ea" />
+      <path d="M862 244 V296" stroke="#d5dde8" strokeWidth="2" fill="none" />
+      <rect x="866" y="256" width="7" height="2.5" rx="1.2" fill="#9aa6b5" />
+      <rect x="836" y="262" width="76" height="34" fill={NAVY} />
+      <rect x="904" y="250" width="8" height="10" rx="2" fill="#ffd76a" />
+      <rect x="908" y="282" width="14" height="14" rx="2.5" fill="#2c3542" />
+      {/* chassis + exhaust */}
+      <rect x="548" y="296" width="380" height="16" rx="3" fill="#2c3542" />
+      <rect x="546" y="306" width="8" height="30" rx="2" fill="#46505e" />
+      {/* stationary wheels: bottoms rest exactly on the road line (y = 340) */}
+      <g transform="translate(622 314)">
+        <circle r="26" fill="#1d232c" />
+        <circle r="13.5" fill="#9aa6b5" />
+        <circle r="4.5" fill="#39424e" />
+        <rect x="-2" y="-12" width="4" height="7" rx="1.5" fill="#5b6675" />
+        <rect x="-2" y="5" width="4" height="7" rx="1.5" fill="#5b6675" />
+        <rect x="-12" y="-2" width="7" height="4" rx="1.5" fill="#5b6675" />
+        <rect x="5" y="-2" width="7" height="4" rx="1.5" fill="#5b6675" />
+      </g>
+      <g transform="translate(880 314)">
+        <circle r="26" fill="#1d232c" />
+        <circle r="13.5" fill="#9aa6b5" />
+        <circle r="4.5" fill="#39424e" />
+        <rect x="-2" y="-12" width="4" height="7" rx="1.5" fill="#5b6675" />
+        <rect x="-2" y="5" width="4" height="7" rx="1.5" fill="#5b6675" />
+        <rect x="-12" y="-2" width="7" height="4" rx="1.5" fill="#5b6675" />
+        <rect x="5" y="-2" width="7" height="4" rx="1.5" fill="#5b6675" />
+      </g>
+      {/* gentle exhaust pulse while parked */}
+      <g className="mv-smoke">
+        <circle className="mv-smoke-puff mv-smoke-puff--1" cx="550" cy="300" r="5" fill="#a9b6c6" />
+        <circle className="mv-smoke-puff mv-smoke-puff--2" cx="556" cy="302" r="6" fill="#b6c2d0" />
+        <circle
+          className="mv-smoke-puff mv-smoke-puff--3"
+          cx="545"
+          cy="303"
+          r="4.5"
+          fill="#b6c2d0"
+        />
+      </g>
+      <title>{`Shree Nath moving truck ${uid}`}</title>
+    </g>
+  );
+}
+
+function SceneArt({ uid }: { uid: string }) {
+  const crew: MoverSpec[] = [
+    {
+      id: "a",
+      dx: 0,
+      tx: 0,
+      skin: "#e8b98f",
+      scale: 1,
+      fitSpan: 36,
+      arm: "a",
+      item: <ItemMedium />,
+      itemClass: "mv-item--a",
+    },
+    {
+      id: "b1",
+      dx: 0,
+      tx: 0,
+      skin: "#c68e5f",
+      scale: 1.06,
+      fitSpan: 58,
+      arm: "b",
+      item: <ItemCrate />,
+      itemClass: "mv-item--b",
+    },
+    {
+      id: "b2",
+      dx: 18,
+      tx: 30,
+      skin: "#9c6b43",
+      scale: 0.96,
+      beard: "#23272e",
+      fitSpan: 30,
+      arm: "b2",
+    },
+    {
+      id: "c1",
+      dx: 0,
+      tx: 0,
+      skin: "#e0ad82",
+      scale: 0.94,
+      fitSpan: 30,
+      arm: "c",
+    },
+    {
+      id: "c2",
+      dx: 14,
+      tx: 34,
+      skin: "#8d5a3b",
+      scale: 1.02,
+      beard: "#33281e",
+      fitSpan: 30,
+      arm: "c",
+    },
+    {
+      id: "c3",
+      dx: 28,
+      tx: 68,
+      skin: "#d9a06e",
+      scale: 1.08,
+      fitSpan: 30,
+      arm: "c3",
+    },
+  ];
 
   return (
-    <g className="move-scene__wheels">
-      {wheels.map((x) => (
-        <g
-          key={x}
-          className="move-scene__wheel"
-          transform={`translate(${x} ${compact ? 263 : 282})`}
-        >
-          <g className="move-scene__wheel-spin">
-            <circle r={radius} fill="#fff" stroke="#202a25" strokeWidth={compact ? 3 : 4} />
-            <circle
-              r={compact ? 5 : 8}
-              fill="#fff"
-              stroke="#202a25"
-              strokeWidth={compact ? 2.5 : 3}
-            />
-            <path
-              d={
-                compact
-                  ? "M0-11v5m11 6-5-2m-6 13v-5m-11-6 5 2"
-                  : "M0-15v7m15 8-7-3m-8 18v-7m-15-8 7 3"
-              }
-              fill="none"
-              stroke="#202a25"
-              strokeWidth={compact ? 1.8 : 2}
-              strokeLinecap="round"
-            />
+    <>
+      <defs>
+        <linearGradient id={`mv-sky-${uid}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f8fbfe" />
+          <stop offset="1" stopColor="#e8eff7" />
+        </linearGradient>
+      </defs>
+
+      {/* sky, clouds, skyline */}
+      <rect x="0" y="0" width="960" height="340" fill={`url(#mv-sky-${uid})`} />
+      <g fill="#ffffff" opacity="0.75">
+        <ellipse cx="430" cy="74" rx="34" ry="12" />
+        <ellipse cx="458" cy="66" rx="24" ry="10" />
+        <ellipse cx="756" cy="56" rx="30" ry="11" />
+        <ellipse cx="782" cy="49" rx="20" ry="8" />
+      </g>
+      <g className="mv-skyline" opacity="0.85">
+        <rect x="330" y="216" width="58" height="124" fill="#e3eaf3" />
+        <rect x="394" y="176" width="76" height="164" fill="#dce5f0" />
+        <rect x="476" y="240" width="46" height="100" fill="#e3eaf3" />
+        <rect x="404" y="190" width="12" height="12" fill="#c6d2e2" />
+        <rect x="424" y="190" width="12" height="12" fill="#c6d2e2" />
+        <rect x="404" y="214" width="12" height="12" fill="#c6d2e2" />
+        <rect x="424" y="214" width="12" height="12" fill="#c6d2e2" />
+        <rect x="404" y="238" width="12" height="12" fill="#c6d2e2" />
+        <rect x="424" y="238" width="12" height="12" fill="#c6d2e2" />
+        <path d="M432 176 V158" stroke="#c6d2e2" strokeWidth="3" fill="none" />
+      </g>
+
+      {/* road: crisp edge line at y = 340 that the truck sits on */}
+      <g className="mv-road">
+        <rect x="0" y="340" width="960" height="60" fill="#333d4b" />
+        <rect x="0" y="338" width="960" height="3" fill="#cfd9e4" />
+        <rect x="0" y="341" width="960" height="4" fill="#232b36" opacity="0.25" />
+        <path
+          d="M0 371 H960"
+          stroke="#e8eef5"
+          strokeWidth="3"
+          strokeDasharray="34 26"
+          opacity="0.4"
+          fill="none"
+        />
+      </g>
+
+      <House />
+      <Truck uid={uid} />
+
+      {/* crew: solo medium lift, 2-man heavy lift, 3-man sofa lift */}
+      {crew.map((spec) => (
+        <Mover key={spec.id} spec={spec} />
+      ))}
+
+      {/* sofa travels as its own load so the crew can pace behind it */}
+      <g className="mv mv-cargo" style={{ "--dx": "14px", "--tx": "34px" } as CSSProperties}>
+        <g className="mv-flip">
+          <g className="mv-bob">
+            <rect x="-80" y="-76" width="160" height="76" fill="none" />
+            <g className="mv-item mv-item--c">
+              <ItemSofa />
+            </g>
           </g>
         </g>
-      ))}
-    </g>
+      </g>
+    </>
   );
 }
 
@@ -191,365 +483,32 @@ export function MoveSceneAnimation() {
     <>
       <svg
         className="move-scene move-scene--wide"
-        viewBox="0 0 1160 360"
+        viewBox="0 0 960 400"
         role="img"
         aria-labelledby="move-scene-title move-scene-description"
       >
-        <title id="move-scene-title">A continuous home-to-truck moving scene</title>
+        <title id="move-scene-title">
+          Shree Nath Packers &amp; Movers crew loading a moving truck
+        </title>
         <desc id="move-scene-description">
-          A mover picks up a box at a home, carries it into a Shree Nath truck, and returns for
-          another load while smoke drifts from the exhaust.
+          A uniformed crew walks out of an open home door, carries boxes and a sofa across the road,
+          and loads them into a parked Shree Nath truck while gentle smoke pulses from the exhaust.
         </desc>
-        <defs>
-          <pattern id="move-scene-dots" width="18" height="18" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="#29332e" opacity="0.11" />
-          </pattern>
-          <pattern
-            id="move-scene-hatch"
-            width="8"
-            height="8"
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(45)"
-          >
-            <line x1="0" y1="0" x2="0" y2="8" stroke="#29332e" strokeWidth="1" opacity="0.12" />
-          </pattern>
-        </defs>
-
-        <rect x="1" y="1" width="1158" height="358" rx="23" fill="#fbfcfa" />
-        <path d="M16 16h340v185H16z" fill="url(#move-scene-dots)" opacity="0.52" />
-        <circle
-          cx="1018"
-          cy="68"
-          r="64"
-          fill="none"
-          stroke="#202a25"
-          strokeWidth="1"
-          opacity="0.08"
-        />
-        <circle
-          cx="1018"
-          cy="68"
-          r="46"
-          fill="none"
-          stroke="#202a25"
-          strokeWidth="1"
-          opacity="0.08"
-        />
-        <path d="M54 286H1110" stroke="#202a25" strokeWidth="2" strokeLinecap="round" />
-        <path
-          d="M65 300H1098"
-          stroke="#202a25"
-          strokeWidth="1"
-          strokeDasharray="2 12"
-          opacity="0.26"
-        />
-
-        <g stroke="#202a25" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M64 149 191 47l130 102v131H64z" fill="#fff" strokeWidth="4" />
-          <path d="m45 152 145-117 146 117" fill="none" strokeWidth="7" />
-          <path d="M83 147h213" strokeWidth="2" opacity="0.38" />
-          <path d="M110 164h75v65h-75z" fill="#f4f5f2" strokeWidth="3" />
-          <path d="M147.5 164v65M110 196.5h75" strokeWidth="2.5" />
-          <path d="M220 179h62v101h-62z" fill="#f7f7f4" strokeWidth="3" />
-          <path
-            d="M232 197c0-11 8-19 19-19h31v101h-50z"
-            fill="url(#move-scene-hatch)"
-            opacity="0.65"
-          />
-          <circle cx="269" cy="231" r="3.5" fill="#202a25" stroke="none" />
-          <path d="M76 280h224" strokeWidth="4" />
-          <path d="M95 280v8m180-8v8" strokeWidth="3" />
-          <path d="M88 129h10m181 0h10" strokeWidth="3" />
-          <path d="M152 47v-17h34v-6h15v32" fill="#fff" strokeWidth="3" />
-          <path d="M161 38h25" strokeWidth="2" opacity="0.5" />
-        </g>
-
-        <Carton className="move-scene__pickup-box" transform="translate(282 242)" />
-
-        <g className="move-scene__route" fill="none" stroke="#a97a4c" strokeLinecap="round">
-          <path
-            d="M321 250c82-86 171-89 259-42 33 18 48 37 74 42"
-            strokeWidth="2.5"
-            strokeDasharray="3 9"
-          />
-          <path d="m651 242 11 9-14 4" strokeWidth="2.5" />
-          <circle cx="332" cy="249" r="5" fill="#a97a4c" stroke="none" />
-        </g>
-
-        <g className="move-scene__truck" stroke="#202a25" strokeLinejoin="round">
-          <path d="M691 151q0-10 10-10h234v139H691z" fill="#fff" strokeWidth="4" />
-          <path
-            d="M703 163h219v105H703z"
-            fill="url(#move-scene-hatch)"
-            strokeWidth="2"
-            opacity="0.78"
-          />
-          <path d="M935 181h94q9 0 14 9l25 42v48H935z" fill="#fff" strokeWidth="4" />
-          <path d="M957 190h60l22 37h-82z" fill="#f4f5f2" strokeWidth="3" />
-          <path d="M1019 193v30h18" fill="none" strokeWidth="2" />
-          <path d="M1068 246h13v17h-13" fill="#fff" strokeWidth="3" />
-          <path d="M935 267h133M691 280h17m215 0h12" strokeWidth="3" />
-          <path d="M718 178h191" strokeWidth="1.5" opacity="0.35" />
-          <rect x="760" y="190" width="132" height="51" rx="6" fill="#fff" strokeWidth="2.5" />
-          <text
-            x="826"
-            y="212"
-            textAnchor="middle"
-            fill="#202a25"
-            stroke="none"
-            fontFamily="Outfit, sans-serif"
-            fontSize="13"
-            fontWeight="800"
-            letterSpacing="1.4"
-          >
-            SHREE NATH
-          </text>
-          <text
-            x="826"
-            y="229"
-            textAnchor="middle"
-            fill="#65716a"
-            stroke="none"
-            fontFamily="Outfit, sans-serif"
-            fontSize="8"
-            fontWeight="700"
-            letterSpacing="1.5"
-          >
-            PACKERS &amp; MOVERS
-          </text>
-          <path d="M947 273v-10h25v10" fill="#fff" strokeWidth="2" />
-          <path d="M1015 274h33" stroke="#a97a4c" strokeWidth="3" strokeLinecap="round" />
-          <path d="M1052 181v-18h7v18" fill="#fff" strokeWidth="2.5" />
-        </g>
-
-        <Carton className="move-scene__loaded-box" transform="translate(700 226) scale(.82)" />
-        <g transform="translate(1055 157)">
-          <Smoke />
-        </g>
-        <SceneWheels />
-
-        <g className="move-scene__porter-track">
-          <Mover porter transform="translate(340 0)" />
-        </g>
-        <Mover transform="translate(663 0)" />
-
-        <g className="move-scene__speech" transform="translate(407 104)">
-          <path
-            d="M0 0q0-9 10-9h100q10 0 10 9v29q0 9-10 9H45l-13 12v-12H10q-10 0-10-9z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
-          <text
-            x="60"
-            y="19"
-            textAnchor="middle"
-            fill="#202a25"
-            fontFamily="Outfit, sans-serif"
-            fontSize="11"
-            fontWeight="700"
-          >
-            Easy does it!
-          </text>
-          <path d="M18 28h35" stroke="#a97a4c" strokeWidth="2" strokeLinecap="round" />
-        </g>
-        <g className="move-scene__safety" transform="translate(1074 135)">
-          <path
-            d="M0-21 18-14v14q-2 15-18 22Q-16 15-18 0v-14z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
-          <path
-            d="m-8 1 5 5 11-13"
-            fill="none"
-            stroke="#a97a4c"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </g>
-        <text
-          x="73"
-          y="327"
-          fill="#6d7972"
-          fontFamily="Outfit, sans-serif"
-          fontSize="9"
-          fontWeight="800"
-          letterSpacing="1.8"
-        >
-          HOME PICKUP
-        </text>
-        <text
-          x="1082"
-          y="327"
-          textAnchor="end"
-          fill="#6d7972"
-          fontFamily="Outfit, sans-serif"
-          fontSize="9"
-          fontWeight="800"
-          letterSpacing="1.8"
-        >
-          LOADED WITH CARE
-        </text>
+        <SceneArt uid="wide" />
       </svg>
 
       <svg
         className="move-scene move-scene--compact"
-        viewBox="0 0 520 340"
+        viewBox="40 100 900 300"
         role="img"
         aria-labelledby="move-scene-compact-title move-scene-compact-description"
       >
-        <title id="move-scene-compact-title">Home-to-truck moving scene</title>
+        <title id="move-scene-compact-title">Shree Nath Packers &amp; Movers moving crew</title>
         <desc id="move-scene-compact-description">
-          A mover picks up a box at home, loads it into the Shree Nath truck, and walks back as
-          smoke drifts from the exhaust.
+          A uniformed crew carries items from an open home door into a parked Shree Nath truck while
+          gentle smoke pulses from the exhaust.
         </desc>
-        <defs>
-          <pattern
-            id="move-scene-compact-dots"
-            width="16"
-            height="16"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="2" cy="2" r="1" fill="#29332e" opacity="0.11" />
-          </pattern>
-          <pattern
-            id="move-scene-compact-hatch"
-            width="8"
-            height="8"
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(45)"
-          >
-            <line x1="0" y1="0" x2="0" y2="8" stroke="#29332e" strokeWidth="1" opacity="0.12" />
-          </pattern>
-        </defs>
-        <rect x="1" y="1" width="518" height="338" rx="18" fill="#fbfcfa" />
-        <path d="M16 16h175v94H16z" fill="url(#move-scene-compact-dots)" />
-        <path d="M20 280h480" stroke="#202a25" strokeWidth="2" strokeLinecap="round" />
-        <path
-          d="M30 295h460"
-          stroke="#202a25"
-          strokeWidth="1"
-          strokeDasharray="2 10"
-          opacity="0.24"
-        />
-
-        <g fill="#fff" stroke="#202a25" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M31 145 107 81l80 64v113H31z" strokeWidth="3.5" />
-          <path d="m20 147 87-76 88 76" fill="none" strokeWidth="6" />
-          <path d="M49 160h43v39H49z" fill="#f0f1ed" strokeWidth="2.5" />
-          <path d="M70 160v39M49 179.5h43" strokeWidth="2" />
-          <path d="M128 178h44v80h-44z" fill="#f6f7f3" strokeWidth="2.5" />
-          <circle cx="161" cy="218" r="2.8" fill="#202a25" stroke="none" />
-          <path d="M42 258h139" strokeWidth="3" />
-        </g>
-
-        <Carton className="move-scene__pickup-box" transform="translate(164 231) scale(.72)" />
-        <path
-          d="M176 236c52-48 104-50 156-23"
-          fill="none"
-          stroke="#a97a4c"
-          strokeWidth="2"
-          strokeDasharray="3 8"
-          strokeLinecap="round"
-        />
-
-        <g className="move-scene__truck" fill="#fff" stroke="#202a25" strokeLinejoin="round">
-          <path d="M264 145h132v113H264z" strokeWidth="3.5" />
-          <path d="M277 158h106v83H277z" fill="url(#move-scene-compact-hatch)" strokeWidth="2" />
-          <path d="M397 173h55q8 0 12 8l19 33v44h-86z" strokeWidth="3.5" />
-          <path d="M409 181h37l16 27h-53z" fill="#f0f1ed" strokeWidth="2.5" />
-          <path d="M398 257h82" strokeWidth="3" />
-          <rect x="292" y="179" width="78" height="32" rx="4" strokeWidth="2" />
-          <text
-            x="331"
-            y="199"
-            textAnchor="middle"
-            fill="#202a25"
-            stroke="none"
-            fontFamily="Outfit, sans-serif"
-            fontSize="11"
-            fontWeight="800"
-            letterSpacing="1"
-          >
-            SHREE NATH
-          </text>
-          <path d="M463 173v-16h6v16" fill="#fff" strokeWidth="2" />
-        </g>
-
-        <Carton className="move-scene__loaded-box" transform="translate(279 216) scale(.68)" />
-        <g transform="translate(466 154)">
-          <Smoke />
-        </g>
-        <SceneWheels compact />
-
-        <g className="move-scene__porter-track">
-          <Mover porter transform="translate(200 14) scale(.95)" />
-        </g>
-        <Mover transform="translate(259 14) scale(.95)" />
-
-        <g className="move-scene__speech" transform="translate(169 58)">
-          <path
-            d="M0 0q0-7 8-7h78q8 0 8 7v24q0 7-8 7H35L24 44V31H8q-8 0-8-7z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2"
-          />
-          <text
-            x="47"
-            y="15"
-            textAnchor="middle"
-            fill="#202a25"
-            fontFamily="Outfit, sans-serif"
-            fontSize="9"
-            fontWeight="700"
-          >
-            Easy does it!
-          </text>
-          <path d="M15 23h28" stroke="#a97a4c" strokeWidth="1.8" strokeLinecap="round" />
-        </g>
-        <g className="move-scene__safety" transform="translate(486 122)">
-          <path
-            d="M0-16 14-11v11q-2 12-14 17Q-12 12-14 0v-11z"
-            fill="#fff"
-            stroke="#202a25"
-            strokeWidth="2"
-          />
-          <path
-            d="m-6 1 4 4 8-9"
-            fill="none"
-            stroke="#a97a4c"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </g>
-        <text
-          x="28"
-          y="319"
-          fill="#6d7972"
-          fontFamily="Outfit, sans-serif"
-          fontSize="8"
-          fontWeight="800"
-          letterSpacing="1.5"
-        >
-          HOME
-        </text>
-        <text
-          x="492"
-          y="319"
-          textAnchor="end"
-          fill="#6d7972"
-          fontFamily="Outfit, sans-serif"
-          fontSize="8"
-          fontWeight="800"
-          letterSpacing="1.5"
-        >
-          TRUCK
-        </text>
+        <SceneArt uid="compact" />
       </svg>
     </>
   );
