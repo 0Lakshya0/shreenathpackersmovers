@@ -16,7 +16,13 @@ export const Route = createFileRoute("/animation-preview")({
       },
       { name: "robots", content: "noindex, nofollow" },
     ],
-    links: [{ rel: "stylesheet", href: animationCss }],
+    links: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap",
+      },
+      { rel: "stylesheet", href: animationCss },
+    ],
   }),
   component: AnimationPreviewPage,
 });
@@ -36,7 +42,7 @@ function AnimationPreviewPage() {
             <p>
               <span /> ANIMATION CONCEPT · SCENE 01
             </p>
-            <span className="animation-preview__scene-number">2D · CORPORATE VECTOR</span>
+            <span className="animation-preview__scene-number">2D · BLACK &amp; WHITE</span>
           </div>
 
           <div className="animation-preview__scene-card">
