@@ -68,10 +68,10 @@ function AnimationPreviewPage() {
                 <em>Premium Shifting, Zero Stress.</em>
               </h1>
               <p className="animation-preview__lead">
-                A friendly, hand-drawn moment from inside the home: two packers sit on the floor and
-                box every item by hand, while our porter brings things in and carries each finished
-                carton out to the truck. This is a standalone visual trial—the main homepage is
-                unchanged.
+                A friendly, hand-drawn moment from inside the home: helpers carry items in through
+                the arched passage, two packers box everything by hand on the floor, and finished
+                cartons go straight out of the front door. This is a standalone visual trial—the
+                main homepage is unchanged.
               </p>
 
               <div className="animation-preview__badges" aria-label="Moving service options">
