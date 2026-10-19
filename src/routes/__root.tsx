@@ -11,7 +11,9 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import enterpriseCss from "../enterprise.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteShell } from "../components/site-shell";
 
 function NotFoundComponent() {
   return (
@@ -78,14 +80,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Shree Nath Packers & Movers" },
-      { name: "description", content: "Packers and movers in Indore — local and domestic shifting." },
+      { title: "Shree Nath Packers & Movers | Indore" },
+      {
+        name: "description",
+        content:
+          "Thoughtful home and office relocation from Indore, with careful packing and domestic moving services.",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: enterpriseCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Sora:wght@700;800&display=swap" },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500;600;700&display=swap",
+      },
+      {
+        rel: "icon",
+        href: `${import.meta.env.BASE_URL}favicon.ico`,
+        type: "image/x-icon",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -96,7 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         <HeadContent />
       </head>
@@ -113,8 +127,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteShell>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </SiteShell>
     </QueryClientProvider>
   );
 }

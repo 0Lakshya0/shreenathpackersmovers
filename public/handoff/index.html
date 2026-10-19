@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Project Handoff — Shree Nath Packers &amp; Movers</title>
+    <style>
+      :root {
+        --paper: #f7f5ef;
+        --card: #fffefa;
+        --ink: #222a26;
+        --muted: #70766f;
+        --line: #dfdcd2;
+        --accent: #ad704a;
+        --navy: #202f2a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 32px 18px 64px;
+        display: flex;
+        justify-content: center;
+        background:
+          radial-gradient(ellipse at 8% 4%, rgb(173 112 74 / 10%), transparent 42%),
+          linear-gradient(160deg, #f4f6f2, var(--paper) 62%, #f7f8f5);
+        color: var(--ink);
+        font-family:
+          "Outfit",
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 640px;
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 14px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgb(173 112 74 / 16%);
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-family: "Bodoni Moda", Georgia, "Times New Roman", serif;
+        font-size: clamp(30px, 7vw, 44px);
+        line-height: 1.06;
+        letter-spacing: -0.015em;
+        font-weight: 500;
+      }
+      .lede {
+        margin: 0 0 26px;
+        max-width: 46ch;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #4a524c;
+      }
+      .card {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        box-shadow: var(--shadow, 0 22px 58px -32px rgb(26 35 29 / 24%));
+      }
+      .card h2 {
+        margin: 0 0 4px;
+        font-family: "Bodoni Moda", Georgia, serif;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .card p {
+        margin: 0 0 16px;
+        font-size: 13.5px;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 15px 18px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease;
+      }
+      .btn + .btn {
+        margin-top: 10px;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn:active {
+        transform: translateY(0);
+      }
+      .btn--primary {
+        background: var(--navy);
+        color: #f7f5ef;
+        box-shadow: 0 14px 30px -18px rgb(32 47 42 / 70%);
+      }
+      .btn--primary:hover {
+        box-shadow: 0 18px 34px -18px rgb(32 47 42 / 80%);
+      }
+      .btn--outline {
+        background: #fff;
+        border-color: var(--line);
+        color: var(--ink);
+      }
+      .btn--outline:hover {
+        border-color: #c9c4b6;
+      }
+      .btn--ghost {
+        background: #f3f1ea;
+        color: var(--navy);
+      }
+      .btn svg {
+        flex: none;
+        width: 18px;
+        height: 18px;
+      }
+      .btn small {
+        margin-left: auto;
+        font-size: 11.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        opacity: 0.6;
+        white-space: nowrap;
+      }
+      .steps {
+        margin: 26px 0 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: step;
+      }
+      .steps li {
+        position: relative;
+        padding: 0 0 14px 38px;
+        font-size: 14px;
+        line-height: 1.55;
+        color: #414a44;
+        counter-increment: step;
+      }
+      .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 0;
+        top: -1px;
+        width: 24px;
+        height: 24px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .steps li:last-child {
+        padding-bottom: 0;
+      }
+      code {
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: #eceae3;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.88em;
+      }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 26px;
+      }
+      .links a {
+        padding: 8px 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgb(255 254 250 / 70%);
+        color: var(--navy);
+        font-size: 12.5px;
+        text-decoration: none;
+      }
+      .links a:hover {
+        border-color: #c9c4b6;
+      }
+      .note {
+        margin-top: 22px;
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translate(-50%, 14px);
+        padding: 11px 18px;
+        border-radius: 999px;
+        background: var(--navy);
+        color: #f7f5ef;
+        font-size: 13px;
+        font-weight: 500;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+      .toast.is-on {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      @media (max-width: 420px) {
+        .btn small {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <p class="eyebrow">Project handoff · unlisted</p>
+      <h1>Shree Nath Packers &amp; Movers</h1>
+      <p class="lede">
+        Poora project — site + dono animation scenes + naye chat ke liye brief. Neeche se download
+        karo ya text copy karke dusre Arena chat me paste kar do.
+      </p>
+
+      <section class="card">
+        <h2>Download</h2>
+        <p>Naye chat me attach karne ke liye dono files.</p>
+
+        <a class="btn btn--primary" href="./shreenath-handoff.md" download="shreenath-handoff.md">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" />
+          </svg>
+          Download project brief
+          <small>.md · 18 KB</small>
+        </a>
+
+        <a
+          class="btn btn--outline"
+          href="./shreenath-source.tar.gz"
+          download="shreenath-source.tar.gz"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            aria-hidden="true"
+          >
+            <path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5v-9Z" stroke-linejoin="round" />
+            <path d="M4 7.5 12 11l8-3.5M12 11v9" stroke-linejoin="round" />
+          </svg>
+          Download source snapshot
+          <small>.tar.gz · 1.5 MB</small>
+        </a>
+
+        <button class="btn btn--ghost" id="copy" type="button">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            aria-hidden="true"
+          >
+            <rect x="9" y="9" width="11" height="12" rx="2" />
+            <path
+              d="M15 5.5A1.5 1.5 0 0 0 13.5 4H5.5A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span id="copy-label">Copy full brief</span>
+          <small>paste into new chat</small>
+        </button>
+      </section>
+
+      <ol class="steps">
+        <li>Naya chat kholo.</li>
+        <li>
+          Upar wala <strong>brief</strong> copy karke first message me paste karo (ya downloaded
+          <code>.md</code> file attach kar do).
+        </li>
+        <li>
+          Agar naye chat ko GitHub access nahi hai, to <code>.tar.gz</code> bhi attach kar dena —
+          usme exact source hai.
+        </li>
+      </ol>
+
+      <div class="links">
+        <a href="../">Live site</a>
+        <a href="../animation-preview/">Scene 01</a>
+        <a href="../animation-preview-2/">Scene 02</a>
+      </div>
+
+      <p class="note">
+        Ye page unlisted hai (<code>noindex</code>) — site ke kisi menu ya page se link nahi hai.
+        Code branch: <code>arena/adfb3ae5-shreenathpackersmovers</code>.
+      </p>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Copied — ab paste kar do</div>
+
+    <script>
+      (function () {
+        var btn = document.getElementById("copy");
+        var label = document.getElementById("copy-label");
+        var toast = document.getElementById("toast");
+        var timer;
+
+        function flash(message) {
+          toast.textContent = message;
+          toast.classList.add("is-on");
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            toast.classList.remove("is-on");
+          }, 2400);
+        }
+
+        function fallbackCopy(text) {
+          var area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          var ok = false;
+          try {
+            ok = document.execCommand("copy");
+          } catch (error) {
+            ok = false;
+          }
+          document.body.removeChild(area);
+          return ok;
+        }
+
+        btn.addEventListener("click", function () {
+          if (btn.disabled) return;
+          btn.disabled = true;
+          label.textContent = "Copying…";
+
+          fetch("./shreenath-handoff.md", { cache: "no-store" })
+            .then(function (response) {
+              if (!response.ok) throw new Error("fetch failed");
+              return response.text();
+            })
+            .then(function (text) {
+              if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text).then(function () {
+                  return true;
+                });
+              }
+              return fallbackCopy(text);
+            })
+            .then(function (ok) {
+              label.textContent = ok ? "Copied ✓" : "Copy full brief";
+              flash(
+                ok
+                  ? "Copied — ab naye chat me paste kar do"
+                  : "Copy nahi hua — file download kar lo",
+              );
+            })
+            .catch(function () {
+              label.textContent = "Copy full brief";
+              flash("Copy nahi hua — upar se file download kar lo");
+            })
+            .then(function () {
+              btn.disabled = false;
+              setTimeout(function () {
+                if (label.textContent === "Copied ✓") label.textContent = "Copy full brief";
+              }, 2600);
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

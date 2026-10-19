@@ -1,0 +1,53 @@
+name: Publish phone-friendly preview
+
+on:
+  push:
+    branches:
+      - arena/adfb3ae5-shreenathpackersmovers
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_DEPLOY_TARGET: github-pages
+    steps:
+      - name: Check out the preview branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-package-lock --legacy-peer-deps
+      - name: Build and prerender all pages
+        run: npm run build
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Add the no-Jekyll marker
+        run: touch .output/public/.nojekyll
+      - name: Upload the static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+  deploy:
+    environment:
+      # The default github-pages environment is restricted to main; this preview deploys from the Arena branch.
+      name: phone-preview
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publish the preview
+        id: deployment
+        uses: actions/deploy-pages@v4

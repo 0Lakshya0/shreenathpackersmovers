@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AnimationPreviewRouteImport } from './routes/animation-preview'
+import { Route as AnimationPreview2RouteImport } from './routes/animation-preview-2'
+import { Route as AnimationPreviewBookingRouteImport } from './routes/animation-preview-booking'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ServicesRouteImport } from './routes/services'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimationPreviewRoute = AnimationPreviewRouteImport.update({
+  id: '/animation-preview',
+  path: '/animation-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimationPreview2Route = AnimationPreview2RouteImport.update({
+  id: '/animation-preview-2',
+  path: '/animation-preview-2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimationPreviewBookingRoute = AnimationPreviewBookingRouteImport.update({
+  id: '/animation-preview-booking',
+  path: '/animation-preview-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animation-preview': typeof AnimationPreviewRoute
+  '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/services': typeof ServicesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animation-preview': typeof AnimationPreviewRoute
+  '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/services': typeof ServicesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animation-preview': typeof AnimationPreviewRoute
+  '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/services': typeof ServicesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/animation-preview'
+    | '/animation-preview-2'
+    | '/animation-preview-booking'
+    | '/contact'
+    | '/faq'
+    | '/services'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/animation-preview'
+    | '/animation-preview-2'
+    | '/animation-preview-booking'
+    | '/contact'
+    | '/faq'
+    | '/services'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/animation-preview'
+    | '/animation-preview-2'
+    | '/animation-preview-booking'
+    | '/contact'
+    | '/faq'
+    | '/services'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AnimationPreviewRoute: typeof AnimationPreviewRoute
+  AnimationPreview2Route: typeof AnimationPreview2Route
+  AnimationPreviewBookingRoute: typeof AnimationPreviewBookingRoute
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
+  ServicesRoute: typeof ServicesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animation-preview': {
+      id: '/animation-preview'
+      path: '/animation-preview'
+      fullPath: '/animation-preview'
+      preLoaderRoute: typeof AnimationPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animation-preview-2': {
+      id: '/animation-preview-2'
+      path: '/animation-preview-2'
+      fullPath: '/animation-preview-2'
+      preLoaderRoute: typeof AnimationPreview2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animation-preview-booking': {
+      id: '/animation-preview-booking'
+      path: '/animation-preview-booking'
+      fullPath: '/animation-preview-booking'
+      preLoaderRoute: typeof AnimationPreviewBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AnimationPreviewRoute: AnimationPreviewRoute,
+  AnimationPreview2Route: AnimationPreview2Route,
+  AnimationPreviewBookingRoute: AnimationPreviewBookingRoute,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
+  ServicesRoute: ServicesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
