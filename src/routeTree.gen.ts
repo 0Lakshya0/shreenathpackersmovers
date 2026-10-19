@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AnimationPreviewRouteImport } from './routes/animation-preview'
 import { Route as AnimationPreview2RouteImport } from './routes/animation-preview-2'
+import { Route as AnimationPreviewBookingRouteImport } from './routes/animation-preview-booking'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -37,6 +38,11 @@ const AnimationPreview2Route = AnimationPreview2RouteImport.update({
   path: '/animation-preview-2',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnimationPreviewBookingRoute = AnimationPreviewBookingRouteImport.update({
+  id: '/animation-preview-booking',
+  path: '/animation-preview-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/animation-preview': typeof AnimationPreviewRoute
   '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/services': typeof ServicesRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/animation-preview': typeof AnimationPreviewRoute
   '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/services': typeof ServicesRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/animation-preview': typeof AnimationPreviewRoute
   '/animation-preview-2': typeof AnimationPreview2Route
+  '/animation-preview-booking': typeof AnimationPreviewBookingRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/services': typeof ServicesRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/animation-preview'
     | '/animation-preview-2'
+    | '/animation-preview-booking'
     | '/contact'
     | '/faq'
     | '/services'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/animation-preview'
     | '/animation-preview-2'
+    | '/animation-preview-booking'
     | '/contact'
     | '/faq'
     | '/services'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/animation-preview'
     | '/animation-preview-2'
+    | '/animation-preview-booking'
     | '/contact'
     | '/faq'
     | '/services'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AnimationPreviewRoute: typeof AnimationPreviewRoute
   AnimationPreview2Route: typeof AnimationPreview2Route
+  AnimationPreviewBookingRoute: typeof AnimationPreviewBookingRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   ServicesRoute: typeof ServicesRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimationPreview2RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/animation-preview-booking': {
+      id: '/animation-preview-booking'
+      path: '/animation-preview-booking'
+      fullPath: '/animation-preview-booking'
+      preLoaderRoute: typeof AnimationPreviewBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AnimationPreviewRoute: AnimationPreviewRoute,
   AnimationPreview2Route: AnimationPreview2Route,
+  AnimationPreviewBookingRoute: AnimationPreviewBookingRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   ServicesRoute: ServicesRoute,
