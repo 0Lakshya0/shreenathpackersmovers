@@ -20,7 +20,7 @@ function doodleRect(x: number, y: number, w: number, h: number, wobble = 1.2) {
 type Hair = "spiky" | "flat" | "part" | "cap" | "bald";
 
 /* ==================================================================== */
-/*  CARTOON FACES                                                       */
+/*  FACES                                                               */
 /* ==================================================================== */
 
 function HairSide({ hair }: { hair: Hair }) {
@@ -138,7 +138,6 @@ function HairFront({ hair }: { hair: Hair }) {
   }
 }
 
-/** Profile head. Local origin: the walker's feet. */
 function HeadSide({ hair }: { hair: Hair }) {
   return (
     <g className="pk-head">
@@ -154,7 +153,6 @@ function HeadSide({ hair }: { hair: Hair }) {
             strokeWidth="2.2"
           />
           <circle cx="2.8" cy="-62.6" r="9.6" fill={PAPER} stroke={INK} strokeWidth="3.6" />
-          {/* ear */}
           <path
             d="M-4.4 -62.4 Q-7 -62 -6.4 -58.8 Q-5.8 -56.6 -3.4 -57.6"
             fill={PAPER}
@@ -162,7 +160,6 @@ function HeadSide({ hair }: { hair: Hair }) {
             strokeWidth="2.2"
             strokeLinejoin="round"
           />
-          {/* eye: white + pupil, big cartoon style */}
           <ellipse
             cx="6.4"
             cy="-64.4"
@@ -173,7 +170,6 @@ function HeadSide({ hair }: { hair: Hair }) {
             strokeWidth="1.7"
           />
           <circle className="pk-eye" cx="7.2" cy="-64.2" r="1.5" fill={INK} />
-          {/* brow */}
           <path
             d="M4 -69.4 Q7 -71 9.8 -69.6"
             stroke={INK}
@@ -181,7 +177,6 @@ function HeadSide({ hair }: { hair: Hair }) {
             strokeLinecap="round"
             fill="none"
           />
-          {/* nose + mouth */}
           <path
             d="M10.4 -63.4 Q13 -61.4 10.6 -60.2"
             stroke={INK}
@@ -196,7 +191,6 @@ function HeadSide({ hair }: { hair: Hair }) {
             strokeLinecap="round"
             fill="none"
           />
-          {/* blush */}
           <g stroke={INK} strokeWidth="1.1" opacity="0.35" strokeLinecap="round">
             <path d="M6.6 -58.6 L9 -57.4 M7.2 -57.6 L9.6 -56.4" />
           </g>
@@ -217,21 +211,17 @@ function HeadSide({ hair }: { hair: Hair }) {
   );
 }
 
-/** Front-facing head of a seated packer. Local origin: the packer's seat. */
 function HeadFront({ hair }: { hair: Hair }) {
   return (
     <g className="pk-head pk-head--front">
       <g className="pk-headsway">
         <circle cx="0" cy="-56" r="13.4" fill={PAPER} stroke={INK} strokeWidth="3.4" />
-        {/* ears */}
         <circle cx="-13" cy="-55" r="3" fill={PAPER} stroke={INK} strokeWidth="2" />
         <circle cx="13" cy="-55" r="3" fill={PAPER} stroke={INK} strokeWidth="2" />
-        {/* eyes */}
         <ellipse cx="-4.6" cy="-57.4" rx="3.5" ry="4" fill="#fff" stroke={INK} strokeWidth="1.8" />
         <ellipse cx="4.6" cy="-57.4" rx="3.5" ry="4" fill="#fff" stroke={INK} strokeWidth="1.8" />
         <circle className="pk-eye" cx="-4.2" cy="-57" r="1.7" fill={INK} />
         <circle className="pk-eye" cx="5" cy="-57" r="1.7" fill={INK} />
-        {/* brows */}
         <path
           d="M-8.2 -62.6 Q-4.6 -64.4 -1.4 -62.8 M1.4 -62.8 Q4.6 -64.4 8.2 -62.6"
           stroke={INK}
@@ -239,7 +229,6 @@ function HeadFront({ hair }: { hair: Hair }) {
           strokeLinecap="round"
           fill="none"
         />
-        {/* nose */}
         <path
           d="M0 -56.6 Q-1.1 -54.4 0.4 -53.6"
           stroke={INK}
@@ -247,7 +236,6 @@ function HeadFront({ hair }: { hair: Hair }) {
           strokeLinecap="round"
           fill="none"
         />
-        {/* smile */}
         <path
           d="M-3.4 -48.2 Q0 -45.2 3.4 -48.2"
           stroke={INK}
@@ -256,7 +244,6 @@ function HeadFront({ hair }: { hair: Hair }) {
           fill="none"
         />
         <ellipse className="pk-mouth" cx="0" cy="-47.2" rx="2.4" ry="2.8" fill={INK} />
-        {/* blush hatch */}
         <g stroke={INK} strokeWidth="1.2" opacity="0.32" strokeLinecap="round">
           <path d="M-10.4 -52.6 L-7.6 -51 M-10.8 -51 L-8 -49.4" />
           <path d="M10.4 -52.6 L7.6 -51 M10.8 -51 L8 -49.4" />
@@ -277,7 +264,7 @@ function HeadFront({ hair }: { hair: Hair }) {
 }
 
 /* ==================================================================== */
-/*  WALKER (profile): the porter                                       */
+/*  FIGURE PARTS                                                        */
 /* ==================================================================== */
 
 function Leg({ back }: { back?: boolean }) {
@@ -289,7 +276,6 @@ function Leg({ back }: { back?: boolean }) {
         <g className="pk-shin" transform="translate(0 19)">
           <rect x="-3" y="0" width="6" height="19.6" fill="none" />
           <path d="M0 0 L0 16.8" stroke={INK} strokeWidth="6" strokeLinecap="round" fill="none" />
-          {/* chunky cartoon boot */}
           <path
             d="M-4 13.2 L7.4 13.2 Q10.6 13.2 10.6 15.4 Q10.6 20.4 6.4 20.4 L-6 20.4 Q-8.4 20.4 -8.4 17 Q-8.4 13.2 -4 13.2 Z"
             fill={PAPER}
@@ -297,7 +283,6 @@ function Leg({ back }: { back?: boolean }) {
             strokeWidth="2.6"
             strokeLinejoin="round"
           />
-          <path d="M-3.4 17.4 L7 17.4" stroke={INK} strokeWidth="1.1" opacity="0.35" />
         </g>
       </g>
     </g>
@@ -360,38 +345,30 @@ function TorsoSide() {
   );
 }
 
-function Walker({
-  id,
-  x,
-  scale,
-  hair,
-  children,
-}: {
-  id: string;
-  x: number;
-  scale: number;
-  hair: Hair;
-  children?: ReactNode;
-}) {
+/** Body of a walking carrier (local space, feet at y 0). */
+function CarrierBody({ hair, children }: { hair: Hair; children?: ReactNode }) {
   return (
-    <g className={`pk pk--${id}`} transform={`translate(${x} 460)`}>
-      <ellipse className="pk-shadow" cx="0" cy="1.5" rx="17" ry="3.4" fill={INK} opacity="0.1" />
+    <g className="pk-fit">
+      <rect x="-36" y="-84" width="72" height="84" fill="none" />
+      <Leg back />
+      <Leg />
+      <g className="pk-bob">
+        <Arm back />
+        <TorsoSide />
+        <HeadSide hair={hair} />
+        <Arm className="pk-arm pk-arm--f pk-arm--main" />
+      </g>
+      {children}
+    </g>
+  );
+}
+
+function CarrierShell({ id, deep, children }: { id: string; deep?: boolean; children: ReactNode }) {
+  return (
+    <g className={`pk pk--${id}${deep ? " pk--deep" : " pk--front"}`}>
       <g className="pk-squash">
         <g className="pk-flip">
-          <g className="pk-wobble">
-            <g className="pk-fit" style={{ "--s": scale } as CSSProperties}>
-              <rect x="-36" y="-84" width="72" height="84" fill="none" />
-              <Leg back />
-              <Leg />
-              <g className="pk-bob">
-                <Arm back />
-                <TorsoSide />
-                <HeadSide hair={hair} />
-                <Arm className="pk-arm pk-arm--f pk-arm--main" />
-              </g>
-              {children}
-            </g>
-          </g>
+          <g className="pk-wobble">{children}</g>
         </g>
       </g>
     </g>
@@ -416,23 +393,21 @@ function Packer({
       className={`pk pk--${id}`}
       transform={id === "k1" ? "translate(430 460)" : "translate(700 460)"}
     >
-      {/* sitting mat + crossed legs */}
       <ellipse cx="0" cy="-2" rx="74" ry="9" fill={INK} opacity="0.06" />
       <path
-        d="M-70 -11 Q-78 -3 -68 1 L-46 1 Q-54 -6 -50 -13 Z"
+        d="M-40 -11 Q-46 -3 -39 1 L-26 1 Q-31 -6 -29 -13 Z"
         fill={PAPER}
         stroke={INK}
         strokeWidth="2.8"
         strokeLinejoin="round"
       />
       <path
-        d="M70 -11 Q78 -3 68 1 L46 1 Q54 -6 50 -13 Z"
+        d="M40 -11 Q46 -3 39 1 L26 1 Q31 -6 29 -13 Z"
         fill={PAPER}
         stroke={INK}
         strokeWidth="2.8"
         strokeLinejoin="round"
       />
-      {/* body — squashes and stretches as he bends, grabs and sits back */}
       <g className="pk-bend">
         <g className="pk-bob">
           <g className="pk-upper">
@@ -489,11 +464,76 @@ function Packer({
           </g>
         </g>
       </g>
-      <g className="pk-item pk-item--hand pk-item--hand1" transform="translate(-26 -18)">
+      <g className="pk-item pk-item--hand pk-item--hand1" transform="translate(-64 -16)">
         {items[0]}
       </g>
-      <g className="pk-item pk-item--hand pk-item--hand2" transform="translate(-26 -18)">
+      <g className="pk-item pk-item--hand pk-item--hand2" transform="translate(-64 -16)">
         {items[1]}
+      </g>
+    </g>
+  );
+}
+
+/* ==================================================================== */
+/*  SUPERVISOR                                                          */
+/* ==================================================================== */
+
+function Supervisor() {
+  return (
+    <g className="pk pk--sup" transform="translate(318 500)">
+      <ellipse cx="0" cy="1.5" rx="17" ry="3.4" fill={INK} opacity="0.1" />
+      <g className="pk-sup-shift">
+        <g className="pk-sup-bob">
+          <g className="pk-fit">
+            <rect x="-34" y="-84" width="68" height="84" fill="none" />
+            <Leg back />
+            <Leg />
+            <g className="pk-bob">
+              <Arm back />
+              <g className="pk-torso-g">
+                <path
+                  d="M-10.4 -36 Q-12 -52 -8.6 -60.4 Q0 -64 8.6 -60.4 Q12 -52 10.4 -36 Q0 -33.2 -10.4 -36 Z"
+                  fill={PAPER}
+                  stroke={INK}
+                  strokeWidth="3.6"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M-10.4 -36 Q-12 -52 -8.6 -60.4 Q0 -64 8.6 -60.4 Q12 -52 10.4 -36 Q0 -33.2 -10.4 -36 Z"
+                  fill={`url(#pk-hatch)`}
+                  opacity="0.35"
+                />
+                <path
+                  d="M-1.5 -61 L-2.5 -36 M7.5 -61 L8.5 -36"
+                  stroke={INK}
+                  strokeWidth="1.4"
+                  fill="none"
+                />
+              </g>
+              <HeadSide hair="cap" />
+              <g className="pk-arm pk-arm--f pk-arm--sup">
+                <g className="pk-clipboard">
+                  <rect
+                    x="2"
+                    y="-46"
+                    width="17"
+                    height="21"
+                    rx="1.5"
+                    fill={PAPER}
+                    stroke={INK}
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M6 -41 L15 -41 M6 -36.5 L15 -36.5 M6 -32 L12.5 -32"
+                    stroke={INK}
+                    strokeWidth="1.2"
+                    opacity="0.7"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
       </g>
     </g>
   );
@@ -505,7 +545,7 @@ function Packer({
 
 function ItemVase() {
   return (
-    <g className="pk-rock pk-rock--soft">
+    <g className="pk-rock">
       <path
         d="M-4.6 -13 Q-5.6 -8 -8 -5 Q-10 -2 -8.4 0 L8.4 0 Q10 -2 8 -5 Q5.6 -8 4.6 -13 Z"
         fill={PAPER}
@@ -534,7 +574,7 @@ function ItemVase() {
 
 function ItemBooks() {
   return (
-    <g className="pk-rock pk-rock--soft">
+    <g className="pk-rock">
       <path
         d="M-15 -4.4 Q0 -6 15 -4.4 L15 0 Q0 -1.6 -15 0 Z"
         fill={PAPER}
@@ -556,19 +596,13 @@ function ItemBooks() {
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
-      <path
-        d="M-8.6 -5 L-8.6 0 M-7 -9.6 L-7 -4.4 M5.2 -14 L5.2 -8.8"
-        stroke={INK}
-        strokeWidth="1.3"
-        opacity="0.5"
-      />
     </g>
   );
 }
 
 function ItemLamp() {
   return (
-    <g className="pk-rock pk-rock--soft">
+    <g className="pk-rock">
       <path
         d="M-9 -17 Q0 -19 9 -17 L6.6 0 Q0 1 -6.6 0 Z"
         fill={PAPER}
@@ -591,7 +625,7 @@ function ItemLamp() {
 
 function ItemFrame() {
   return (
-    <g className="pk-rock pk-rock--soft">
+    <g className="pk-rock">
       <path d={doodleRect(-13, -28, 26, 28, 1)} fill={PAPER} stroke={INK} strokeWidth="2.6" />
       <path
         d={doodleRect(-10, -25, 20, 22, 0.8)}
@@ -612,7 +646,6 @@ function ItemFrame() {
   );
 }
 
-/** Closed, taped moving carton with the SN stamp (front view, base at y 0). */
 function PackedBox() {
   return (
     <g>
@@ -646,18 +679,12 @@ function PackedBox() {
       >
         SN
       </text>
-      <path
-        d="M-19 -21 L-12 -21 M-19 -17.6 L-15 -17.6"
-        stroke={INK}
-        strokeWidth="1.3"
-        opacity="0.45"
-      />
     </g>
   );
 }
 
 /* ==================================================================== */
-/*  CARTON (open, flaps, tape)                                          */
+/*  CARTON                                                              */
 /* ==================================================================== */
 
 function Carton({ id }: { id: "k1" | "k2" }) {
@@ -720,39 +747,7 @@ function Carton({ id }: { id: "k1" | "k2" }) {
           strokeWidth="1.2"
           opacity="0.9"
         />
-        <path
-          d="M-38 -18 L-24 -18 M-38 -14.6 L-30 -14.6"
-          stroke={INK}
-          strokeWidth="1.1"
-          opacity="0.45"
-        />
       </g>
-    </g>
-  );
-}
-
-/* ==================================================================== */
-/*  BENCH / STOOL beside each packer                                    */
-/* ==================================================================== */
-
-function Stool({ x }: { x: number }) {
-  return (
-    <g transform={`translate(${x} 462)`}>
-      <ellipse cx="0" cy="1" rx="21" ry="3" fill={INK} opacity="0.1" />
-      <path
-        d="M-20 -18 Q0 -21 20 -18 L18 -13 Q0 -16 -18 -13 Z"
-        fill={PAPER}
-        stroke={INK}
-        strokeWidth="2.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M-15 -14 L-18 0 M15 -14 L18 0 M0 -15 L0 0"
-        stroke={INK}
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <path d="M-16 -9 Q0 -11 16 -9" stroke={INK} strokeWidth="1.4" opacity="0.4" fill="none" />
     </g>
   );
 }
@@ -764,19 +759,15 @@ function Stool({ x }: { x: number }) {
 function RoomShell() {
   return (
     <>
-      {/* ceiling band */}
       <path d="M0 0 H960 V58 Q480 54 0 58 Z" fill="#f3f4ef" />
       <path d="M0 58 Q480 54 960 58" stroke={INK} strokeWidth="2.6" fill="none" />
       <path d="M0 50 Q480 46 960 50" stroke={INK} strokeWidth="1.2" opacity="0.4" fill="none" />
-      {/* back wall */}
       <path d="M0 392 H960" stroke={INK} strokeWidth="2.8" />
       <path d="M0 382 H960" stroke={INK} strokeWidth="1.3" opacity="0.32" />
       <path d="M0 400 H960" stroke={INK} strokeWidth="1.4" opacity="0.45" />
-      {/* faint wallpaper ticks */}
       <g stroke={INK} strokeWidth="1" opacity="0.05">
         <path d="M120 96 V376 M210 90 V378 M330 96 V372 M440 90 V376 M560 96 V374 M660 90 V378 M820 96 V372 M900 92 V376" />
       </g>
-      {/* bare patch where a picture used to hang */}
       <path
         d="M596 210 Q622 207 648 210 L648 268 Q622 271 596 268 Z"
         fill="#f7f7ef"
@@ -784,7 +775,6 @@ function RoomShell() {
         strokeWidth="1.2"
         opacity="0.55"
       />
-      {/* floor */}
       <path d="M0 400 H960 V520 H0 Z" fill="#fafaf5" />
       <path d="M0 400 H960" stroke={INK} strokeWidth="2.6" />
       <g stroke={INK} strokeWidth="1.2" opacity="0.3">
@@ -802,16 +792,13 @@ function RoomShell() {
   );
 }
 
-/** Arched passage into the next room — clearly inside the house. */
+/** Arched passage into the next room (corridor is drawn behind the walkers). */
 function InnerArch() {
   return (
     <g>
-      {/* corridor beyond */}
       <path d="M92 392 L92 214 A56 58 0 0 1 204 214 L204 392 Z" fill="#eeecdf" />
-      {/* corridor depth: floor and side wall converging */}
       <path d="M92 392 L204 392 L186 372 L110 372 Z" fill="#f2f0e5" />
       <path d="M110 372 L186 372 L186 232 L110 232 Z" fill="#e6e4d7" />
-      {/* glimpse of the room beyond */}
       <path
         d="M124 372 L172 372 L172 268 Q148 254 124 268 Z"
         fill="#f7f6ee"
@@ -822,7 +809,21 @@ function InnerArch() {
       <g stroke={INK} strokeWidth="1.1" opacity="0.2">
         <path d="M92 340 L110 336 M204 340 L186 336 M96 300 L110 298 M200 300 L186 298" />
       </g>
-      {/* arch casing */}
+      <path
+        d="M96 232 Q104 250 98 274 Q106 292 100 312 Q108 330 102 348"
+        fill="none"
+        stroke={INK}
+        strokeWidth="1.4"
+        opacity="0.35"
+      />
+    </g>
+  );
+}
+
+/** Arch casing, drawn in front of the walkers coming through it. */
+function ArchCasing() {
+  return (
+    <g>
       <path
         d="M92 392 L92 214 A56 58 0 0 1 204 214 L204 392"
         fill="none"
@@ -837,7 +838,6 @@ function InnerArch() {
         strokeWidth="2.2"
         opacity="0.55"
       />
-      {/* threshold */}
       <path
         d="M84 392 L212 392 L220 404 L76 404 Z"
         fill="#f4f2e8"
@@ -846,134 +846,7 @@ function InnerArch() {
         strokeLinejoin="round"
       />
       <path d="M84 398 L212 398" stroke={INK} strokeWidth="1" opacity="0.35" />
-      {/* hanging cloth at the side (a bit of home life) */}
-      <path
-        d="M96 232 Q104 250 98 274 Q106 292 100 312 Q108 330 102 348"
-        fill="none"
-        stroke={INK}
-        strokeWidth="1.4"
-        opacity="0.35"
-      />
     </g>
-  );
-}
-
-/** The main door: proper jamb, open leaf, threshold and a landing outside. */
-function MainDoor() {
-  return (
-    <>
-      <defs>
-        <linearGradient id="pk-daylight" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fdfbf2" />
-          <stop offset="60%" stopColor="#f8f4e4" />
-          <stop offset="100%" stopColor="#efeade" />
-        </linearGradient>
-      </defs>
-      <g>
-        {/* light of the landing beyond */}
-        <path d="M772 160 H898 V392 H772 Z" fill="url(#pk-daylight)" />
-        {/* landing wall + step, seen through the opening */}
-        <path d="M772 330 H898 V392 H772 Z" fill="#f1eee1" />
-        <path d="M772 340 H898" stroke={INK} strokeWidth="1.4" opacity="0.35" />
-        <path
-          d="M784 392 L784 356 Q806 350 828 356 L828 392"
-          fill="none"
-          stroke={INK}
-          strokeWidth="1.6"
-          opacity="0.3"
-        />
-        {/* door frame */}
-        <path
-          d="M772 160 H898 M772 160 V392 M898 160 V392"
-          fill="none"
-          stroke={INK}
-          strokeWidth="5"
-          strokeLinecap="square"
-        />
-        <path d="M762 146 H908" stroke={INK} strokeWidth="4" strokeLinecap="round" />
-        <path d="M756 160 H772 M898 160 H914" stroke={INK} strokeWidth="2.6" />
-        <path d="M766 168 H904" stroke={INK} strokeWidth="1.4" opacity="0.4" />
-        {/* transom light above */}
-        <path d="M790 140 H880 V158 H790 Z" fill="#fdfaf0" stroke={INK} strokeWidth="2.2" />
-        <path d="M835 140 V158 M790 149 H880" stroke={INK} strokeWidth="1.4" opacity="0.7" />
-        {/* door leaf swung inward toward the room */}
-        <path
-          d="M898 166 Q902 164 904 172 L934 214 Q938 220 938 230 L938 372 Q938 384 926 382 L904 378 Q898 376 898 366 Z"
-          fill={PAPER}
-          stroke={INK}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M908 190 L926 222 L926 366 L908 362 Z"
-          fill="none"
-          stroke={INK}
-          strokeWidth="1.5"
-          opacity="0.55"
-        />
-        <path
-          d="M908 246 L926 250 M908 300 L926 304"
-          stroke={INK}
-          strokeWidth="1.3"
-          opacity="0.4"
-        />
-        <circle cx="906" cy="280" r="2.6" fill={INK} />
-        {/* nameplate + bell + switch */}
-        <g>
-          <rect
-            x="800"
-            y="112"
-            width="70"
-            height="20"
-            rx="3"
-            fill={PAPER}
-            stroke={INK}
-            strokeWidth="2"
-          />
-          <text
-            x="835"
-            y="127"
-            textAnchor="middle"
-            fontFamily={HAND}
-            fontSize="13"
-            fontWeight="700"
-            fill={INK}
-          >
-            Shree Nath
-          </text>
-        </g>
-        <circle cx="912" cy="238" r="5" fill={PAPER} stroke={INK} strokeWidth="2" />
-        <circle cx="912" cy="238" r="1.6" fill={INK} />
-        <rect
-          x="726"
-          y="216"
-          width="12"
-          height="20"
-          rx="2"
-          fill={PAPER}
-          stroke={INK}
-          strokeWidth="2"
-        />
-        <path d="M730 221 L734 221" stroke={INK} strokeWidth="1.6" />
-        {/* threshold + doormat + light spill */}
-        <path
-          d="M766 392 L904 392 L914 408 L756 408 Z"
-          fill="#f6f4ea"
-          stroke={INK}
-          strokeWidth="2.2"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M790 416 Q834 412 878 416 L874 436 Q834 432 794 436 Z"
-          fill="none"
-          stroke={INK}
-          strokeWidth="1.8"
-          strokeDasharray="8 7"
-          opacity="0.6"
-        />
-        <path d="M772 400 L898 400 L922 470 L748 470 Z" fill="#fbf6e4" opacity="0.55" />
-      </g>
-    </>
   );
 }
 
@@ -991,7 +864,6 @@ function WindowArt() {
         strokeWidth="2.6"
         strokeLinejoin="round"
       />
-      {/* curtains */}
       <g className="pk-curtain pk-curtain--l">
         <path
           d="M236 196 Q246 216 238 246 Q246 272 238 302 Q252 314 264 302 Q272 272 260 244 Q268 214 258 196 Z"
@@ -1071,11 +943,9 @@ function ClockArt() {
   );
 }
 
-/** Leftover flat cartons, tape and paper — the room is mid-move. */
 function MovingBits() {
   return (
     <>
-      {/* flat cartons leaning on the wall */}
       <g transform="translate(146 400)">
         <path
           d="M0 0 L26 -92 L54 -84 L30 0 Z"
@@ -1090,7 +960,6 @@ function MovingBits() {
           strokeWidth="1.4"
           opacity="0.5"
         />
-        <path d="M4 -12 L32 -3" stroke={INK} strokeWidth="1.6" opacity="0.6" />
       </g>
       <g transform="translate(178 400)">
         <path
@@ -1102,13 +971,10 @@ function MovingBits() {
         />
         <path d="M7 -26 L34 -17 M12 -46 L35 -38" stroke={INK} strokeWidth="1.3" opacity="0.45" />
       </g>
-      {/* tape roll on the floor */}
       <g transform="translate(214 402)">
         <ellipse cx="0" cy="-3" rx="12" ry="9" fill={PAPER} stroke={INK} strokeWidth="2.4" />
         <ellipse cx="0" cy="-3" rx="5" ry="3.4" fill="none" stroke={INK} strokeWidth="1.6" />
-        <path d="M8 -2 Q16 2 22 0" fill="none" stroke={INK} strokeWidth="1.6" opacity="0.6" />
       </g>
-      {/* crumpled paper + small bin */}
       <g transform="translate(676 402)">
         <path
           d="M-8 0 Q-12 -6 -6 -9 Q-3 -13 3 -10 Q9 -11 8 -4 Q11 0 4 1 Z"
@@ -1127,9 +993,7 @@ function MovingBits() {
           strokeLinejoin="round"
         />
         <ellipse cx="0" cy="-26" rx="10" ry="3.6" fill={PAPER} stroke={INK} strokeWidth="2" />
-        <path d="M-9 -18 L9 -18" stroke={INK} strokeWidth="1.2" opacity="0.4" />
       </g>
-      {/* cap on a wall hook */}
       <g transform="translate(700 190)">
         <path d="M0 0 L0 -6" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
         <path
@@ -1192,9 +1056,184 @@ function PendantArt() {
   );
 }
 
+/** The landing beyond the front door (stays visible through the open door). */
+function DoorOpening() {
+  return (
+    <>
+      <defs>
+        <linearGradient id="pk-daylight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fdfbf2" />
+          <stop offset="60%" stopColor="#f8f4e4" />
+          <stop offset="100%" stopColor="#efeade" />
+        </linearGradient>
+      </defs>
+      <g>
+        <path d="M772 160 H898 V392 H772 Z" fill="url(#pk-daylight)" />
+        <path d="M772 330 H898 V392 H772 Z" fill="#f1eee1" />
+        <path d="M772 340 H898" stroke={INK} strokeWidth="1.4" opacity="0.35" />
+        <path
+          d="M784 392 L784 356 Q806 350 828 356 L828 392"
+          fill="none"
+          stroke={INK}
+          strokeWidth="1.6"
+          opacity="0.3"
+        />
+        <path d="M790 140 H880 V158 H790 Z" fill="#fdfaf0" stroke={INK} strokeWidth="2.2" />
+        <path d="M835 140 V158 M790 149 H880" stroke={INK} strokeWidth="1.4" opacity="0.7" />
+      </g>
+    </>
+  );
+}
+
+/** Door frame + the leaf, held wide open. Drawn in front of the walkers. */
+function DoorFrame() {
+  return (
+    <>
+      <path
+        d="M772 160 H898 M772 160 V392 M898 160 V392"
+        fill="none"
+        stroke={INK}
+        strokeWidth="5"
+        strokeLinecap="square"
+      />
+      <path d="M762 146 H908" stroke={INK} strokeWidth="4" strokeLinecap="round" />
+      <path d="M756 160 H772 M898 160 H914" stroke={INK} strokeWidth="2.6" />
+      <path d="M766 168 H904" stroke={INK} strokeWidth="1.4" opacity="0.4" />
+      {/* leaf swung right back against the landing wall, fully open */}
+      <path
+        d="M900 164 Q906 162 908 170 L936 210 Q940 216 940 226 L940 374 Q940 386 928 384 L906 380 Q900 378 900 368 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M910 188 L928 220 L928 368 L910 364 Z"
+        fill="none"
+        stroke={INK}
+        strokeWidth="1.5"
+        opacity="0.55"
+      />
+      <path d="M910 246 L928 250 M910 300 L928 304" stroke={INK} strokeWidth="1.3" opacity="0.4" />
+      <circle cx="908" cy="282" r="2.6" fill={INK} />
+      {/* nameplate, bell, switch */}
+      <g>
+        <rect
+          x="800"
+          y="112"
+          width="70"
+          height="20"
+          rx="3"
+          fill={PAPER}
+          stroke={INK}
+          strokeWidth="2"
+        />
+        <text
+          x="835"
+          y="127"
+          textAnchor="middle"
+          fontFamily={HAND}
+          fontSize="13"
+          fontWeight="700"
+          fill={INK}
+        >
+          Shree Nath
+        </text>
+      </g>
+      <circle cx="762" cy="238" r="5" fill={PAPER} stroke={INK} strokeWidth="2" />
+      <rect
+        x="726"
+        y="216"
+        width="12"
+        height="20"
+        rx="2"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="2"
+      />
+      {/* threshold + mat */}
+      <path
+        d="M766 392 L904 392 L914 408 L756 408 Z"
+        fill="#f6f4ea"
+        stroke={INK}
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M790 416 Q834 412 878 416 L874 434 Q834 430 794 434 Z"
+        fill="none"
+        stroke={INK}
+        strokeWidth="1.8"
+        strokeDasharray="8 7"
+        opacity="0.6"
+      />
+    </>
+  );
+}
+
+function Stool({ x }: { x: number }) {
+  return (
+    <g transform={`translate(${x} 462)`}>
+      <ellipse cx="0" cy="1" rx="21" ry="3" fill={INK} opacity="0.1" />
+      <path
+        d="M-20 -18 Q0 -21 20 -18 L18 -13 Q0 -16 -18 -13 Z"
+        fill={PAPER}
+        stroke={INK}
+        strokeWidth="2.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M-15 -14 L-18 0 M15 -14 L18 0 M0 -15 L0 0"
+        stroke={INK}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </g>
+  );
+}
+
 /* ==================================================================== */
 /*  SCENE                                                               */
 /* ==================================================================== */
+
+const CARRY_C1 = (
+  <>
+    <g className="pk-item pk-item--carry-c1a" transform="translate(16 -30)">
+      <ItemVase />
+    </g>
+    <g className="pk-item pk-item--carry-c1b" transform="translate(16 -30)">
+      <ItemLamp />
+    </g>
+  </>
+);
+
+const CARRY_C3 = (
+  <>
+    <g className="pk-item pk-item--carry-c3a" transform="translate(16 -30)">
+      <ItemBooks />
+    </g>
+    <g className="pk-item pk-item--carry-c3b" transform="translate(16 -30)">
+      <ItemFrame />
+    </g>
+    <g className="pk-item pk-item--carry-c3box" transform="translate(10 -42)">
+      <PackedBox />
+    </g>
+  </>
+);
+
+const CARRY_C2 = (
+  <>
+    <g className="pk-item pk-item--carry-c2a" transform="translate(10 -42)">
+      <PackedBox />
+    </g>
+    <g className="pk-item pk-item--carry-c2b" transform="translate(10 -42)">
+      <PackedBox />
+    </g>
+    <g className="pk-item pk-item--carry-c2c" transform="translate(10 -42)">
+      <PackedBox />
+    </g>
+  </>
+);
 
 function SceneArt({ uid }: { uid: string }) {
   return (
@@ -1210,10 +1249,26 @@ function SceneArt({ uid }: { uid: string }) {
           />
           <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.1" />
         </filter>
+        <pattern
+          id="pk-hatch"
+          width="5"
+          height="5"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <path d="M0 0 L0 5" stroke={INK} strokeWidth="1.1" />
+        </pattern>
         <radialGradient id={`pk-glow-${uid}`} cx="0.5" cy="0.4" r="0.7">
           <stop offset="0%" stopColor="#fffdf2" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#fffdf2" stopOpacity="0" />
         </radialGradient>
+        {/* the two openings: walkers inside them are clipped by the wall */}
+        <clipPath id={`pk-open-arch-${uid}`} clipPathUnits="userSpaceOnUse">
+          <path d="M92 392 L92 214 A56 58 0 0 1 204 214 L204 392 Z" />
+        </clipPath>
+        <clipPath id={`pk-open-door-${uid}`} clipPathUnits="userSpaceOnUse">
+          <path d="M772 160 H898 V392 H772 Z" />
+        </clipPath>
       </defs>
 
       <g filter={`url(#pk-rough-${uid})`}>
@@ -1225,34 +1280,43 @@ function SceneArt({ uid }: { uid: string }) {
         <PendantArt />
         <MovingBits />
         <Rug />
-        <Stool x={404} />
-        <Stool x={674} />
-        <MainDoor />
+        <Stool x={366} />
+        <Stool x={636} />
+        <DoorOpening />
       </g>
 
       <ellipse cx="309" cy="270" rx="150" ry="120" fill={`url(#pk-glow-${uid})`} />
 
-      {/* box mat between the packers, where finished cartons wait */}
-      <g>
-        <path
-          d="M528 476 Q584 472 640 476 L646 490 Q584 486 522 490 Z"
-          fill="#f1efe4"
-          stroke={INK}
-          strokeWidth="2.2"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M534 482 Q584 479 634 482"
-          stroke={INK}
-          strokeWidth="1.1"
-          opacity="0.35"
-          fill="none"
-        />
+      {/* ---- walkers inside the openings (drawn behind everything) ---- */}
+      <g clipPath={`url(#pk-open-arch-${uid})`}>
+        <CarrierShell id="c1" deep>
+          <CarrierBody hair="bald">{CARRY_C1}</CarrierBody>
+        </CarrierShell>
+        <CarrierShell id="c3" deep>
+          <CarrierBody hair="flat">{CARRY_C3}</CarrierBody>
+        </CarrierShell>
+      </g>
+      <g clipPath={`url(#pk-open-door-${uid})`}>
+        <CarrierShell id="c2" deep>
+          <CarrierBody hair="spiky">{CARRY_C2}</CarrierBody>
+        </CarrierShell>
+        <CarrierShell id="c3" deep>
+          <CarrierBody hair="flat">{CARRY_C3}</CarrierBody>
+        </CarrierShell>
       </g>
 
-      {/* finished cartons sliding onto the mat */}
+      {/* ---- the packers ---- */}
+      <Packer id="k1" hair="part" items={[<ItemVase key="v" />, <ItemLamp key="l" />]} />
+      <Packer id="k2" hair="cap" items={[<ItemBooks key="b" />, <ItemFrame key="f" />]} />
+      <Carton id="k1" />
+      <Carton id="k2" />
+
+      {/* finished cartons waiting on the mat */}
       <g transform="translate(452 486)">
         <g className="pk-item pk-item--done1">
+          <PackedBox />
+        </g>
+        <g className="pk-item pk-item--done3">
           <PackedBox />
         </g>
       </g>
@@ -1260,20 +1324,13 @@ function SceneArt({ uid }: { uid: string }) {
         <g className="pk-item pk-item--done2">
           <PackedBox />
         </g>
-      </g>
-      <g transform="translate(452 486)">
-        <g className="pk-item pk-item--done3">
-          <PackedBox />
-        </g>
-      </g>
-      <g transform="translate(678 486)">
         <g className="pk-item pk-item--done4">
           <PackedBox />
         </g>
       </g>
 
-      {/* items left on the stools for the packers */}
-      <g transform="translate(404 444)">
+      {/* items waiting on the stools */}
+      <g transform="translate(366 444)">
         <g className="pk-item pk-item--stool-a1">
           <ItemVase />
         </g>
@@ -1281,7 +1338,7 @@ function SceneArt({ uid }: { uid: string }) {
           <ItemLamp />
         </g>
       </g>
-      <g transform="translate(674 444)">
+      <g transform="translate(636 444)">
         <g className="pk-item pk-item--stool-b1">
           <ItemBooks />
         </g>
@@ -1290,41 +1347,21 @@ function SceneArt({ uid }: { uid: string }) {
         </g>
       </g>
 
-      {/* the two packers */}
-      <Packer id="k1" hair="part" items={[<ItemVase key="v" />, <ItemLamp key="l" />]} />
-      <Packer id="k2" hair="cap" items={[<ItemBooks key="b" />, <ItemFrame key="f" />]} />
+      {/* ---- carriers, front copies ---- */}
+      <CarrierShell id="c1">
+        <CarrierBody hair="bald">{CARRY_C1}</CarrierBody>
+      </CarrierShell>
+      <CarrierShell id="c3">
+        <CarrierBody hair="flat">{CARRY_C3}</CarrierBody>
+      </CarrierShell>
+      <Supervisor />
+      <CarrierShell id="c2">
+        <CarrierBody hair="spiky">{CARRY_C2}</CarrierBody>
+      </CarrierShell>
 
-      {/* their cartons, in front of them on the rug */}
-      <Carton id="k1" />
-      <Carton id="k2" />
-
-      {/* the porter: in with an item, out with a finished carton */}
-      <Walker id="porter" x={150} scale={1} hair="bald">
-        <g className="pk-item pk-item--carry-a1" transform="translate(12 -40)">
-          <ItemVase />
-        </g>
-        <g className="pk-item pk-item--carry-b1" transform="translate(12 -40)">
-          <ItemBooks />
-        </g>
-        <g className="pk-item pk-item--carry-a2" transform="translate(12 -40)">
-          <ItemLamp />
-        </g>
-        <g className="pk-item pk-item--carry-b2" transform="translate(12 -40)">
-          <ItemFrame />
-        </g>
-        <g className="pk-item pk-item--carry-box1" transform="translate(12 -42)">
-          <PackedBox />
-        </g>
-        <g className="pk-item pk-item--carry-box2" transform="translate(12 -42)">
-          <PackedBox />
-        </g>
-        <g className="pk-item pk-item--carry-box3" transform="translate(12 -42)">
-          <PackedBox />
-        </g>
-        <g className="pk-item pk-item--carry-box4" transform="translate(12 -42)">
-          <PackedBox />
-        </g>
-      </Walker>
+      {/* ---- the openings' frames, in front of the walkers ---- */}
+      <ArchCasing />
+      <DoorFrame />
     </>
   );
 }
@@ -1340,11 +1377,12 @@ export function PackingSceneAnimation() {
       >
         <title id="packing-scene-title">Shree Nath Packers &amp; Movers crew packing a home</title>
         <desc id="packing-scene-description">
-          A hand-drawn black and white cartoon inside a home: a porter carries a vase, books, a lamp
-          and a picture frame in through an arched passage, sets each one on a stool beside a
-          packer, and the two packers — sitting on the floor — open the carton, tuck each item in,
-          fold the flaps, tape the seam and pat the box. The porter then carries every finished
-          carton out of the main door.
+          A hand-drawn black and white cartoon inside a home: a crew of six works in parallel — a
+          porter and two helpers walk in through the arched passage carrying a vase, books, a lamp
+          and a picture frame, set them on stools beside two packers sitting on the floor, and the
+          packers box each item, fold the flaps and tape the cartons shut. Other workers carry the
+          finished cartons out through the open front door while a supervisor with a clipboard
+          watches.
         </desc>
         <SceneArt uid="wide" />
       </svg>
@@ -1357,8 +1395,8 @@ export function PackingSceneAnimation() {
       >
         <title id="packing-scene-compact-title">Shree Nath Packers &amp; Movers packing crew</title>
         <desc id="packing-scene-compact-description">
-          A hand-drawn black and white cartoon: two packers sit on the floor of a home, packing each
-          item into a box, while a porter brings items in and carries the finished boxes out.
+          A hand-drawn black and white cartoon: workers carry items in and boxes out of a home while
+          two packers fill cartons on the floor.
         </desc>
         <SceneArt uid="compact" />
       </svg>
